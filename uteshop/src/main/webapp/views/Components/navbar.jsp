@@ -1,17 +1,17 @@
-<%@page import="com.eazydeals.entities.Admin"%>
-<%@page import="com.eazydeals.entities.Cart"%>
-<%@page import="com.eazydeals.dao.CartDao"%>
-<%@page import="com.eazydeals.entities.User"%>
+<%@page import="cuoiki.ltweb.models.UserModel"%>
+<%@page import="cuoiki.ltweb.models.CategoryModel"%>
+<%@page import="cuoiki.ltweb.impl.CategoryDAOImpl"%>
+<%@page import="cuoiki.ltweb.dao.ICategoryDAO"%>
+<%@page import="cuoiki.ltweb.impl.CartDAOImpl"%>
+<%@page import="cuoiki.ltweb.dao.ICartDAO"%>
+<%@page import="cuoiki.ltweb.dao.ICategoryDAO"%>
 <%@page import="java.util.List"%>
-<%@page import="com.eazydeals.entities.Category"%>
-<%@page import="com.eazydeals.helper.ConnectionProvider"%>
-<%@page import="com.eazydeals.dao.CategoryDao"%>
 <%
-User user = (User) session.getAttribute("activeUser");
-Admin admin = (Admin) session.getAttribute("activeAdmin");
-
-CategoryDao catDao = new CategoryDao(ConnectionProvider.getConnection());
-List<Category> categoryList = catDao.getAllCategories();
+//User user = (User) session.getAttribute("activeUser");
+UserModel admin = (UserModel)session.getAttribute("activeAdmin");
+UserModel user = (UserModel) session.getAttribute("activeUser");
+ICategoryDAO catedao = new CategoryDAOImpl();
+List<CategoryModel> categoryList = catedao.findAll();
 %>
 <style>
 .navbar {
@@ -40,7 +40,7 @@ List<Category> categoryList = catDao.getAllCategories();
 	%>
 	<div class="container">
 		<a class="navbar-brand" href="admin.jsp"><i
-			class="fa-sharp fa-solid fa-house" style="color: #ffffff;"></i>&ensp;EazyDeals</a>
+			class="fa-sharp fa-solid fa-house" style="color: #ffffff;"></i>&ensp;UTEShop</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -58,7 +58,7 @@ List<Category> categoryList = catDao.getAllCategories();
 							class="btn nav-link" data-bs-toggle="modal"
 							data-bs-target="#add-product"><i class="fa-solid fa-plus fa-xs"></i>Add Product</button></li>
 					<li class="nav-item"><a class="nav-link" aria-current="page"
-						href="admin.jsp"><%=admin.getName()%></a></li>
+						href="admin.jsp"><%=admin.getUsername()%></a></li>
 					<li class="nav-item"><a class="nav-link" aria-current="page"
 						href="LogoutServlet?user=admin"><i
 							class="fa-solid fa-user-slash fa-sm" style="color: #fafafa;"></i>&nbsp;Logout</a></li>
@@ -72,10 +72,10 @@ List<Category> categoryList = catDao.getAllCategories();
 
 	<!-- end -->
 
-	<!-- for all -->
+	<!-- ai cung thay duoc  -->
 	<div class="container">
 		<a class="navbar-brand" href="index.jsp"><i
-			class="fa-sharp fa-solid fa-house" style="color: #ffffff;"></i>&ensp;EazyDeals</a>
+			class="fa-sharp fa-solid fa-house" style="color: #ffffff;"></i>&ensp;UTEShop</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -93,10 +93,10 @@ List<Category> categoryList = catDao.getAllCategories();
 						<li><a class="dropdown-item" href="products.jsp?category=0">All
 								Products</a></li>
 						<%
-						for (Category c : categoryList) {
+						for (CategoryModel c : categoryList) {
 						%>
 						<li><a class="dropdown-item"
-							href="products.jsp?category=<%=c.getCategoryId()%>"><%=c.getCategoryName()%></a></li>
+							href="products.jsp?category=<%=c.getId()%>"><%=c.getName()%></a></li>
 						<%
 						}
 						%>
@@ -110,11 +110,12 @@ List<Category> categoryList = catDao.getAllCategories();
 				<button class="btn btn-outline-light" type="submit">Search</button>
 			</form>
 
-			<!-- when user is logged in -->
+			<!-- khi user log vao -->
 			<%
 			if (user != null) {
-				CartDao cartDao = new CartDao(ConnectionProvider.getConnection());
-				int cartCount = cartDao.getCartCountByUserId(user.getUserId());
+				
+				ICartDAO cartDao = new CartDAOImpl();
+				int cartCount = cartDao.getCartCountByUserId(user.getId());
 			%>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active pe-3"><a
@@ -123,7 +124,7 @@ List<Category> categoryList = catDao.getAllCategories();
 						style="color: #ffffff;"></i> &nbsp;Cart<span
 						class="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger"><%=cartCount%></span></a></li>
 				<li class="nav-item active pe-3"><a class="nav-link"
-					aria-current="page" href="profile.jsp"><%=user.getUserName()%></a></li>
+					aria-current="page" href="profile.jsp"><%=user.getUsername()%></a></li>
 				<li class="nav-item pe-3"><a class="nav-link"
 					aria-current="page" href="LogoutServlet?user=user"><i
 						class="fa-solid fa-user-slash" style="color: #fafafa;"></i>&nbsp;Logout</a></li>
@@ -150,5 +151,6 @@ List<Category> categoryList = catDao.getAllCategories();
 	}
 	%>
 	<!-- end  -->
+
 </nav>
 

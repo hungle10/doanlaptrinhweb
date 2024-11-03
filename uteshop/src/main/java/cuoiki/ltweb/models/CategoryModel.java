@@ -1,26 +1,28 @@
 package cuoiki.ltweb.models;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class CategoryModel {
 	private Long id;
 	private String name;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private String image;
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
 
 	// Default constructor
 	public CategoryModel() {
-    }
+	}
 
-	// Parameterized constructor
-	public CategoryModel(Long id, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+	public CategoryModel(Long id, String name, String image, Timestamp createdAt, Timestamp updatedAt) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.image = image;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
-	// Getters and Setters
 	public Long getId() {
 		return id;
 	}
@@ -37,19 +39,29 @@ public class CategoryModel {
 		this.name = name;
 	}
 
-	public LocalDateTime getCreatedAt() {
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public LocalDateTime getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(LocalDateTime updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+
 }
