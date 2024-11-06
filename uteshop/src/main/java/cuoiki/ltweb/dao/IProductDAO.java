@@ -15,7 +15,9 @@ public interface IProductDAO {
 
 	public List<ProductModel> getProductsBasedOnPageNumber(int currentpage);
 
-	List<ProductModel> getAllProductsByCategoryId(int catId);
+	public List<ProductModel> getAllProductsByCategoryId(int catId);
 
-	List<ProductModel> getAllProductsBySearchKey(String search);
+	public List<ProductModel> getAllProductsBySearchKey(String search);
+
+	public ProductModel getProductsByProductId(long product_id);
 }

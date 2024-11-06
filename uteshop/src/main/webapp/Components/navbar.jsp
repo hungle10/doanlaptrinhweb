@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+  <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <style>
 .navbar {
 	font-weight: 500;
@@ -75,17 +75,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="/uteshop/products?category=0"
+                <li class="nav-item"><a class="nav-link" href="/uteshop/user/products?category=0"
                     role="button" aria-expanded="false"> Products </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false"> Category </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/uteshop/products?category=0">All Products</a></li>
+                        <li><a class="dropdown-item" href="/uteshop/user/products?category=0">All Products</a></li>
                         <c:forEach var="category" items="${categoryList}">
                             <li>
-                                <a class="dropdown-item" href="/uteshop/products?category=${category.id}">
+                                <a class="dropdown-item" href="/uteshop/user/products?category=${category.id}">
                                     <c:out value="${category.name}"/>
                                 </a>
                             </li>
@@ -94,7 +94,7 @@
                 </li>
             </ul>
             
-            <form class="d-flex pe-5 p-3" role="search" action="/uteshop/products" method="get">
+            <form class="d-flex pe-5 p-3" role="search" action="/uteshop/user/products" method="get">
                 <div class="input-group">
                     <input name="search" class="form-control me-2" size="50"
                            type="search" placeholder="Search for products" aria-label="Search"
@@ -108,7 +108,7 @@
                 <c:when test="${not empty sessionScope.activeUser}">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active pe-3">
-                            <a class="nav-link position-relative" aria-current="page" href="cart.jsp">
+                            <a class="nav-link position-relative" aria-current="page" href="/uteshop/user/cart">
                                 <i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i> &nbsp;Cart
                                 <span class="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger">
                                     ${cartCount}

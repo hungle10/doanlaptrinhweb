@@ -216,14 +216,15 @@
 	padding-right: 40px;
 	background: #fff;
 }
-#login-btn .btn-outline-primary {
-    background-color: #007bff; /* Choose your desired color */
-    color: white;
-    border-color: #007bff; /* Match the border with the background color */
+.btn-outline-primary {
+    background-color: #007bff; /* Màu nền mặc định cho nút */
+    color: white;              /* Màu chữ */
+    border-color: #007bff;     /* Màu viền */
 }
 
-#login-btn .btn-outline-primary:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+/* Đổi màu nền khi hover */
+.btn-outline-primary:hover {
+    background-color: #0056b3; /* Tông màu đậm hơn khi hover */
     color: white;
     border-color: #0056b3;
 }
@@ -268,4 +269,5 @@ label {
 	border: 1px solid #c2c2c2;
 	margin: 0 5px;
 }
+
 

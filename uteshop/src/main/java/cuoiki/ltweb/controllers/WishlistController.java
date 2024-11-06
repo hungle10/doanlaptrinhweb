@@ -14,7 +14,7 @@ import cuoiki.ltweb.impl.*;
 import cuoiki.ltweb.models.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = "/wishlist")
+@WebServlet(urlPatterns = "/user/wishlist")
 public class WishlistController extends HttpServlet {
 
 	@Override

@@ -7,8 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import cuoiki.ltweb.configs.DBConnectSQLServer;
 import cuoiki.ltweb.dao.IProductDAO;
 import cuoiki.ltweb.models.ProductModel;
@@ -269,6 +267,35 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	
+	@Override
+	public ProductModel getProductsByProductId(long product_id) {
+		ProductModel product = new ProductModel();
+		try {
+			conn = super.getConnection();
+			String query = "select * from products where id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1, product_id);
+			ResultSet rs = psmt.executeQuery();
+			rs.next();
+			product.setId(rs.getLong("id"));
+			product.setName(rs.getString("name"));
+			product.setDescription(rs.getString("description"));
+			product.setPrice(rs.getFloat("price"));
+			product.setQuantity(rs.getInt("quantity"));
+			product.setDiscount(rs.getInt("discount"));
+			product.setImage(rs.getString("image"));
+			product.setCategory_id(rs.getInt("category_id"));
+			product.setCreatedAt(rs.getTimestamp("created_at"));
+			product.setUpdatedAt(rs.getTimestamp("updated_at"));
+			product.setShop_id(rs.getInt("shop_id"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return product;
 	}
 
 }

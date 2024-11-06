@@ -1,53 +1,51 @@
 package cuoiki.ltweb.models;
 
 public class CartModel {
-	private Integer cartId;
-	private Long userId;
-	private Long productId;
-	private Integer quantity;
-
-	// Default constructor
-	public CartModel() {
-    }
-
-	// Parameterized constructor
-	public CartModel(Integer cartId, Long userId, Long productId, Integer quantity) {
-        this.cartId = cartId;
-        this.userId = userId;
-        this.productId = productId;
-        this.quantity = quantity;
-    }
-
-	// Getters and Setters
-	public Integer getCartId() {
+	private int cartId;
+	private long userId;
+	private long productId;
+	private int quantity;
+	public int getCartId() {
 		return cartId;
 	}
-
-	public void setCartId(Integer cartId) {
+	public void setCartId(int cartId) {
 		this.cartId = cartId;
 	}
-
-	public Long getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-
-	public void setUserId(Long userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-
-	public Long getProductId() {
+	public long getProductId() {
 		return productId;
 	}
-
-	public void setProductId(Long productId) {
+	public void setProductId(long productId) {
 		this.productId = productId;
 	}
-
-	public Integer getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
-
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	public CartModel() {
+
+	}
+	public CartModel(int cartId, long userId, long productId, int quantity) {
+		super();
+		this.cartId = cartId;
+		this.userId = userId;
+		this.productId = productId;
+		this.quantity = quantity;
+	}
+	public CartModel(long userId, long productId, int quantity) {
+		super();
+		this.userId = userId;
+		this.productId = productId;
+		this.quantity = quantity;
+	}
+
+
+
 }

@@ -30,13 +30,13 @@
 							<div class="wishlist-icon">
 							
 							 <c:if test="${fn:contains(requestScope.prodListWish, p)}">    <!--on click ma js scipt -->
-									        	<button onclick="window.open('/uteshop/wishlist?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=remove', '_self')"
+									        	<button onclick="window.open('/uteshop/user/wishlist?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=remove', '_self')"
 													class="btn btn-link" type="submit">
 													<i class="fa-sharp fa-solid fa-heart" style="color: #ff0303;"></i>
 												</button>
 							 </c:if>
 							  <c:if test="${fn:contains(requestScope.prodListUnWish, p)}">
-							    <button onclick="window.open('/uteshop/wishlist?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=add', '_self')"
+							    <button onclick="window.open('/uteshop/user/wishlist?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=add', '_self')"
 													class="btn btn-link" type="submit">
 													<i class="fa-sharp fa-solid fa-heart" style="color: #909191;"></i>
 												</button>
@@ -66,16 +66,16 @@
    <!-- Previous Button -->
     <c:if test="${requestScope.currentpage > 1}">
         <li class="page-item">
-            <a class="page-link" href="/uteshop/products?page=${requestScope.currentpage - 1}">Previous</a>
+            <a class="page-link" href="/uteshop/user/products?page=${requestScope.currentpage - 1}">Previous</a>
         </li>
     </c:if>
   <c:forEach var="i" begin="1" end="${requestScope.endPage}" step="1">
-       <li class="page-item"><a class="page-link" href="/uteshop/products?page=${i}">${i}</a></li>
+       <li class="page-item"><a class="page-link" href="/uteshop/user/products?page=${i}">${i}</a></li>
     </c:forEach>
     <!-- Next Button -->
     <c:if test="${requestScope.currentpage < requestScope.endPage}">
         <li class="page-item">
-            <a class="page-link" href="/uteshop/products?page=${requestScope.currentpage + 1}">Next</a>
+            <a class="page-link" href="/uteshop/user/products?page=${requestScope.currentpage + 1}">Next</a>
         </li>
     </c:if>
   </ul>
