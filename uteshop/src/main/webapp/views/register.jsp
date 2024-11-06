@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%@ include file="Components/common_css_js.jsp" %>
+<%@ include file="/Components/common_css_js.jsp" %>
 <style>
 label {
 	font-weight: bold;
@@ -12,7 +12,8 @@ label {
 </style>
 </head>
 <body>
-
+	<!--navbar -->
+	<%@include file="/Components/navbar.jsp"%>
 
 	<div class="container-fluid mt-4">
 		<div class="row g-0">
@@ -21,57 +22,66 @@ label {
 					<div class="card-body px-5">
 
 						<div class="container text-center">
-							<img src="Images/signUp.png" style="max-width: 80px;" class="img-fluid">
+							<img src="/uteshop/Images/signUp.png" style="max-width: 80px;"
+								class="img-fluid">
 						</div>
 						<h3 class="text-center">Create Account</h3>
+						<%@include file="/Components/alert_message.jsp"%>
+
 						<!--registration-form-->
-						<form id="register-form" action="RegisterServlet" method="post">
+						<form id="register-form" action="/uteshop/register" method="post">
 							<div class="row">
 								<div class="col-md-6 mt-2">
 									<label class="form-label">Your name</label> <input type="text"
-										name="user_name" class="form-control"
+										name="fullname" class="form-control"
 										placeholder="First and last name" required>
 								</div>
 								<div class="col-md-6 mt-2">
+                                       <label class="form-label">Date of Birth</label>
+                                        <input type="date" name="dateOfBirth" class="form-control" required>
+                                   </div>
+							
+								<div class="col-md-6 mt-2">
 									<label class="form-label">Email</label> <input type="email"
-										name="user_email" placeholder="Email address"
+										name="email" placeholder="Email address"
 										class="form-control" required>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6 mt-2">
 									<label class="form-label">Mobile number</label> <input
-										type="number" name="user_mobile_no"
+										type="number" name="phonenumber"
 										placeholder="Mobile number" class="form-control">
 								</div>
-								<div class="col-md-6 mt-5">
-									<label class="form-label pe-3">Gender</label> <input
-										class="form-check-input" type="radio" name="gender"
-										value="Male"> <span class="form-check-label pe-3 ps-1">
-										Male </span> <input class="form-check-input" type="radio"
-										name="gender" value="Female"> <span
-										class="form-check-label ps-1"> Female </span>
-								</div>
+								    
 							</div>
 							<div class="mt-2">
 								<label class="form-label">Address</label> <input type="text"
-									name="user_address"
+									name="address"
 									placeholder="Enter Address(Area and Street))"
 									class="form-control" required>
 							</div>  
+							<div class="row">
 								<div class="col-md-6 mt-2">
 									<label class="form-label">Password</label> <input
-										type="password" name="user_password"
+										type="password" name="password"
 										placeholder="Enter Password" class="form-control" required>
 								</div>
+								<div class="col-md-6 mt-2">
+									<label class="form-label">User name</label> <input type="text"
+										name="username" class="form-control"
+										placeholder="Enter your user name" required>
+								</div>
 							</div>
+
 							<div id="submit-btn" class="container text-center mt-4">
 								<button type="submit" class="btn btn-outline-primary me-3">Submit</button>
 								<button type="reset" class="btn btn-outline-primary">Reset</button>
 							</div>
 							<div class="mt-3 text-center">
 								<h6>
-									Already have an account?<a href="views/login.jsp" style="text-decoration: none"> Sign in</a>
+									Already have an account?<a href="/uteshop/views/login.jsp"
+										style="text-decoration: none"> Sign in</a>
 								</h6>
 							</div>
 						</form>

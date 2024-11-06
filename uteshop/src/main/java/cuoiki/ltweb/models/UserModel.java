@@ -43,15 +43,13 @@ public class UserModel {
 	private Boolean isActive;
     private Date dateOfBirth;
     private String image;
-    private long facebookAccountId;
-    private long googleAccountId;
     private int roleId;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
 
 	public UserModel(long id, String username, String fullname, String phoneNumber, String address,String email, String password,
-			Boolean isActive, Date dateOfBirth,String image ,long facebookAccountId, long googleAccountId, int roleId,
+			Boolean isActive, Date dateOfBirth,String image , int roleId,
 			Timestamp timestamp, Timestamp timestamp2) {
 		super();
 		this.id = id;
@@ -62,8 +60,6 @@ public class UserModel {
 		this.password = password;
 		this.isActive = isActive;
 		this.dateOfBirth = dateOfBirth;
-		this.facebookAccountId = facebookAccountId;
-		this.googleAccountId = googleAccountId;
 		this.roleId = roleId;
 		this.createdAt = timestamp;
 		this.updatedAt = timestamp2;
@@ -97,8 +93,7 @@ public class UserModel {
 
 
 	public UserModel(String username, String fullname, String phoneNumber, String address, String email,
-			String password, Boolean isActive, Date dateOfBirth, String image, long facebookAccountId,
-			long googleAccountId, int roleId, Timestamp createdAt, Timestamp updatedAt) {
+			String password, Boolean isActive, Date dateOfBirth, String image, int roleId, Timestamp createdAt, Timestamp updatedAt) {
 		super();
 		this.username = username;
 		this.fullname = fullname;
@@ -109,19 +104,16 @@ public class UserModel {
 		this.isActive = isActive;
 		this.dateOfBirth = dateOfBirth;
 		this.image = image;
-		this.facebookAccountId = facebookAccountId;
-		this.googleAccountId = googleAccountId;
 		this.roleId = roleId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
 
 
-	public UserModel(String fullname, Boolean isActive, long facebookAccountId, int roleId, Timestamp createdAt) {
+	public UserModel(String fullname, Boolean isActive, int roleId, Timestamp createdAt) {
 		super();
 		this.fullname = fullname;
 		this.isActive = isActive;
-		this.facebookAccountId = facebookAccountId;
 		this.roleId = roleId;
 		this.createdAt = createdAt;
 	}
@@ -203,27 +195,9 @@ public class UserModel {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
-    public long getFacebookAccountId() {
-        return facebookAccountId;
-    }
-
-    public void setFacebookAccountId(long facebookAccountId) {
-        this.facebookAccountId = facebookAccountId;
-    }
-
-    public long getGoogleAccountId() {
-        return googleAccountId;
-    }
-
-    public void setGoogleAccountId(long googleAccountId) {
-        this.googleAccountId = googleAccountId;
-    }
-
     public int getRoleId() {
         return roleId;
     }
-
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }

@@ -43,8 +43,6 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 			                    rs.getBoolean("is_active"),
 			                    rs.getDate("date_of_birth"),
 			                    rs.getString("image"),
-			                    rs.getLong("facebook_account_id"),
-			                    rs.getLong("google_account_id"),
 			                    rs.getInt("role_id"),
 			                    rs.getTimestamp("created_at"),
 			                    rs.getTimestamp("updated_at")
@@ -81,8 +79,6 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 				oneUser.setIsActive(rs.getBoolean("is_active"));
 				oneUser.setDateOfBirth(rs.getDate("date_of_birth"));
 				oneUser.setImage(rs.getString("image"));
-				oneUser.setFacebookAccountId(rs.getLong("facebook_account_id"));
-				oneUser.setGoogleAccountId(rs.getLong("google_account_id"));
 				oneUser.setRoleId(rs.getInt("role_id"));
 				oneUser.setUpdatedAt(rs.getTimestamp("updated_at"));
 				oneUser.setCreatedAt(rs.getTimestamp("created_at"));
@@ -98,49 +94,11 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 		}
 		return null;
 	}
-	@Override
-	public UserModel findByFbId(long id) {
-		String sql = "SELECT * FROM users WHERE facebook_account_id = ?";
-		UserModel oneUser = new UserModel();
-
-		try {
-		    conn = super.getConnection();
-		    ps = conn.prepareStatement(sql);
-		    ps.setLong(1,id); 
-		    rs = ps.executeQuery(); 
-		    while(rs.next())
-			{
-		    	oneUser.setId(rs.getLong("id"));
-			    oneUser.setUsername(rs.getString("username"));
-				oneUser.setFullname(rs.getString("fullname"));
-				oneUser.setPhoneNumber(rs.getString("phone_number"));
-				oneUser.setAddress(rs.getString("address"));
-				oneUser.setEmail(rs.getString("email"));
-				oneUser.setPassword(rs.getString("password"));
-				oneUser.setIsActive(rs.getBoolean("is_active"));
-				oneUser.setDateOfBirth(rs.getDate("date_of_birth"));
-				oneUser.setImage(rs.getString("image"));
-				oneUser.setFacebookAccountId(rs.getLong("facebook_account_id"));
-				oneUser.setGoogleAccountId(rs.getLong("google_account_id"));
-				oneUser.setRoleId(rs.getInt("role_id"));
-				oneUser.setUpdatedAt(rs.getTimestamp("updated_at"));
-				oneUser.setCreatedAt(rs.getTimestamp("created_at"));
-			}
-		    return oneUser;
-		    }
-		   catch (Exception e) 
-		{
-		    e.printStackTrace();
-		} finally 
-		{
-		   
-		}
-		return null;
-	}
+	
 	@Override
 	public void insert(UserModel user) {
-		String sql = "INSERT INTO users (username , fullname, phone_number, address,email,password, is_active, date_of_birth, image,facebook_account_id,google_account_id,role_id, created_at, updated_at)\r\n"
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO users (username , fullname, phone_number, address,email,password, is_active, date_of_birth, image,role_id, created_at, updated_at)\r\n"
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 		try
 		{
 			conn=super.getConnection();
@@ -154,11 +112,9 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 			ps.setBoolean(7,user.getIsActive());
 			ps.setDate(8,user.getDateOfBirth());
 			ps.setString(9,user.getImage());
-			ps.setLong(10,user.getFacebookAccountId());
-			ps.setLong(11,user.getGoogleAccountId());
-			ps.setInt(12,user.getRoleId());
-			ps.setTimestamp(13,user.getCreatedAt());
-			ps.setTimestamp(14,user.getUpdatedAt());
+			ps.setInt(10,user.getRoleId());
+			ps.setTimestamp(11,user.getCreatedAt());
+			ps.setTimestamp(12,user.getUpdatedAt());
 			int i = ps.executeUpdate();
 		}catch(Exception e)
 		{
@@ -194,8 +150,6 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 				oneUser.setIsActive(rs.getBoolean("is_active"));
 				oneUser.setDateOfBirth(rs.getDate("date_of_birth"));
 				oneUser.setImage(rs.getString("image"));
-				oneUser.setFacebookAccountId(rs.getLong("facebook_account_id"));
-				oneUser.setGoogleAccountId(rs.getLong("google_account_id"));
 				oneUser.setRoleId(rs.getInt("role_id"));
 				oneUser.setUpdatedAt(rs.getTimestamp("updated_at"));
 				oneUser.setCreatedAt(rs.getTimestamp("created_at"));
@@ -238,8 +192,6 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 				oneUser.setIsActive(rs.getBoolean("is_active"));
 				oneUser.setDateOfBirth(rs.getDate("date_of_birth"));
 				oneUser.setImage(rs.getString("image"));
-				oneUser.setFacebookAccountId(rs.getLong("facebook_account_id"));
-				oneUser.setGoogleAccountId(rs.getLong("google_account_id"));
 				oneUser.setRoleId(rs.getInt("role_id"));
 				oneUser.setUpdatedAt(rs.getTimestamp("updated_at"));
 				oneUser.setCreatedAt(rs.getTimestamp("created_at"));
@@ -299,28 +251,6 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 		}
 		return duplicate;
 	}
-	@Override
-	public boolean checkExistFbId(long facebook_account_id) {
-		String sql = "SELECT * FROM users WHERE facebook_account_id = ?";
-		boolean duplicate = false;
-		try 
-		{
-		    conn = super.getConnection();
-		    ps=conn.prepareStatement(sql);
-		    ps.setLong(1,facebook_account_id);
-		    rs=ps.executeQuery();
-		    if(rs.next()) {
-		    	duplicate=true;
-		    }
-		    ps.close();
-		    conn.close();
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return duplicate;
-	}
-
 	@Override
 	public void update(UserModel user) {
 		 String sql = "UPDATE users SET fullname = ? , phone_number = ? , address = ? , email = ? , date_of_birth = ? , image = ?, updated_at = ? WHERE id = ?";

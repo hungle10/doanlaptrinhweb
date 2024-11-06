@@ -41,6 +41,7 @@ public class LoginFacebookController extends HttpServlet{
 		      
 		      req.setAttribute("id", user.getId()); //id facebook
 		      req.setAttribute("name", user.getName());
+		 //     System.out.println(user.getEmail());
 		      
 		      //tajo session accountfb
 		      HttpSession session = req.getSession(true);
@@ -50,13 +51,13 @@ public class LoginFacebookController extends HttpServlet{
 			  
 			  //add user bang tai khoan fb
 
-			  Boolean check = iuser.registerByFb(generateUniqueUsername(user.getName()),user.getName(),"","",generateFakeEmail(user.getId()),"",true,generateFakeBirthday(),"",Long.parseLong(user.getId()),0,3);
-			  if(check==true)
+			/*  Boolean check = iuser.registerByFb(generateUniqueUsername(user.getName()),user.getName(),"","",generateFakeEmail(user.getId()),"",true,generateFakeBirthday(),"",Long.parseLong(user.getId()),0,3);
+			 if(check==true)
 				  System.out.println("add thanh cong bang fb");
 			  else
 				  System.out.println("da co tai khoan fb");
 			  
-			  resp.sendRedirect(req.getContextPath() + "/waiting");
+			  resp.sendRedirect(req.getContextPath() + "/waiting");*/
 
 		    }
 	}
@@ -81,11 +82,7 @@ public class LoginFacebookController extends HttpServlet{
 	 private void saveRememberMe(HttpServletResponse response, String userfbId) {
 		 Cookie cookie = new Cookie("fbToken", userfbId);
 	        cookie.setPath("/"); // Cookie có hiệu lực cho toàn bộ ứng dụng
-	        cookie.setMaxAge(30 * 60); // 30 phút
-	        cookie.setHttpOnly(true); // Ngăn chặn truy cập từ JavaScript
-	        cookie.setSecure(true); // Cehỉ gửi cookie qua HTTPS
-	        cookie.setAttribute("same_site", "None"); // Đảm bảo cookie có thể được gửi qua các domain khác
-	        // Thêm cookie vào response
+	        cookie.setMaxAge(30 * 60); // 30 p	        // Thêm cookie vào response
 	        response.addCookie(cookie);
 	    }
 	 String generateUniqueUsername(String fullname) {

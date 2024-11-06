@@ -37,17 +37,19 @@ public class WaitingController extends HttpServlet {
 				resp.sendRedirect(req.getContextPath() + "/admin/home");
 				return;
 			} else if (u.getRoleId() == 2) {
+				session.setAttribute("activeUser",u);
 				resp.sendRedirect(req.getContextPath() + "/vendor/home");
 				return;
-			} else {
+			} else if(u.getRoleId() == 3) {
 				session.setAttribute("activeUser",u);
 				resp.sendRedirect(req.getContextPath() + "/home");
 				return;
 			}
-		}
-		if (session != null && session.getAttribute("accountfb") != null) {
-			resp.sendRedirect(req.getContextPath() + "/home");
-			return;
+			else {
+				session.setAttribute("activeUser",u);
+				resp.sendRedirect(req.getContextPath() + "/shipper/home");
+				return;
+			}
 		}
 
 		// Check cookie
@@ -58,19 +60,18 @@ public class WaitingController extends HttpServlet {
 					String username = decodeJWT(cookie.getValue());
 					UserModel u = user.findByUserName(username);
 					if (u.getRoleId() == 1) {
+						session.setAttribute("activeAdmin",u);
 						resp.sendRedirect(req.getContextPath() + "/admin/home");
 						return;
 					} else if (u.getRoleId() == 2) {
+						session.setAttribute("activeUser",u);
 						resp.sendRedirect(req.getContextPath() + "/vendor/home");
 						return;
 					} else {
+						session.setAttribute("activeUser",u);
 						resp.sendRedirect(req.getContextPath() + "/home");
 						return;
 					}
-				}
-				if (cookie.getName().equals("fbToken")) {
-					resp.sendRedirect(req.getContextPath() + "/home");
-					return;
 				}
 			}
 		}

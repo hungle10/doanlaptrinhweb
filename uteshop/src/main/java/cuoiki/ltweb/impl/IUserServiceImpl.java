@@ -21,7 +21,7 @@ public class IUserServiceImpl implements IUserService {
 
 	
 	@Override
-	public boolean register(String username, String fullname, String phoneNumber, String address, String email,String password, Boolean isActive, Date dateOfBirth, String image, long facebookAccountId,long googleAccountId, int roleId) {
+	public boolean register(String username, String fullname, String phoneNumber, String address, String email,String password, Boolean isActive, Date dateOfBirth, String image,int roleId) {
 		if (userDao.checkExistUsername(username)) {
 			System.out.print("that bai da ton tai username nay ");
 			return false;
@@ -30,25 +30,8 @@ public class IUserServiceImpl implements IUserService {
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(millis);
         System.out.println("check check");
 		// Khi gọi hàm insert
-		userDao.insert(new UserModel(username,fullname,phoneNumber,address,email,password,isActive,dateOfBirth,image,facebookAccountId,googleAccountId,roleId,timestamp,timestamp));
+		userDao.insert(new UserModel(username,fullname,phoneNumber,address,email,password,isActive,dateOfBirth,image,roleId,timestamp,timestamp));
 		System.out.println("check check check");
-		return true;
-	}
-
-	@Override
-    //dang ki nguoi dung fb
-	public boolean registerByFb(String username, String fullname, String phoneNumber, String address, String email,String password, Boolean isActive, Date dateOfBirth, String image, long facebookAccountId,long googleAccountId, int roleId) {
-		
-		
-		if (userDao.checkExistFbId(facebookAccountId)) {
-			System.out.print("that bai da ton tai tai khoan fb nay ");
-			return false;
-		}
-		long millis = System.currentTimeMillis();
-		java.sql.Timestamp timestamp = new java.sql.Timestamp(millis);
-
-		// Khi gọi hàm insert
-		userDao.insert(new UserModel(username,fullname,phoneNumber,address,email,password,isActive,dateOfBirth,image,facebookAccountId,googleAccountId,roleId,timestamp,timestamp));
 		return true;
 	}
 

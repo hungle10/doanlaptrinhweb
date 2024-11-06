@@ -83,18 +83,13 @@ public class LoginController extends HttpServlet {
 		
 	    HttpSession session = req.getSession(false);
 	    
-	    //check session khi dang nhap binh thuong
-		if (session != null && session.getAttribute("accountfb") != null) {
-			resp.sendRedirect(req.getContextPath() + "/waiting");
-			return;
-			}
-		//check session khi dang nhap fb
+		//check session 
 		if (session != null && session.getAttribute("account") != null) {
 			resp.sendRedirect(req.getContextPath() + "/waiting");
 			return;
 			}
 		
-        // Kiểm tra nếu đã có JWT va fbtoken trong cookie
+        // Kiểm tra nếu đã có JWT trong cookie
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -105,11 +100,6 @@ public class LoginController extends HttpServlet {
                         resp.sendRedirect(req.getContextPath() + "/waiting");
                         return;
                     }
-                }
-                if(cookie.getName().equals("fbToken")) {
-                	System.out.println("helo dom dom");
-                	resp.sendRedirect(req.getContextPath() + "/waiting");
-                    return;
                 }
             }
         }
@@ -146,21 +136,17 @@ public class LoginController extends HttpServlet {
     }
     private void getLogOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     	
-    	//khi logout xoa 2 session account binh thuong va account fb
+    	//khi logout xoa session
     	HttpSession session = req.getSession();
 		session.removeAttribute("account");
-		session.removeAttribute("accountfb");
-    	
+		session.removeAttribute("activeAdmin");
+		session.removeAttribute("activeUser");
+
         // Xóa JWT , fb trong cookie
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("jwtToken")) {
-                    cookie.setMaxAge(0);
-                    resp.addCookie(cookie);
-                    break;
-                }
-                if (cookie.getName().equals("fbToken")) {
                     cookie.setMaxAge(0);
                     resp.addCookie(cookie);
                     break;

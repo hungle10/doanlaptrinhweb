@@ -15,8 +15,6 @@ public class HomeController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// Set the content   
-		req.getRequestDispatcher("/views/User.jsp").forward(req, resp);
 	    resp.setContentType("text/html");
 
 	    // Create a PrintWriter object to write the HTML content

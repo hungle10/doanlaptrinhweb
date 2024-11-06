@@ -21,8 +21,4 @@ public interface IUserDAO {
 	
 	void update(UserModel user);
 
-	UserModel findByFbId(long id);
-
-	boolean checkExistFbId(long facebook_account_id);
-
 }
