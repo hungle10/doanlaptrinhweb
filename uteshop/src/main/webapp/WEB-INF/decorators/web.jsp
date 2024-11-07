@@ -17,6 +17,5 @@
 <!-- begin footer -->
 <%@include file="/Components/footer.jsp" %>
 <!-- end footer -->
-
 </body>
 </html>

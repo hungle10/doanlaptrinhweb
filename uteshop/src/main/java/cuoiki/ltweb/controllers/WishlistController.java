@@ -28,15 +28,15 @@ public class WishlistController extends HttpServlet {
 		{
 			WishlistModel wishlist = new WishlistModel(uid, pid);
 			wishlistDao.addToWishlist(wishlist);
-			resp.sendRedirect("/uteshop/products");
+			resp.sendRedirect("/uteshop/user/products");
 		}else if(op.trim().equals("remove"))
 		{
 			wishlistDao.deleteWishlist(uid, pid);
-			resp.sendRedirect("/uteshop/products");
+			resp.sendRedirect("/uteshop/user/products");
 		}else if(op.trim().equals("delete"))
 		{
 			wishlistDao.deleteWishlist(uid, pid);
-			resp.sendRedirect("/uteshop/products");
+			resp.sendRedirect("/uteshop/user/products");
 	}
 	
 }

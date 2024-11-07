@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cuoiki.ltweb.models.CategoryModel;
 import cuoiki.ltweb.models.ProductModel;
+import cuoiki.ltweb.models.ShopModel;
 import cuoiki.ltweb.models.UserModel;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,18 +16,24 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import cuoiki.ltweb.dao.*;
 import cuoiki.ltweb.impl.CategoryDAOImpl;
+import cuoiki.ltweb.impl.ICategoryServiceImpl;
 import cuoiki.ltweb.impl.IProductServiceImpl;
 import cuoiki.ltweb.impl.ProductDAOImpl;
 import cuoiki.ltweb.impl.WishlistDAOImpl;
 import cuoiki.ltweb.services.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = "/user/products")
+@WebServlet(urlPatterns = {"/user/products","/view/product"})
 public class ProductController extends HttpServlet{
 
 	@SuppressWarnings("null")
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//req.getRequestDispatcher("/views/User.jsp").forward(req, resp);
+        String path = req.getServletPath();
+
+        // Kiểm tra xem URL có chứa 'forgotPassword' hay không
+        if (path.contains("user")) {
 		String searchKey = req.getParameter("search");
 		String catId = req.getParameter("category");
 		
@@ -136,6 +144,21 @@ public class ProductController extends HttpServlet{
 		req.setAttribute("currentpage",currentPage);
 		req.setAttribute("message", message);
 		req.getRequestDispatcher("/views/products.jsp").forward(req, resp);
+	 }
+        if (path.contains("view")) {
+        	IProductService productService = new IProductServiceImpl();
+        	ICategoryService category_service = new ICategoryServiceImpl();
+        	ProductModel product = productService.getProductsByProductId(Integer.parseInt(req.getParameter("pid")));
+        	int price_after_discount = productService.getProductPriceAfterDiscount(product.getDiscount(),product.getPrice());
+        	product.setPrice_after_discount(price_after_discount);
+        	CategoryModel category = category_service.getCategoryById(product.getCategory_id());
+        	ShopModel shop = productService.getShopByProductId(product.getId());
+        	req.setAttribute("shop",shop);
+        	req.setAttribute("category", category);
+        	req.setAttribute("product", product);
+        	
+        	req.getRequestDispatcher("/views/viewDetailProduct.jsp").forward(req, resp);
+        }
 	}
 
 }

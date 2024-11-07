@@ -1,5 +1,6 @@
 package cuoiki.ltweb.impl;
 import cuoiki.ltweb.models.ProductModel;
+import cuoiki.ltweb.models.ShopModel;
 import cuoiki.ltweb.services.*;
 import cuoiki.ltweb.dao.*;
 public class IProductServiceImpl implements IProductService{
@@ -14,6 +15,10 @@ public class IProductServiceImpl implements IProductService{
 	@Override
 	public ProductModel getProductsByProductId(long product_id) {
 		return productdao.getProductsByProductId(product_id);
+	}
+	@Override
+	public ShopModel getShopByProductId(long product_id) {
+		return productdao.getShopByProductId(product_id);
 	}
 
 }

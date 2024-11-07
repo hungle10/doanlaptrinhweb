@@ -50,7 +50,7 @@
 							</div>
 							<div class="container text-center mb-2 mt-2">
 								<button type="button"
-									onclick="window.open('viewProduct.jsp?pid=${p.id}', '_self')"
+									onclick="window.open('/uteshop/view/product?pid=${p.id}', '_self')"
 									class="btn btn-primary text-white">View Details</button>
 							</div>
 						</div>

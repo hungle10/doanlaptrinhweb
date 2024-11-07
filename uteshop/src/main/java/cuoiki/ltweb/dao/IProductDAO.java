@@ -20,4 +20,6 @@ public interface IProductDAO {
 	public List<ProductModel> getAllProductsBySearchKey(String search);
 
 	public ProductModel getProductsByProductId(long product_id);
+
+	public ShopModel getShopByProductId(long product_id);
 }

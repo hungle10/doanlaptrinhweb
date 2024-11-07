@@ -10,6 +10,7 @@ import java.util.List;
 import cuoiki.ltweb.configs.DBConnectSQLServer;
 import cuoiki.ltweb.dao.IProductDAO;
 import cuoiki.ltweb.models.ProductModel;
+import cuoiki.ltweb.models.ShopModel;
 
 public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 	public Connection conn = null;
@@ -296,6 +297,34 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			e.printStackTrace();
 		}
 		return product;
+	}
+	@Override
+	public ShopModel getShopByProductId(long product_id) {
+		ShopModel shop = new ShopModel();
+		try {
+			conn = super.getConnection();
+			String query = "select s.* from shops s inner join products p on p.id = s.id where p.id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1, product_id);
+			ResultSet rs = psmt.executeQuery();
+			rs.next();
+			shop.setId(rs.getLong("id"));
+			shop.setVendor_id(rs.getLong("vendor_id"));
+			shop.setName(rs.getString("shop_name"));
+			shop.setDescription(rs.getString("description"));
+			shop.setLogo(rs.getString("logo"));
+			shop.setAddress(rs.getString("address"));
+			shop.setPhone_number(rs.getString("phone_number"));
+			shop.setEmail(rs.getString("email"));
+			shop.setIs_active(rs.getBoolean("is_active"));
+			shop.setCreated_at(rs.getTimestamp("created_at"));
+			shop.setUpdated_at(rs.getTimestamp(""));
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return shop;
 	}
 
 }

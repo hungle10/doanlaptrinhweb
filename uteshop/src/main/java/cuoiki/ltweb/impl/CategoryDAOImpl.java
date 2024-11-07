@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 import cuoiki.ltweb.configs.DBConnectSQLServer;
 import cuoiki.ltweb.dao.ICategoryDAO;
 import cuoiki.ltweb.models.CategoryModel;
@@ -61,6 +63,29 @@ public class CategoryDAOImpl extends DBConnectSQLServer implements ICategoryDAO{
 		}
 		return category;
 	}
+	@Override
+	public CategoryModel getCategoryById(long cid) {
+		CategoryModel category = new CategoryModel();
+		try {
+			conn = super.getConnection();
+			String query = "select * from categories where id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1, cid);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				category.setId(rs.getLong("id"));
+				category.setName(rs.getString("name"));
+				category.setImage(rs.getString("image"));
+				category.setCreatedAt(rs.getTimestamp("created_at"));
+				category.setCreatedAt(rs.getTimestamp("updated_at"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return category;
+	}
+
+	
 
 
 }

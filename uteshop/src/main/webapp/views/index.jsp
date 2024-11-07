@@ -70,7 +70,7 @@
         <c:forEach var="product" items="${sessionScope.productList}" varStatus="status">
             <c:if test="${status.index < 3}">
                 <div class="col">
-                    <a href="viewProduct.jsp?pid=${product.id}" style="text-decoration: none;">
+                    <a href="/uteshop/view/product?pid=${product.id}" style="text-decoration: none;">
                         <div class="card h-100">
                             <div class="container text-center">
                                 <img src="/uteshop/Images/${product.image}" class="card-img-top m-2" style="max-width: 100%; max-height: 200px; width: auto;">     
