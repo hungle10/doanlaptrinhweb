@@ -49,5 +49,9 @@ public class IUserServiceImpl implements IUserService {
 	public UserModel get(String username) {
 		return userDao.findByUserName(username);
 	}
+	@Override
+	public UserModel findById(long id) {
+		return userDao.findById(id);
+	}
 
 }

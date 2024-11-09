@@ -9,5 +9,6 @@ public interface IUserService {
 	public UserModel get(String username); //find by user name
 	public boolean register(String username, String fullname, String phoneNumber, String address, String email,String password, Boolean isActive, Date dateOfBirth, String image,int roleId);
 	boolean checkExistEmail(String email);
-	boolean checkExistUsername(String username);	
+	boolean checkExistUsername(String username);
+	public UserModel findById(long id);	
 }
