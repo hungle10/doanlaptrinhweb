@@ -2,6 +2,7 @@ package cuoiki.ltweb.impl;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import cuoiki.ltweb.dao.*;
 import cuoiki.ltweb.models.UserModel;
@@ -52,6 +53,10 @@ public class IUserServiceImpl implements IUserService {
 	@Override
 	public UserModel findById(long id) {
 		return userDao.findById(id);
+	}
+	@Override
+	public List<UserModel> findAll(){
+		return userDao.findAll();
 	}
 
 }

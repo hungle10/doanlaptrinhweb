@@ -1,5 +1,6 @@
 <sitemesh>
   <mapping path="/v1/api/*" exclude="true"/>
+  <mapping path="/user/chat/*" exclude="true"/>
   <mapping path="/user/chat" exclude="true"/>
   <mapping path="/*" decorator="web.jsp"/>
 </sitemesh>

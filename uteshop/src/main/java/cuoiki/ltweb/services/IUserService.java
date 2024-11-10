@@ -1,6 +1,7 @@
 package cuoiki.ltweb.services;
 
 import java.sql.Date;
+import java.util.List;
 
 import cuoiki.ltweb.models.UserModel;
 
@@ -10,5 +11,6 @@ public interface IUserService {
 	public boolean register(String username, String fullname, String phoneNumber, String address, String email,String password, Boolean isActive, Date dateOfBirth, String image,int roleId);
 	boolean checkExistEmail(String email);
 	boolean checkExistUsername(String username);
-	public UserModel findById(long id);	
+	public UserModel findById(long id);
+	public List<UserModel> findAll();	
 }
