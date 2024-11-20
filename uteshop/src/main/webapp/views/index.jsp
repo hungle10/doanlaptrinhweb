@@ -14,7 +14,7 @@
         <!-- Loop through category list -->
         <c:forEach var="category" items="${sessionScope.categoryList}">
             <div class="col-md-3 text-center mb-3">
-                <a href="<c:url value='products.jsp'><c:param name='category' value='${category.id}'/></c:url>" 
+                <a href="<c:url value='/user/products'><c:param name='category' value='${category.id}'/></c:url>" 
                    style="text-decoration: none;">
                     <div class="card cus-card h-100">
                         <div class="container text-center">

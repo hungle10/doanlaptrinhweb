@@ -12,5 +12,8 @@ public interface IUserService {
 	boolean checkExistEmail(String email);
 	boolean checkExistUsername(String username);
 	public UserModel findById(long id);
-	public List<UserModel> findAll();	
+	public List<UserModel> findAll();
+	UserModel findByEmail(String id);
+	void update(UserModel user);
+
 }

@@ -89,7 +89,7 @@
 
     <script>
         // Kết nối WebSocket tới server
-        var ws = new WebSocket("ws://localhost:8082/uteshop/chat1");
+        var ws = new WebSocket("ws://172.20.10.5:8082/uteshop/chat1");
         // Xử lý khi nhận tin nhắn từ server
             ws.onopen = function(event) {
             	 var userId = "${requestScope.userid}"; // ID của user đang kết nối

@@ -26,7 +26,7 @@ label {
 								class="img-fluid">
 						</div>
 						<h3 class="text-center">Create Account</h3>
-						<%@include file="/Components/alert_message.jsp"%>
+				
 
 						<!--registration-form-->
 						<form id="register-form" action="/uteshop/register" method="post">

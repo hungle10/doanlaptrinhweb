@@ -2,7 +2,7 @@ package cuoiki.ltweb.controllers;
 
 import java.io.IOException;
 import java.util.Date;
-
+import java.util.Random;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import cuoiki.ltweb.services.*;
 import cuoiki.ltweb.impl.*;
+import cuoiki.ltweb.mail.MailMessenger;
 import cuoiki.ltweb.models.UserModel;
 import cuoiki.ltweb.entities.*;
 @SuppressWarnings("serial")
@@ -55,7 +56,7 @@ public class LoginController extends HttpServlet {
         UserModel user = service.login(username, password);
         System.out.println(user);
         System.out.println("helo tdt");
-       if (user != null) {
+       if (user != null && user.getIsActive() == true ) {
             // Tạo JWT
             String jwtToken = createJWTToken(user.getUsername());
 			session.setAttribute("account", user);
@@ -65,7 +66,11 @@ public class LoginController extends HttpServlet {
 
             resp.sendRedirect(req.getContextPath() + "/waiting"); // Phần waiting(controller) kiểm tra role của user
         } else {
+        	if(user.getIsActive() == true)
             alertMsg = "Tài khoản hoặc mật khẩu không đúng";
+        	else {
+             alertMsg = "Tài khoản đã bị khóa";
+        	}
             req.setAttribute("alert", alertMsg);
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         }

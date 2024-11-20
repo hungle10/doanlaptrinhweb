@@ -253,16 +253,19 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 	}
 	@Override
 	public void update(UserModel user) {
-		 String sql = "UPDATE users SET fullname = ? , phone_number = ? , address = ? , email = ? , date_of_birth = ? , image = ?, updated_at = ? WHERE id = ?";
+		 String sql = "UPDATE users SET fullname = ? , phone_number = ? , address = ? , email = ? ,password = ? ,date_of_birth = ? , image = ?, updated_at = ? WHERE id = ?";
 		    try {
 		        conn = super.getConnection();
 		        ps = conn.prepareStatement(sql);
 		        ps.setString(1, user.getFullname());
 		        ps.setString(2, user.getPhoneNumber());
-		        ps.setString(3, user.getEmail());
-		        ps.setDate(4,user.getDateOfBirth());
-		        ps.setString(5,user.getImage());
-		        ps.setTimestamp(6,user.getUpdatedAt());
+		        ps.setString(3, user.getAddress());
+		        ps.setString(4, user.getEmail());
+		        ps.setString(5, user.getPassword());
+		        ps.setDate(6,user.getDateOfBirth());
+		        ps.setString(7,user.getImage());
+		        ps.setTimestamp(8,user.getUpdatedAt());
+		        ps.setLong(9,user.getId());
 		        ps.executeUpdate();
 		    } catch (Exception e) {
 		        e.printStackTrace();
