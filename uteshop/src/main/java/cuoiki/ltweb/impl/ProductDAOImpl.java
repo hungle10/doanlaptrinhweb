@@ -326,5 +326,37 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 		}
 		return shop;
 	}
+	@Override
+	public void updateQuantity(long id, int qty) {
+		try {
+			conn = super.getConnection();
+			String query = "update products set quantity = ? where id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setInt(1, qty);
+			psmt.setLong(2, id);
+
+			psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public int getProductQuantityById(long pid) {
+		int qty = 0;
+		try {
+			conn = super.getConnection();
+			String query = "select quantity from products where id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1, pid);
+			ResultSet rs = psmt.executeQuery();
+			rs.next();
+			qty = rs.getInt(1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return qty;
+	}
 
 }

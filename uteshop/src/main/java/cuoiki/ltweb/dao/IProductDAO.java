@@ -22,4 +22,9 @@ public interface IProductDAO {
 	public ProductModel getProductsByProductId(long product_id);
 
 	public ShopModel getShopByProductId(long product_id);
+
+	public void updateQuantity(long id, int qty);
+
+	public int getProductQuantityById(long pid);
+
 }

@@ -10,5 +10,17 @@ public interface ICartService {
 
 	public int getCartCountByUserId(long uid);
 
+	public boolean addToCart(CartModel cart);
 
+	public int getQuantity(long uid, long pid);
+
+	public int getIdCartByUserIdAndProductId(long uid, long pid);
+
+	public void updateQuantity(int id, int qty);
+
+	public int getQuantityByCartId(int id);
+
+	public long getProductId(int cid);
+
+	public void removeProductInCart(int cid);
 }

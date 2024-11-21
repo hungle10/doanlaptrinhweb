@@ -25,6 +25,12 @@
 <!-- nếu ng dùng có listOfCart -->
 <c:if test="${not empty requestScope.listOfCart}">
 <div class="container mt-5">
+ <!-- Alert Message -->
+<c:if test="${not empty message}">
+    <div class="message">
+        <i class="fas fa-exclamation-circle"></i> ${message}
+    </div>
+</c:if>
 		<div class="card px-3 py-3">
 			<table class="table table-hover">
 				<thead>
@@ -46,25 +52,28 @@
 						<td class="text-start">${product.name}</td>
 						<td>&#8377;${product.price_after_discount}</td>
 						<td>
-							<a href="CartOperationServlet?cid=${cart.cartId}&opt=1" role="button" class="btn btn-light" style="border-radius: 50%; font-size: 8px;">
+							<a href="/uteshop/user/cartoperation?cid=${cart.cartId}&opt=1" role="button" class="btn btn-light" style="border-radius: 50%; font-size: 8px;">
 								<i class="fa-regular fa-plus fa-2xl"></i>
 							</a>
 							<div class="qty">${cart.quantity}</div>
 							<c:choose>
 								<c:when test="${cart.quantity > 1}">
-									<a href="CartOperationServlet?cid=${cart.cartId}&opt=2" role="button" class="btn btn-light" id="qtyDesc" style="border-radius: 50%; font-size: 8px;">
+								<!-- increse product quantity in cart :v -->
+									<a href="/uteshop/user/cartoperation?cid=${cart.cartId}&opt=2" role="button" class="btn btn-light" id="qtyDesc" style="border-radius: 50%; font-size: 8px;">
 										<i class="fa-solid fa-minus fa-2xl"></i>
 									</a>
 								</c:when>
 								<c:otherwise>
-									<a href="CartOperationServlet?cid=${cart.cartId}&opt=2" role="button" class="btn btn-light disabled" id="qtyDesc" style="border-radius: 50%; font-size: 8px;">
+								<!-- decrese product quantity in cart :v -->
+									<a href="/uteshop/user/cartoperation?cid=${cart.cartId}&opt=2" role="button" class="btn btn-light disabled" id="qtyDesc" style="border-radius: 50%; font-size: 8px;">
 										<i class="fa-solid fa-minus fa-2xl"></i>
 									</a>
 								</c:otherwise>
 							</c:choose>
 						</td>
+						<!-- remove product in cart :v -->
 						<td>&#8377;${cart.quantity * product.price_after_discount}</td>
-						<td><a href="CartOperationServlet?cid=${cart.cartId}&opt=3" class="btn btn-secondary" role="button">Remove</a></td>
+						<td><a href="/uteshop/user/cartoperation?cid=${cart.cartId}&opt=3" class="btn btn-secondary" role="button">Remove</a></td>
 					</tr>
 					</c:if>
 						</c:forEach>
@@ -80,8 +89,8 @@
 </tbody>
 </table>
 <div class="text-end">
-			<a href="products.jsp" class="btn btn-outline-primary" role="button" >Continue Shopping</a>&nbsp; 
-			<a href="checkout.jsp" id="checkout-btn" class="btn btn-outline-primary" role="button" >Checkout</a>
+			<a href="/uteshop/user/products" class="btn btn-outline-primary" role="button" >Continue Shopping</a>&nbsp; 
+			<a href="/uteshop/user/checkout?totalPrice=${totalPrice}&from=cart" id="checkout-btn" class="btn btn-outline-primary" role="button" >Checkout</a>
 </div>
 </div>
 </div>

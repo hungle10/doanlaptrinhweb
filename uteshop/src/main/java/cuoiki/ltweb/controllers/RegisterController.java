@@ -57,7 +57,7 @@ public class RegisterController extends HttpServlet {
 				session.removeAttribute("password");
 				Date dateOfBirth = (java.sql.Date)session.getAttribute("dateOfBirth");
 				session.removeAttribute("dateOfBirth");
-				boolean isSuccess = service.register(username,fullname,phonenumber,address,email,password,true,dateOfBirth,"",3);
+				boolean isSuccess = service.register(username,fullname,phonenumber,address,email,password,true,dateOfBirth,"",2); //2 là user
 				if (isSuccess) {
 					MailMessenger.successfullyRegister(username, email);
 					String alertMsg = "Thanh cong";

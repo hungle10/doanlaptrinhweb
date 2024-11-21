@@ -27,6 +27,11 @@
 	<%@include file="/Components/navbar.jsp"%>
 <div class="container mt-5">
 			<!-- them cau lenh alert -->
+			<c:if test="${not empty message}">
+    <div class="message">
+        <i class="fas fa-exclamation-circle"></i> ${message}
+    </div>
+</c:if>
 		<div class="row border border-3">
 			<div class="col-md-6">
 				<div class="container-fluid text-end my-3">
@@ -68,7 +73,7 @@
 							</c:if>
 							<c:if test="${sessionScope.activeUser != null}">
 							<button type="submit"
-								formaction="/uteshop/user/cart?uid=${sessionScope.activeUser.id}&pid=${requestScope.product.id}"
+								formaction="/uteshop/user/addcart?uid=${sessionScope.activeUser.id}&pid=${requestScope.product.id}"
 								class="btn btn-primary text-white btn-lg">Add to Cart</button>
 							&emsp; <a
 								href="checkout.jsp" id="buy-btn"

@@ -20,5 +20,13 @@ public class IProductServiceImpl implements IProductService{
 	public ShopModel getShopByProductId(long product_id) {
 		return productdao.getShopByProductId(product_id);
 	}
+	@Override
+	public void updateQuantity(long id, int qty) {
+		productdao.updateQuantity(id, qty);
+	}
+	@Override
+	public int getProductQuantityById(long pid) {
+		return productdao.getProductQuantityById(pid);
+	}
 
 }

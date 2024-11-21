@@ -1,199 +1,121 @@
 package cuoiki.ltweb.models;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
+import java.sql.*;
 
 public class OrderModel {
-	private Long id;
-	private Long userId;
-	private String fullname;
-	private String email;
-	private String phoneNumber;
-	private String address;
-	private String note;
-	private LocalDate orderDate;
+	private long id;
+	private long userid;
+	private long shippingcompanyid;
+	private Date orderdate;
 	private String status;
-	private Float totalMoney;
-	private String shippingMethod;
-	private String shippingAddress;
-	private LocalDate shippingDate;
-	private String trackingNumber;
-	private String paymentMethod;
-	private Boolean active;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private float totalmoney;
+    private String payment_method;
+    private String payment_status;
+    private String shipping_address;
+    private Timestamp createdAt;
+	private Timestamp updatedAt;
+	
+	
+	public OrderModel(long id, long userid, long shippingcompanyid, Date orderdate, String status, float totalmoney,
+			String payment_method, String payment_status, String shipping_address, Timestamp createdAt,
+			Timestamp updatedAt) {
+		super();
+		this.id = id;
+		this.userid = userid;
+		this.shippingcompanyid = shippingcompanyid;
+		this.orderdate = orderdate;
+		this.status = status;
+		this.totalmoney = totalmoney;
+		this.payment_method = payment_method;
+		this.payment_status = payment_status;
+		this.shipping_address = shipping_address;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+	
+	public OrderModel(long userid, long shippingcompanyid, Date orderdate, String status, float totalmoney,
+			String payment_method, String payment_status, String shipping_address, Timestamp createdAt,
+			Timestamp updatedAt) {
+		super();
+		this.userid = userid;
+		this.shippingcompanyid = shippingcompanyid;
+		this.orderdate = orderdate;
+		this.status = status;
+		this.totalmoney = totalmoney;
+		this.payment_method = payment_method;
+		this.payment_status = payment_status;
+		this.shipping_address = shipping_address;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
-	// Default constructor
-	public OrderModel() {
-	    }
-
-	// Parameterized constructor
-	public OrderModel(Long id, Long userId, String fullname, String email, String phoneNumber, String address, String note,
-	                 LocalDate orderDate, String status, Float totalMoney, String shippingMethod, String shippingAddress,
-	                 LocalDate shippingDate, String trackingNumber, String paymentMethod, Boolean active,
-	                 LocalDateTime createdAt, LocalDateTime updatedAt) {
-	        this.id = id;
-	        this.userId = userId;
-	        this.fullname = fullname;
-	        this.email = email;
-	        this.phoneNumber = phoneNumber;
-	        this.address = address;
-	        this.note = note;
-	        this.orderDate = orderDate;
-	        this.status = status;
-	        this.totalMoney = totalMoney;
-	        this.shippingMethod = shippingMethod;
-	        this.shippingAddress = shippingAddress;
-	        this.shippingDate = shippingDate;
-	        this.trackingNumber = trackingNumber;
-	        this.paymentMethod = paymentMethod;
-	        this.active = active;
-	        this.createdAt = createdAt;
-	        this.updatedAt = updatedAt;
-	    }
-
-	// Getters and Setters
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
-	public Long getUserId() {
-		return userId;
+	public long getUserid() {
+		return userid;
 	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUserid(long userid) {
+		this.userid = userid;
 	}
-
-	public String getFullname() {
-		return fullname;
+	public long getShippingcompanyid() {
+		return shippingcompanyid;
 	}
-
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public void setShippingcompanyid(long shippingcompanyid) {
+		this.shippingcompanyid = shippingcompanyid;
 	}
-
-	public String getEmail() {
-		return email;
+	public Date getOrderdate() {
+		return orderdate;
 	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setOrderdate(Date orderdate) {
+		this.orderdate = orderdate;
 	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-	public LocalDate getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(LocalDate orderDate) {
-		this.orderDate = orderDate;
-	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public Float getTotalMoney() {
-		return totalMoney;
+	public float getTotalmoney() {
+		return totalmoney;
 	}
-
-	public void setTotalMoney(Float totalMoney) {
-		this.totalMoney = totalMoney;
+	public void setTotalmoney(float totalmoney) {
+		this.totalmoney = totalmoney;
 	}
-
-	public String getShippingMethod() {
-		return shippingMethod;
+	public String getPayment_method() {
+		return payment_method;
 	}
-
-	public void setShippingMethod(String shippingMethod) {
-		this.shippingMethod = shippingMethod;
+	public void setPayment_method(String payment_method) {
+		this.payment_method = payment_method;
 	}
-
-	public String getShippingAddress() {
-		return shippingAddress;
+	public String getPayment_status() {
+		return payment_status;
 	}
-
-	public void setShippingAddress(String shippingAddress) {
-		this.shippingAddress = shippingAddress;
+	public void setPayment_status(String payment_status) {
+		this.payment_status = payment_status;
 	}
-
-	public LocalDate getShippingDate() {
-		return shippingDate;
+	public String getShipping_address() {
+		return shipping_address;
 	}
-
-	public void setShippingDate(LocalDate shippingDate) {
-		this.shippingDate = shippingDate;
+	public void setShipping_address(String shipping_address) {
+		this.shipping_address = shipping_address;
 	}
-
-	public String getTrackingNumber() {
-		return trackingNumber;
-	}
-
-	public void setTrackingNumber(String trackingNumber) {
-		this.trackingNumber = trackingNumber;
-	}
-
-	public String getPaymentMethod() {
-		return paymentMethod;
-	}
-
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
-
-	public Boolean getActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
-	public LocalDateTime getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
-
-	public LocalDateTime getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	
 }

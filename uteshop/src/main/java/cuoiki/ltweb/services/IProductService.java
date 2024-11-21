@@ -9,5 +9,7 @@ public interface IProductService {
 	//calculate price of product by applying discount
 	public ProductModel getProductsByProductId(long product_id);
 	public ShopModel getShopByProductId(long product_id);
+	void updateQuantity(long id, int qty);
+	int getProductQuantityById(long pid);
     
 }

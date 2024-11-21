@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import cuoiki.ltweb.impl.*;
 import cuoiki.ltweb.models.CartModel;
 import cuoiki.ltweb.models.ProductModel;
 import cuoiki.ltweb.models.UserModel;
+import cuoiki.ltweb.services.ICartService;
 import cuoiki.ltweb.services.IProductService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,14 +19,68 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = {"/user/cart"})
+@WebServlet(urlPatterns = {"/user/cart","/user/addcart","/user/cartoperation"})
 public class CartController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		HttpSession session = req.getSession();
+	
+		String path = req.getServletPath();
+		if(path.contains("cartoperation")) {
+			ICartService cart_service = new ICartServiceImpl();
+			IProductService product_service = new IProductServiceImpl();
+			int cid =Integer.parseInt(req.getParameter("cid"));
+			int opt =Integer.parseInt(req.getParameter("opt"));
+			
+			int qty =  cart_service.getQuantityByCartId(cid);
+			long pid =  cart_service.getProductId(cid);
+			
+			//số lượng product trong kho :))
+			int quantity = product_service.getProductQuantityById(pid);
+			
+			
+			//tăng số lượng product trong cart -> giảm số lượng product trong kho
+			if(opt == 1) {
+				if(quantity > 0) {
+					cart_service.updateQuantity(cid, qty+1);
+					//updating(decreasing) quantity of product in database
+					 product_service.updateQuantity(pid,  product_service.getProductQuantityById(pid) - 1);
+					resp.sendRedirect("/uteshop/user/cart");
+					return;
+					
+				}else {
+					String message = "Product out of stock! error";
+					session.setAttribute("message", message);
+					resp.sendRedirect("/uteshop/user/cart");
+					return;
+				}
+				
+			}else if(opt == 2) {
+				cart_service.updateQuantity(cid, qty-1);
+				
+				//updating(increasing) quantity of product in database
+				product_service.updateQuantity(pid,  product_service.getProductQuantityById(pid) + 1);
+				resp.sendRedirect("/uteshop/user/cart");
+				return;
+				
+			}else if(opt == 3) {
+				//remove product khỏi cart đó
+				cart_service.removeProductInCart(cid);
+				String message = "Product removed from cart! success";
+				session.setAttribute("message", message);
+				
+				//updating quantity of product in database
+				//adding all the product qty back to database
+				product_service.updateQuantity(pid, product_service.getProductQuantityById(pid) + qty);
+				resp.sendRedirect("/uteshop/user/cart");
+				return;
+			}
+			
+		}
 		UserModel user = (UserModel)session.getAttribute("activeUser");
-		ICartServiceImpl cart_service = new ICartServiceImpl();
+		ICartService cart_service = new ICartServiceImpl();
 		List<CartModel> listOfCart = cart_service.getCartListByUserId(user.getId());
 		List<ProductModel> listOfProduct = new ArrayList<ProductModel>();
 	    IProductService product_service = new IProductServiceImpl();
@@ -47,8 +103,35 @@ public class CartController extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		String message = "";
+		String path = req.getServletPath();
+		HttpSession session = req.getSession();
+		if(path.contains("addcart"))
+		{
+			ICartService cart_service = new ICartServiceImpl();
+			IProductService product_service = new IProductServiceImpl();
+
+			long user_id = Long.parseLong(req.getParameter("uid"));
+			long product_id =Long.parseLong(req.getParameter("pid"));
+			
+			int quantity = cart_service.getQuantity(user_id,product_id);
+			if (quantity == 0) {
+				CartModel cart = new CartModel(user_id,product_id, quantity + 1);
+				cart_service.addToCart(cart);
+			    message = "Product is added to cart successfully!";
+				
+			}else {
+				int cid = cart_service.getIdCartByUserIdAndProductId(user_id, product_id);
+				cart_service.updateQuantity(cid, quantity+1);
+				message = "Product quantity is increased!";
+			}
+			//updating quantity of product in database
+			
+			product_service.updateQuantity(product_id, product_service.getProductQuantityById(product_id) - 1);
+			session.setAttribute("message", message);
+			resp.sendRedirect("/uteshop/view/product?pid="+product_id);
+			
+		}
 	}
 
 }

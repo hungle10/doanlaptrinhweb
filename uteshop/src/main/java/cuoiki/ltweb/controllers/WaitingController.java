@@ -38,10 +38,6 @@ public class WaitingController extends HttpServlet {
 				return;
 			} else if (u.getRoleId() == 2) {
 				session.setAttribute("activeUser",u);
-				resp.sendRedirect(req.getContextPath() + "/vendor/home");
-				return;
-			} else if(u.getRoleId() == 3) {
-				session.setAttribute("activeUser",u);
 				resp.sendRedirect(req.getContextPath() + "/home");
 				return;
 			}
