@@ -24,4 +24,6 @@ public interface ICartDAO {
 
 	public void removeProductInCart(int cid);
 
+	void removeAllProductInCartByUserId(long uid);
+
 }

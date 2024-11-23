@@ -23,4 +23,6 @@ public interface ICartService {
 	public long getProductId(int cid);
 
 	public void removeProductInCart(int cid);
+
+	void removeAllProductInCartByUserId(long uid);
 }

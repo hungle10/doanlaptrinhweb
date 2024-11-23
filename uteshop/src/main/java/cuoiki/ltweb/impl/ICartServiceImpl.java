@@ -49,5 +49,9 @@ public class ICartServiceImpl implements ICartService{
 	public void removeProductInCart(int cid) {
 		cartdao.removeProductInCart(cid);
 	}
+	@Override
+	public void removeAllProductInCartByUserId(long uid) {
+		cartdao.removeAllProductInCartByUserId(uid);
+	}
 
 }

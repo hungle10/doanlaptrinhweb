@@ -2,6 +2,6 @@ package cuoiki.ltweb.services;
 
 public interface IShippingCompanyService {
 
-	int getIdShippingCompanyByName(String companyname);
+	public long getIdShippingCompanyByName(String companyname);
 
 }

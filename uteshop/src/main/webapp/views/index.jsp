@@ -137,6 +137,27 @@
 </div>
 <!-- end -->
  
+<!-- confirmation message for successful order -->
+<c:if test="${not empty sessionScope.order}">
+    <script type="text/javascript">
+        console.log("testing..4...");
+        Swal.fire({
+          icon : 'success',
+          title: 'Order Placed, Thank you!',
+          text: 'Confirmation will be sent to ${user.email}',
+          width: 600,
+          padding: '3em',
+          showConfirmButton : false,
+          timer : 3500,
+          backdrop: `
+            rgba(0,0,123,0.4)
+          `
+        });
+    </script>
+    <!-- Xóa giá trị của "order" trong session -->
+    <c:remove var="order" scope="session"/>
+</c:if>
+<!-- end of message -->
 
 
 </body>

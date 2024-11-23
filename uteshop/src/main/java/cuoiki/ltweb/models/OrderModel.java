@@ -15,8 +15,9 @@ public class OrderModel {
     private String shipping_address;
     private Timestamp createdAt;
 	private Timestamp updatedAt;
-	
-	
+	public OrderModel() {
+		
+	}	
 	public OrderModel(long id, long userid, long shippingcompanyid, Date orderdate, String status, float totalmoney,
 			String payment_method, String payment_status, String shipping_address, Timestamp createdAt,
 			Timestamp updatedAt) {

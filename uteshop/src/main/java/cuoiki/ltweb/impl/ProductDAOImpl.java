@@ -318,7 +318,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			shop.setEmail(rs.getString("email"));
 			shop.setIs_active(rs.getBoolean("is_active"));
 			shop.setCreated_at(rs.getTimestamp("created_at"));
-			shop.setUpdated_at(rs.getTimestamp(""));
+			shop.setUpdated_at(rs.getTimestamp("updated_at"));
 			
 
 		} catch (Exception e) {

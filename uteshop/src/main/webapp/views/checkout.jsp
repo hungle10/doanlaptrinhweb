@@ -90,7 +90,6 @@
 					<div class="container px-3 py-3">
 						<h4>Price Details</h4>
 						<hr>
-					<c:if test="${from.trim() == 'cart'}">
 						<table class="table table-borderless">
 							<tr>
 								<td>Total Item</td>
@@ -112,32 +111,6 @@
                                   </td>
 							</tr>
 						</table>
-					</c:if>
-						<c:if test="${from.trim() != 'cart'}">
-                          <c:set var="pid" value="${sessionScope.pid}" />
-                          <c:set var="price" value="${productDao.getProductPriceById(pid)}" />
-						<table class="table table-borderless">
-							<tr>
-								<td>Total Item</td>
-								<td>1</td>
-							</tr>
-							<tr>
-								<td>Total Price</td>
-								 <td>&#8377; <span id="totalPrice"><c:out value="${totalPrice}"/></span></td>
-							</tr>
-							<tr>
-								<td>Delivery Charges</td>
-								<td>&#8377; <span id="cost">0.00</span></td>
-							</tr>
-							<tr>
-								<td><h5>Amount Payable :</h5></td>
-                                   <td>
-                                    <h5>&#8377; <span id="amountPayable"><c:out value="${totalPrice}"/></span></h5>
-
-                                  </td>
-							</tr>
-						</table>
-						</c:if>
 					</div>
 				</div>
 			</div>

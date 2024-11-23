@@ -90,7 +90,7 @@
 </table>
 <div class="text-end">
 			<a href="/uteshop/user/products" class="btn btn-outline-primary" role="button" >Continue Shopping</a>&nbsp; 
-			<a href="/uteshop/user/checkout?totalPrice=${totalPrice}&from=cart" id="checkout-btn" class="btn btn-outline-primary" role="button" >Checkout</a>
+			<a href="/uteshop/user/checkout?totalPrice=${totalPrice}" id="checkout-btn" class="btn btn-outline-primary" role="button" >Checkout</a>
 </div>
 </div>
 </div>

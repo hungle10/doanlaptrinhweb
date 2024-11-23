@@ -179,5 +179,17 @@ public class CartDAOImpl extends DBConnectSQLServer implements ICartDAO{
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public void removeAllProductInCartByUserId(long uid) {
+		try {
+			conn = super.getConnection();
+			String query = "delete from cart where user_id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1,uid);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -64,19 +64,13 @@
                                                                         </a>
 					<form method="post">
 						<div class="container-fluid text-center mt-3">
-							<c:if test="${sessionScope.activeUser == null}">
-							<button type="button" onclick="window.open('/uteshop/login', '_self')"
-								class="btn btn-primary text-white btn-lg">Add to Cart</button>
-							&emsp;
-							<button type="button" onclick="window.open('/uteshop/login', '_self')"
-								class="btn btn-info text-white btn-lg">Buy Now</button>
-							</c:if>
 							<c:if test="${sessionScope.activeUser != null}">
 							<button type="submit"
 								formaction="/uteshop/user/addcart?uid=${sessionScope.activeUser.id}&pid=${requestScope.product.id}"
 								class="btn btn-primary text-white btn-lg">Add to Cart</button>
-							&emsp; <a
-								href="checkout.jsp" id="buy-btn"
+							&emsp;
+							<a
+								href="/uteshop/user/checkout?from=buynow&pid=${requestScope.product.id}" id="buy-btn"
 								class="btn btn-info text-white btn-lg" role="button"
 								aria-disabled="true">Buy Now</a> 
 							</c:if>
@@ -92,11 +86,6 @@
 				$('#availability').css('color', 'red');
 				$('.btn').addClass('disabled');
 			}
-			$('#buy-btn').click(function(){
-				<c:set var="pid" value="${requestScope.product.id}" scope="session" />
-                <c:set var="from" value="buy" scope="session" />
-				%>	
-				});
 		});
 	</script>
 <div class="container mt-5">

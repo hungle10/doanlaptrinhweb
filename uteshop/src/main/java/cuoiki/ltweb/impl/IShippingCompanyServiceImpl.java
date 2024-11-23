@@ -7,7 +7,7 @@ public class IShippingCompanyServiceImpl implements IShippingCompanyService{
 IShippingCompanyDAO companydao = new ShippingCompanyDAOImpl(); 
 	
 	@Override
-	public int getIdShippingCompanyByName(String companyname) {
+	public long getIdShippingCompanyByName(String companyname) {
 		return companydao.getIdShippingCompanyByName(companyname);
 	}
 

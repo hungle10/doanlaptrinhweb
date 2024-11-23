@@ -2,6 +2,8 @@ package cuoiki.ltweb.controllers;
 
 import java.io.IOException;
 
+
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import cuoiki.ltweb.services.*;
 import cuoiki.ltweb.impl.*;
+import cuoiki.ltweb.models.ProductModel;
 import cuoiki.ltweb.models.UserModel;
 
 @SuppressWarnings("serial")
@@ -18,9 +21,10 @@ public class CheckoutController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
+		IProductService product_service = new IProductServiceImpl();
 		String path = req.getServletPath();
 		
+		HttpSession session = req.getSession();
 		if (path.contains("shippingcaculator"))
 		{
 			float cost = 0;
@@ -50,6 +54,21 @@ public class CheckoutController extends HttpServlet{
 		        return;
 		       
 		}
+		String from = req.getParameter("from");
+		if(from.equals("buynow")) {
+			session.setAttribute("from", from);
+			String pidStr = req.getParameter("pid");
+			
+			ProductModel prod = product_service.getProductsByProductId(Long.valueOf(pidStr));
+			float totalPrice = product_service.getProductPriceAfterDiscount(prod.getDiscount(),prod.getPrice());
+			session.setAttribute("totalPrice",totalPrice );
+			session.setAttribute("totalProduct",1);
+			req.getRequestDispatcher("/views/checkout.jsp").forward(req, resp);
+			return;
+		}
+		
+		
+		
 		ICartService cart_service = new ICartServiceImpl();
 		
 		String totalPriceStr = req.getParameter("totalPrice");
@@ -58,11 +77,9 @@ public class CheckoutController extends HttpServlet{
 		
 		UserModel user = (UserModel)session.getAttribute("activeUser");
 		
-		String from = req.getParameter("from");
 		
 		int totalProduct = cart_service.getCartCountByUserId(user.getId());
 		
-		session.setAttribute("from",from);
 		session.setAttribute("totalPrice", totalPrice);
 		session.setAttribute("totalProduct",totalProduct);
 		req.getRequestDispatcher("/views/checkout.jsp").forward(req, resp);

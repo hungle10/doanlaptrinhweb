@@ -153,6 +153,8 @@ public class ProductController extends HttpServlet{
         	product.setPrice_after_discount(price_after_discount);
         	CategoryModel category = category_service.getCategoryById(product.getCategory_id());
         	ShopModel shop = productService.getShopByProductId(product.getId());
+        	
+        	//khi bấm detail trong danh sách list product gọi đến đây set attribute cho session
         	req.setAttribute("shop",shop);
         	req.setAttribute("category", category);
         	req.setAttribute("product", product);

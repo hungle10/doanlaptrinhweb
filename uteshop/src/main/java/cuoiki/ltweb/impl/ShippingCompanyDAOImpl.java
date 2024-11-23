@@ -12,8 +12,8 @@ public class ShippingCompanyDAOImpl extends DBConnectSQLServer implements IShipp
 	public ResultSet rs = null;
 
 	@Override
-	public int getIdShippingCompanyByName(String companyname) {
-		int cid = 0;
+	public long getIdShippingCompanyByName(String companyname) {
+		long cid = 0;
 		try {
 			conn = super.getConnection();
 			String query = "select * from shippingcompanys where name = ?";
