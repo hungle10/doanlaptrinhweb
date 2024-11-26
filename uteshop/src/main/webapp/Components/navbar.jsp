@@ -1,4 +1,5 @@
   <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+  
 <style>
 .navbar {
 	font-weight: 500;
@@ -119,7 +120,7 @@
                             </a>
                         </li>
                         <li class="nav-item active pe-3">
-                            <a class="nav-link" aria-current="page" href="profile.jsp">
+                            <a class="nav-link" aria-current="page" href="/uteshop/user/profile">
                                 <c:out value="${sessionScope.activeUser.username}"/>
                             </a>
                         </li>

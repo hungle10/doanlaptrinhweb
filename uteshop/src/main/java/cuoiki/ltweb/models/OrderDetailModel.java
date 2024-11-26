@@ -7,7 +7,17 @@ public class OrderDetailModel {
 	private float price;
 	private int numberOfProducts;
 	private float totalMoney;
+	private ProductModel product;
 	
+	
+	public ProductModel getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductModel product) {
+		this.product = product;
+	}
+
 	public OrderDetailModel(long id, long orderId, long productId, float price, int numberOfProducts,
 			float totalMoney) {
 		super();
@@ -26,6 +36,10 @@ public class OrderDetailModel {
 		this.price = price;
 		this.numberOfProducts = numberOfProducts;
 		this.totalMoney = totalMoney;
+	}
+
+	public OrderDetailModel() {
+		
 	}
 
 	public long getId() {

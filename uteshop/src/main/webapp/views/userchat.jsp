@@ -43,7 +43,8 @@
             </div>
            <div class="chat">
            
-                <div class="chat-header clearfix"> <!-- cập nhật dựa vào controller -->
+                <div class="chat-header clearfix" data-user-id="<c:if test='${not empty user_receiver}'>${user_receiver.id}</c:if>">
+
                 <c:if test="${not empty user_receiver}">
                     <div class="row">
                         <div class="col-lg-6">
@@ -213,7 +214,8 @@
         }
         function handleIncomingMessage(senderId, message) {
             // Kiểm tra nếu `chat-header` không hiển thị thông tin của `senderId` hoặc cần cập nhật
-            if (!document.querySelector('.chat-header').textContent.includes(senderId)) {
+            const userId = document.querySelector('.chat-header').getAttribute('data-user-id');
+            if (userId && userId === senderId) {
                 fetch('/uteshop/v1/api/getUserInfo?user_id='+senderId)
                     .then(response => response.json())
                     .then(data => {
@@ -235,15 +237,19 @@
                             '</div>';
                         updateToUserInput(senderId);
                     });
+                // Thêm tin nhắn vào `chatHistory`
+                updateToUserInput(senderId);
+                var chatHistory = document.getElementById("chatHistory");
+                var newMessage = document.createElement("li");
+                newMessage.classList.add("clearfix");
+                newMessage.innerHTML = '<div class="message my-message">'+message+'</div>';
+                chatHistory.appendChild(newMessage);
+            }
+            else{
+            	
             }
 
-            // Thêm tin nhắn vào `chatHistory`
-            updateToUserInput(senderId);
-            var chatHistory = document.getElementById("chatHistory");
-            var newMessage = document.createElement("li");
-            newMessage.classList.add("clearfix");
-            newMessage.innerHTML = '<div class="message my-message">'+message+'</div>';
-            chatHistory.appendChild(newMessage);
+          
         }
         function updateToUserInput(senderId) {
             const toUserInput = document.getElementById("toUser");

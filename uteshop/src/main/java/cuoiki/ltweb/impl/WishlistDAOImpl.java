@@ -2,6 +2,10 @@ package cuoiki.ltweb.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 import cuoiki.ltweb.configs.DBConnectSQLServer;
 import cuoiki.ltweb.dao.*;
@@ -31,6 +35,31 @@ public class WishlistDAOImpl extends DBConnectSQLServer implements IWishlistDAO{
 			e.printStackTrace();
 		}
 		return flag;
+	}
+	
+	
+	@Override
+	public List<WishlistModel> getListByUserId(long uid){
+		List<WishlistModel> list = new ArrayList<WishlistModel>();
+		try {
+			conn = super.getConnection();
+		
+			String query = "select * from wishlist where user_id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1, uid);
+			
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				WishlistModel wishlist = new WishlistModel();
+				wishlist.setWishlistId(rs.getInt("id"));
+				wishlist.setUserId(rs.getLong("user_id"));
+				wishlist.setProductId(rs.getLong("product_id"));
+				list.add(wishlist);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	@Override

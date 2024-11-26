@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 import cuoiki.ltweb.configs.DBConnectSQLServer;
@@ -32,6 +35,30 @@ public class OrderDetailDAOImpl extends DBConnectSQLServer implements IOrderDeta
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public List<OrderDetailModel>getAllOrderedProduct(long oid){
+		List<OrderDetailModel> list = new ArrayList<OrderDetailModel>();
+		try {
+			conn = super.getConnection();
+			String query = "select * from order_details where order_id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1, oid);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				OrderDetailModel orderProd = new OrderDetailModel();
+				orderProd.setId(rs.getLong("id"));
+				orderProd.setOrderId(rs.getLong("order_id"));
+				orderProd.setProductId(rs.getLong("product_id"));
+				orderProd.setPrice(rs.getFloat("price"));
+				orderProd.setNumberOfProducts(rs.getInt("number_of_products"));
+				orderProd.setTotalMoney(rs.getFloat("total_money"));
+				list.add(orderProd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

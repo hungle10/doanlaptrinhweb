@@ -121,11 +121,35 @@
             <small>Remove</small>
         </button>
     </form>
-      
+     <c:if test="${comment.image != ''}">
+                 
+                          <c:if test ="${comment.image.substring(0,5) != 'https' }">
+                         
+                           <c:url value="/image?fname=${comment.image}" var="imgUrl"></c:url>
+                        </c:if>
+
+                       <c:if test ="${comment.image.substring(0,5) == 'https' }">
+                            <c:url value="${comment.image}" var="imgUrl"></c:url>
+                       </c:if>
+                       </c:if>
+         <c:if test="${comment.video != ''}">
+                        
+                        <c:if test ="${comment.video.substring(0,5) != 'https' }">
+                      <c:url value="/video?fname=${comment.video}" var="videoUrl"></c:url>
+                      </c:if>
+                      
+            
+                     <c:if test ="${comment.video.substring(0,5) == 'https' }">
+                     <c:url value="${comment.video}" var="videoUrl"></c:url>
+                     </c:if>
+                     </c:if>
+      <!-- modal ở đây nè :vv -->
     <button type="button" class="btn btn-link text-secondary p-0"
 									data-bs-toggle="modal" data-bs-target="#exampleModal"
 									 data-comment-id="${comment.id}"
 									  data-comment-text="${comment.comment_text}" 
+							
+									
 		
 									style="border: none; background: none;">
 									<small>Chỉnh sửa</small></button>
@@ -143,11 +167,11 @@
                            <c:url value="/image?fname=${comment.image}" var="imgUrl"></c:url>
                         </c:if>
 
-                       <c:if test ="${cate.images.substring(0,5) == 'https' }">
+                       <c:if test ="${comment.image.substring(0,5) == 'https' }">
                             <c:url value="${comment.image}" var="imgUrl"></c:url>
                        </c:if>
                        
-                       <img id="imagess"  src="${imgUrl}" class="comment-media img-fluid rounded mr-2" width="35%" alt="Comment Image" /><br>
+                       <img  src="${imgUrl}" class="comment-media img-fluid rounded mr-2" width="35%" alt="Comment Image" /><br>
                    </c:if>
                        <c:if test="${comment.video != ''}">
                         
@@ -160,7 +184,7 @@
                      <c:url value="${comment.video}" var="videoUrl"></c:url>
                      </c:if>
                      
-                     <video id="videoElement" class="comment-media" width="35%" controls>
+                     <video  class="comment-media" width="35%" controls>
                      <source src="${videoUrl}" type="video/mp4">
                      </video>
                      </c:if>
@@ -179,12 +203,14 @@
                
                     <label for="images">Images:</label><br>
                          <input type="file" id="images" name="fileimage" onchange="chooseFile(this)" ><br>
-                       
+                        <img id="imagess" src="" width="80" height="70" /><br>
                          
 
                       <label for="videos">Videos :</label><br>
                       <input type="file" id="videos" name="filevideo" onchange="chooseFileVideo(this)"><br>
-                      
+                       <video  id="videoElement" width="120" height="100" controls >
+                     <source  src= ""  type="video/mp4">
+                     </video> 
                            <button type="submit" class="btn btn-primary">Post Comment</button><br>
 
 
@@ -217,19 +243,19 @@
                         <label for="commentContent">Nội dung bình luận</label>
                          <input type="text" class="form-control" id="modalCommentText" name="comment" placeholder="Write your comment here">
                         <label for="images">Images:</label><br>
-                         <input type="file" id="images" name="fileimage" onchange="chooseFile(this)" ><br>
+                         <input type="file" id="images" name="fileimage" onchange="chooseFile1(this)" ><br>
                         
-                      <!--   <img id="imagess"  src="${imgUrl}" width="80" height="70" /><br> -->
+                         <img id="imagess1" src="" width="80" height="70" /><br>  
                          
 
                       <label for="videos">Videos :</label><br>
-                      <input type="file" id="videos" name="filevideo" onchange="chooseFileVideo(this)" ><br>
+                      <input type="file" id="videos" name="filevideo" onchange="chooseFileVideo1(this)" ><br>
 
 
                       
-                  <!--    <video id="videoElement" width="80" height="70" controls >
-                     <source src="${videoUrl}" type="video/mp4">
-                     </video> -->
+                 <video  id="videoElement1" width="120" height="100" controls >
+                     <source  src= ""  type="video/mp4">
+                     </video>   
                     </div>
                 </div>
 
@@ -267,6 +293,27 @@ function chooseFileVideo(fileInput) {
         reader.readAsDataURL(fileInput.files[0]);
     }
 }
+function chooseFile1(fileInput) {
+    if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // Update the image source to the uploaded file's data URL
+            $('#imagess1').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
+function chooseFileVideo1(fileInput) {
+    if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // Update the video source to the uploaded file's data URL
+            $('#videoElement1').attr('src', e.target.result);
+            $('#videoElement1')[0].load();  // Reload the video element to play the new file
+        }
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
 document.addEventListener('DOMContentLoaded', function () {
     const editCommentModal = document.getElementById('exampleModal');
     editCommentModal.addEventListener('show.bs.modal', function (event) {
@@ -276,6 +323,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Lấy dữ liệu từ data-*
         const commentId = button.getAttribute('data-comment-id');
         const commentText = button.getAttribute('data-comment-text');
+ 
+
+  
 
 
 
@@ -283,13 +333,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const modalCommentId = editCommentModal.querySelector('#modalCommentId');
         const modalCommentText = editCommentModal.querySelector('#modalCommentText');
 
+     
+
 
 
         modalCommentId.value = commentId;
         modalCommentText.value = commentText;
-   
-        
+     
 
+        
+       
     });
 });
 

@@ -22,7 +22,7 @@ import cuoiki.ltweb.services.*;
 import cuoiki.ltweb.mail.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = { "/home", "/forgotPassword", "/changePassword","/otpcode" })
+@WebServlet(urlPatterns = { "/home", "/forgotPassword", "/changePassword","/otpcode","/updateProfile" })
 public class HomeController extends HttpServlet {
 	ICategoryDAO catedao = new CategoryDAOImpl();
 	IProductDAO productDao = new ProductDAOImpl();
@@ -141,5 +141,8 @@ public class HomeController extends HttpServlet {
 		 * // Create a PrintWriter object to write the HTML content PrintWriter out =
 		 * resp.getWriter(); out.println("Username không khớp với mật khẩu!"); }
 		 */
+		if(path.contains("updateProfile")) {
+			
+		}
 	}
 }

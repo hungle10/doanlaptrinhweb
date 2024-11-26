@@ -1,6 +1,7 @@
 package cuoiki.ltweb.models;
 
 import java.sql.Date;
+import java.util.List;
 import java.sql.*;
 
 public class OrderModel {
@@ -15,6 +16,14 @@ public class OrderModel {
     private String shipping_address;
     private Timestamp createdAt;
 	private Timestamp updatedAt;
+	private List<OrderDetailModel> order_detail_list;
+	
+	public List<OrderDetailModel> getOrder_detail_list() {
+		return order_detail_list;
+	}
+	public void setOrder_detail_list(List<OrderDetailModel> order_detail_list) {
+		this.order_detail_list = order_detail_list;
+	}
 	public OrderModel() {
 		
 	}	

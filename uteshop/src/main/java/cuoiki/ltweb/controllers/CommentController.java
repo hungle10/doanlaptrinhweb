@@ -89,6 +89,10 @@ public class CommentController extends HttpServlet {
 					        	video = fileName; // Lưu tên video
 					        }
 						part.write(uploadPath + File.separator + fileName);
+					}else
+					{
+						
+						
 					}
 
 				}

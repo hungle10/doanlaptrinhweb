@@ -1,5 +1,7 @@
 package cuoiki.ltweb.impl;
 
+import java.util.List;
+
 import cuoiki.ltweb.dao.*;
 import cuoiki.ltweb.models.OrderDetailModel;
 import cuoiki.ltweb.services.*;
@@ -10,6 +12,10 @@ IOrderDetailDAO orderdetaildao = new OrderDetailDAOImpl();
 @Override
 public void insertOrderedProduct(OrderDetailModel ordProduct) {
 	 orderdetaildao.insertOrderedProduct(ordProduct);
+}
+@Override
+public List<OrderDetailModel>getAllOrderedProduct(long oid){
+	return orderdetaildao.getAllOrderedProduct(oid);
 }
 
 }

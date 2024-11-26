@@ -76,7 +76,36 @@ public class CommentDAOImpl extends DBConnectSQLServer implements ICommentDAO{
 	
 			return list;
 	}
+	/*@Override
+	public List<CommentModel> getCommentByCommentId(long comment_id) {
+		List<CommentModel> list = new ArrayList<CommentModel>();
+		try {
+			conn = super.getConnection();
+			String query = "select * from comments where product_id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1,product_id);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				list.add(
+						new CommentModel(
+						rs.getLong("id"),
+						rs.getLong("user_id"),
+						rs.getLong("product_id"),
+						rs.getString("comment_text"),
+						rs.getString("image"),
+						rs.getString("video"),
+						rs.getTimestamp("created_at"),
+						rs.getTimestamp("updated_at")
+						)
+						);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	
+			return list;
+	}
+	*/
 	@Override
 	public void insert(CommentModel comment) {
 		String sql = "INSERT INTO comments (user_id, product_id, comment_text,image,video,created_at, updated_at)\r\n"
