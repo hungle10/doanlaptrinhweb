@@ -25,7 +25,7 @@ public class OrderDAOImpl extends DBConnectSQLServer implements IOrderDAO{
 		boolean isSuccess = true;
 		try {
 			conn = super.getConnection();
-			String query = "insert into orders (user_id,shippingcompany_id,order_date,status, total_money,payment_method,payment_status,shipping_add,created_at,updated_at) values(?,?,?,?,?,?,?,?,?,?)";
+			String query = "insert into orders (user_id,shippingcompany_id,order_date,status, total_money,payment_method,payment_status,shipping_address,created_at,updated_at) values(?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement psmt = this.conn.prepareStatement(query);
 			
 			psmt.setLong(1,order.getUserid());
@@ -34,7 +34,7 @@ public class OrderDAOImpl extends DBConnectSQLServer implements IOrderDAO{
 			psmt.setString(4, order.getStatus());
 			psmt.setFloat(5, order.getTotalmoney());
 			psmt.setString(6, order.getPayment_method());
-			psmt.setString(7, order.getStatus());
+			psmt.setString(7, order.getPayment_status());
 			psmt.setString(8, order.getShipping_address());
 			psmt.setTimestamp(9, order.getCreatedAt());
 			psmt.setTimestamp(10, order.getUpdatedAt());

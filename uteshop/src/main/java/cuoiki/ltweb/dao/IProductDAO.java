@@ -4,9 +4,7 @@ import java.util.List;
 import cuoiki.ltweb.models.*;
 public interface IProductDAO {
 	public List<ProductModel> getAllLatestProducts();
-
-	public List<ProductModel> getDiscountedProducts();
-
+	
 	public List<ProductModel> getAllProductsBySearchKey(String search,int currentpage);
 
 	public List<ProductModel> getAllProductsByCategoryId(int catId,int currentpage);
@@ -26,5 +24,7 @@ public interface IProductDAO {
 	public void updateQuantity(long id, int qty);
 
 	public int getProductQuantityById(long pid);
+
+	public List<String> getProductsIdSoldOver10();
 
 }

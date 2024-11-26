@@ -10,4 +10,10 @@ public interface ICommentDAO {
 
 	public void insert(CommentModel comment);
 
+	public List<CommentModel> getAllCommentsOfProduct(long product_id);
+
+	void deleteCommentOfUser(long idcomment, long iduser);
+
+	void update(CommentModel comment);
+
 }

@@ -81,6 +81,17 @@ public class OrderController extends HttpServlet{
      					System.out.println("thuyen em di hello kitti");
      				}
      			}*/
+				if(session.getAttribute("from")!=null) {
+					ProductModel prod = (ProductModel)session.getAttribute("productBuyNow");
+					int prodQty = 1;
+					float price = product_service.getProductPriceAfterDiscount(prod.getDiscount(),prod.getPrice()); //tính toán sau khi giảm
+					float totalMoney = prodQty * price;
+					OrderDetailModel orderedProduct = new OrderDetailModel(order_added.getId(),prod.getId(),price,prodQty,totalMoney);
+					orderdetail_service.insertOrderedProduct(orderedProduct);
+					session.removeAttribute("productBuyNow");
+					session.removeAttribute("from");
+				}
+				else {
 				List<CartModel> listOfCart = cart_service.getCartListByUserId(user.getId());
 
 				for (CartModel item : listOfCart) {
@@ -92,6 +103,7 @@ public class OrderController extends HttpServlet{
 					float totalMoney = prodQty * price;
 					OrderDetailModel orderedProduct = new OrderDetailModel(order_added.getId(),item.getProductId(),price,prodQty,totalMoney);
 					orderdetail_service.insertOrderedProduct(orderedProduct);
+				}
 				}
 				
 				session.removeAttribute("totalMoney");

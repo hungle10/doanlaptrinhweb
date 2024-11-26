@@ -51,6 +51,7 @@
                             <c:out value="${activeAdmin.username}"/>
                         </a>
                     </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/uteshop/login?action=logout">
                             <i class="fa-solid fa-user-slash fa-sm" style="color: #fafafa;"></i>&nbsp;Logout
@@ -78,6 +79,8 @@
                 <li class="nav-item"><a class="nav-link" href="/uteshop/user/products?category=0"
                     role="button" aria-expanded="false"> Products </a>
                 </li>
+          
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false"> Category </a>
@@ -119,6 +122,11 @@
                             <a class="nav-link" aria-current="page" href="profile.jsp">
                                 <c:out value="${sessionScope.activeUser.username}"/>
                             </a>
+                        </li>
+                         <li class="nav-item">
+                       <a class="nav-link chat-button" href="/uteshop/user/chat" role="button" aria-expanded="false">
+                           <i class="fas fa-comment-dots"></i>
+                       </a>
                         </li>
                         <li class="nav-item pe-3">
                             <a class="nav-link" aria-current="page" href="/uteshop/login?action=logout">

@@ -20,6 +20,7 @@ import cuoiki.ltweb.impl.CategoryDAOImpl;
 import cuoiki.ltweb.impl.ICategoryServiceImpl;
 import cuoiki.ltweb.impl.ICommentServiceImpl;
 import cuoiki.ltweb.impl.IProductServiceImpl;
+import cuoiki.ltweb.impl.IUserServiceImpl;
 import cuoiki.ltweb.impl.ProductDAOImpl;
 import cuoiki.ltweb.impl.WishlistDAOImpl;
 import cuoiki.ltweb.services.*;
@@ -151,9 +152,26 @@ public class ProductController extends HttpServlet{
         	IProductService productService = new IProductServiceImpl();
         	ICategoryService category_service = new ICategoryServiceImpl();
         	ICommentService comment_service = new ICommentServiceImpl();	
+        	IUserService user_service = new IUserServiceImpl();
         	
-        	List<CommentModel> commentList = comment_service.getAllComments();
         	ProductModel product = productService.getProductsByProductId(Integer.parseInt(req.getParameter("pid")));
+        	
+        	List<CommentModel> commentList = comment_service.getAllCommentsOfProduct(product.getId());
+        	List<UserModel> userList =  user_service.findAll();
+        	
+        	for (CommentModel comment : commentList) {
+        		for(UserModel user : userList ){
+        			if(comment.getUser_id() == user.getId())
+        			{
+        				comment.setImage_user(user.getImage());
+        				comment.setUsername(user.getUsername());
+        				System.out.println("Son tung mtp");
+        				System.out.println(comment.getImage_user());
+        			}
+        		}
+        	}
+
+        	
         	int price_after_discount = productService.getProductPriceAfterDiscount(product.getDiscount(),product.getPrice());
         	product.setPrice_after_discount(price_after_discount);
         	CategoryModel category = category_service.getCategoryById(product.getCategory_id());

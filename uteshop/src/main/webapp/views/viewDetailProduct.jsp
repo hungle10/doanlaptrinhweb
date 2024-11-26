@@ -98,29 +98,38 @@
 <div class="container mt-5">
     <div class="row d-flex justify-content-center">
         <div class="col-md-8">
+        <c:forEach var="comment" items="${requestScope.commentList}">
             <div class="card p-4 mt-2 shadow-sm">
-               <c:forEach var="comment" items="${requestScope.commentList}">
+               
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="user d-flex align-items-center">
-                        <img src="https://i.imgur.com/C4egmYM.jpg" width="40" class="user-img rounded-circle mr-3">
+                        <img src="/uteshop/Images/${comment.image_user}" width="40" class="user-img rounded-circle mr-3">
                         <div>
-                            <small class="font-weight-bold text-primary">"${comment.username}"</small>
-                            <small class="font-weight-bold d-block">"${comment.comment_text}"</small>
+                            <small class="font-weight-bold text-primary">${comment.username}</small>
+                            <small class="font-weight-bold d-block">${comment.comment_text}</small>
                         </div>
                     </div>
                     <small class="text-muted">${comment.created_at}"</small>
                 </div>
                 <div class="action d-flex justify-content-between mt-3 align-items-center">
                     <div class="reply px-4">
-    <form action="/uteshop/user/comment/remove" method="POST" style="display:inline;">
+        <c:if test="${sessionScope.activeUser.id == comment.user_id}">
+    <form action="/uteshop/user/comment/remove?pid=${requestScope.product.id}" method="post" style="display:inline;" enctype="multipart/form-data">
+    
         <input type="hidden" name="comment_id" value="${comment.id}">
         <button type="submit" class="btn btn-link text-secondary p-0" style="border: none; background: none;">
             <small>Remove</small>
         </button>
     </form>
+      
     <button type="button" class="btn btn-link text-secondary p-0"
-									data-bs-toggle="modal" data-bs-target="#exampleModal" style="border: none; background: none;">
+									data-bs-toggle="modal" data-bs-target="#exampleModal"
+									 data-comment-id="${comment.id}"
+									  data-comment-text="${comment.comment_text}" 
+		
+									style="border: none; background: none;">
 									<small>Chỉnh sửa</small></button>
+		 </c:if>
 </div>
                     <div class="icons align-items-center">
                         <i class="fa fa-check-circle-o check-icon text-primary"></i>
@@ -128,7 +137,9 @@
                 </div>
                  <div class="d-flex justify-content-start">
                  <c:if test="${comment.image != ''}">
+                 
                           <c:if test ="${comment.image.substring(0,5) != 'https' }">
+                         
                            <c:url value="/image?fname=${comment.image}" var="imgUrl"></c:url>
                         </c:if>
 
@@ -139,6 +150,7 @@
                        <img id="imagess"  src="${imgUrl}" class="comment-media img-fluid rounded mr-2" width="35%" alt="Comment Image" /><br>
                    </c:if>
                        <c:if test="${comment.video != ''}">
+                        
                         <c:if test ="${comment.video.substring(0,5) != 'https' }">
                       <c:url value="/video?fname=${comment.video}" var="videoUrl"></c:url>
                       </c:if>
@@ -153,24 +165,25 @@
                      </video>
                      </c:if>
                    </div>
-                 </c:forEach>
+             
             </div>
+                </c:forEach>
 
             <!-- Comment submission area -->
             <div class="card p-4 mt-3 shadow-sm">
                 <form action="/uteshop/user/comment/add?pid=${requestScope.product.id}" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="commentInput">Add a comment:</label>
-                        <input type="text" class="form-control" id="commentInput" name="comment" placeholder="Write your comment here">
+                        <input type="text" class="form-control" id="commentInput" name="comment" placeholder="Write your comment here"  maxlength="50">
                     </div>
                
                     <label for="images">Images:</label><br>
-                         <input type="file" id="images" name="fileimage" onchange="chooseFile(this)" value = ${comment.image }><br>
+                         <input type="file" id="images" name="fileimage" onchange="chooseFile(this)" ><br>
                        
                          
 
                       <label for="videos">Videos :</label><br>
-                      <input type="file" id="videos" name="filevideo" onchange="chooseFileVideo(this)" value = ${comment.video }><br>
+                      <input type="file" id="videos" name="filevideo" onchange="chooseFileVideo(this)"><br>
                       
                            <button type="submit" class="btn btn-primary">Post Comment</button><br>
 
@@ -195,41 +208,28 @@
             </div>
 
             <!-- Modal Form -->
-            <form action="/uteshop/user/comment/edit" method="POST" enctype="multipart/form-data">
+            <form action="/uteshop/user/comment/edit?pid=${requestScope.product.id}" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <!-- Hidden Input for Comment ID -->
-                    <input type="hidden" name="comment_id" value="${comment.comment_id}">
+                    <input type="hidden" name="comment_id" id="modalCommentId">
                     <!-- Comment Content Input -->
                     <div class="form-group">
                         <label for="commentContent">Nội dung bình luận</label>
-                        
-                        <textarea class="form-control" id="commentContent" name="comment_content" rows="3" placeholder="Nhập nội dung mới tại đây">${comment.comment_content}</textarea>
+                         <input type="text" class="form-control" id="modalCommentText" name="comment" placeholder="Write your comment here">
                         <label for="images">Images:</label><br>
-                         <input type="file" id="images" name="file" onchange="chooseFile(this)" value = ${comment.image }><br>
-                         <c:if test ="${comment.image.substring(0,5) != 'https' }">
-                           <c:url value="/image?fname=${comment.image}" var="imgUrl"></c:url>
-                        </c:if>
-
-                       <c:if test ="${cate.images.substring(0,5) == 'https' }">
-                            <c:url value="${comment.image}" var="imgUrl"></c:url>
-                       </c:if>
-                       <img id="imagess"  src="${imgUrl}" width="80" height="70" /><br>
+                         <input type="file" id="images" name="fileimage" onchange="chooseFile(this)" ><br>
+                        
+                      <!--   <img id="imagess"  src="${imgUrl}" width="80" height="70" /><br> -->
                          
 
                       <label for="videos">Videos :</label><br>
-                      <input type="file" id="videos" name="file" onchange="chooseFileVideo(this)" value = ${video.images }><br>
+                      <input type="file" id="videos" name="filevideo" onchange="chooseFileVideo(this)" ><br>
 
 
-                       <c:if test ="${comment.video.substring(0,5) != 'https' }">
-                      <c:url value="/video?fname=${comment.video}" var="videoUrl"></c:url>
-                      </c:if>
-            
-                     <c:if test ="${comment.video.substring(0,5) == 'https' }">
-                     <c:url value="${comment.video}" var="videoUrl"></c:url>
-                     </c:if>
-                     <video id="videoElement" width="80" height="70" controls>
+                      
+                  <!--    <video id="videoElement" width="80" height="70" controls >
                      <source src="${videoUrl}" type="video/mp4">
-                     </video>
+                     </video> -->
                     </div>
                 </div>
 
@@ -256,8 +256,6 @@ function chooseFile(fileInput) {
         reader.readAsDataURL(fileInput.files[0]);
     }
 }
-</script>
-<script>
 function chooseFileVideo(fileInput) {
     if (fileInput.files && fileInput.files[0]) {
         var reader = new FileReader();
@@ -269,6 +267,32 @@ function chooseFileVideo(fileInput) {
         reader.readAsDataURL(fileInput.files[0]);
     }
 }
+document.addEventListener('DOMContentLoaded', function () {
+    const editCommentModal = document.getElementById('exampleModal');
+    editCommentModal.addEventListener('show.bs.modal', function (event) {
+        // Lấy nút kích hoạt modal
+        const button = event.relatedTarget;
+
+        // Lấy dữ liệu từ data-*
+        const commentId = button.getAttribute('data-comment-id');
+        const commentText = button.getAttribute('data-comment-text');
+
+
+
+        // Gán dữ liệu vào modal
+        const modalCommentId = editCommentModal.querySelector('#modalCommentId');
+        const modalCommentText = editCommentModal.querySelector('#modalCommentText');
+
+
+
+        modalCommentId.value = commentId;
+        modalCommentText.value = commentText;
+   
+        
+
+    });
+});
+
 </script>
 </body>
 </body>

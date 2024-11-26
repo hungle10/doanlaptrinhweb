@@ -10,4 +10,10 @@ public interface ICommentService {
 
 	public void insert(CommentModel comment);
 
+	List<CommentModel> getAllCommentsOfProduct(long product_id);
+
+	void deleteCommentOfUser(long idcomment, long iduser);
+
+	void update(CommentModel comment);
+
 }

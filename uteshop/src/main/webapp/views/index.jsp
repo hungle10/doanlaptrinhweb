@@ -104,14 +104,14 @@
 <!-- end of list -->
 
 
-<!-- product with heavy deals -->
+<!-- product sold over ten -->
 <div class="container-fluid py-3 px-3" style="background: #f0fffe;">
-    <h3>Hot Deals</h3>
+   <h3>Top sản phẩm hot nhất từ các Shop</h3>
     <div class="row row-cols-1 row-cols-md-4 g-3">
-        <c:forEach var="deal" items="${sessionScope.topDeals}" varStatus="status">
+        <c:forEach var="deal" items="${sessionScope.topProductSold}" varStatus="status">
             <c:if test="${status.index < 4}">
                 <div class="col">
-                    <a href="viewProduct.jsp?pid=${deal.id}" style="text-decoration: none;">
+                    <a href="/uteshop/view/product?pid=${deal.id}" style="text-decoration: none;">
                         <div class="card h-100">
                             <div class="container text-center">
                                 <img src="/uteshop/Images/${deal.image}" class="card-img-top m-2"

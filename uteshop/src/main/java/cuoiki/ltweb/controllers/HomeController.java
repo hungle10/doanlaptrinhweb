@@ -1,7 +1,7 @@
 package cuoiki.ltweb.controllers;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -35,11 +35,18 @@ public class HomeController extends HttpServlet {
 		HttpSession session = req.getSession();
 		List<CategoryModel> categoryList = catedao.findAll();
 		List<ProductModel> productList = productDao.getAllLatestProducts();
-		List<ProductModel> topDeals = productDao.getDiscountedProducts();
+		
+		List<String> topProductId = productService.getProductsIdSoldOver10();
+		List<ProductModel> topProduct = new ArrayList<ProductModel>();
+		for (String productId : topProductId) {
+		    System.out.println("Product ID: " + productId);
+		    ProductModel product = productService.getProductsByProductId(Long.valueOf(productId));
+		    int price_after_discount = productService.getProductPriceAfterDiscount(product.getDiscount(),product.getPrice());
+		    product.setPrice_after_discount(price_after_discount);
+		    topProduct.add(product);
+		}
 
-		session.setAttribute("categoryList", categoryList);
-		session.setAttribute("productList", productList);
-		session.setAttribute("topDeals", topDeals);
+		
 
 		// đưa ra những product mới tạo
 		for (int i = 0; i < Math.min(3, productList.size()); i++) {
@@ -47,12 +54,16 @@ public class HomeController extends HttpServlet {
 					productList.get(i).getPrice());
 			productList.get(i).setPrice_after_discount(price_after_discount);
 		}
-		// đưa ra những product có discount > 30%
+	/*	// đưa ra những product có discount > 30%
 		for (int i = 0; i < Math.min(4, topDeals.size()); i++) {
 			int price_after_discount = productService.getProductPriceAfterDiscount(topDeals.get(i).getDiscount(),
 					topDeals.get(i).getPrice());
 			topDeals.get(i).setPrice_after_discount(price_after_discount);
-		}
+		}*/
+		session.setAttribute("categoryList", categoryList);
+		session.setAttribute("productList", productList);
+		session.setAttribute("topProductSold",topProduct);
+		
 		req.getRequestDispatcher("/views/index.jsp").forward(req, resp);
 	}
 

@@ -22,8 +22,7 @@ import cuoiki.ltweb.models.UserModel;
 import cuoiki.ltweb.services.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = { "/user/comment","/user/comment/add", "/user/comment/edit",
-		"/user/comment/remove" })
+@WebServlet(urlPatterns = { "/user/comment","/user/comment/add", "/user/comment/remove","/user/comment/edit" })
 @MultipartConfig
 public class CommentController extends HttpServlet {
 	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Admin\\git\\repositorydoanlaptrinhweb\\uteshop\\src\\main\\webapp\\uploads";
@@ -52,6 +51,71 @@ public class CommentController extends HttpServlet {
 		HttpSession session = req.getSession();
 
 		String path = req.getServletPath();
+		if(path.contains("remove")) {
+			String comment_idStr = req.getParameter("comment_id");
+			long comment_id = Long.valueOf(comment_idStr);
+			UserModel user = (UserModel)session.getAttribute("activeUser");
+			comment_service.deleteCommentOfUser(comment_id,user.getId() );
+			resp.sendRedirect("/uteshop/view/product?pid=" + req.getParameter("pid"));
+		}
+		if(path.contains("edit")) {
+			System.out.print("Cuc cu 2222");
+			String uploadPath = File.separator + UPLOAD_DIRECTORY; // upload vào thư mục bất kỳ
+			// String uploadPath = getServletContext().getRealPath("") + File.separator +
+			// UPLOAD_DIRECTORY; //upload vào thư mục project
+
+			System.out.print(uploadPath);
+			File uploadDir = new File(uploadPath);
+			if (!uploadDir.exists())
+				uploadDir.mkdir();
+			try { 
+				String fileName = "";
+				String image = "";
+				String video = "";
+				// vì đọc(dịch input) thành cái part chỉ 1 lần nên cần lưu trong list để cần thì
+				// duyệt lại
+				List<Part> fileParts = (List<Part>) req.getParts();
+				    
+				for (Part part : fileParts) {
+					fileName = getFileName(part);
+					if (fileName !=  "") {
+						
+						String partName = part.getName();
+						   if ("fileimage".equals(partName)) {
+							   image = fileName; // Lưu tên ảnh
+							   
+					        } else if ("filevideo".equals(partName)) {
+					          
+					        	video = fileName; // Lưu tên video
+					        }
+						part.write(uploadPath + File.separator + fileName);
+					}
+
+				}
+				UserModel user = (UserModel)session.getAttribute("activeUser");
+				String product_idStr = req.getParameter("pid");
+				long product_id = Long.valueOf(product_idStr);
+				String comment_text = req.getParameter("comment");
+				String comment_idStr = req.getParameter("comment_id");
+				long comment_id = Long.valueOf(comment_idStr);
+				if (comment_text != null && comment_text.length() > 50) {
+					comment_text =comment_text.substring(0, 50); // Cắt bớt nếu vượt quá 50 ký tự
+				}
+			
+				
+				long millis = System.currentTimeMillis();
+				java.sql.Timestamp timestamp = new java.sql.Timestamp(millis);
+				timestamp.setNanos(0);
+				
+				CommentModel md = new CommentModel(comment_id,user.getId(),product_id,comment_text,image,video,timestamp);
+				comment_service.update(md);
+				
+				req.setAttribute("message", "Comment has uploaded successfully!");
+			} catch (FileNotFoundException fne) {
+				req.setAttribute("message", "There was an error: " + fne.getMessage());
+			}
+			resp.sendRedirect("/uteshop/view/product?pid=" + req.getParameter("pid"));
+		}
 		if (path.contains("add")) {
 			System.out.print("Cuc cu 2222");
 			String uploadPath = File.separator + UPLOAD_DIRECTORY; // upload vào thư mục bất kỳ
@@ -90,6 +154,9 @@ public class CommentController extends HttpServlet {
 				String product_idStr = req.getParameter("pid");
 				long product_id = Long.valueOf(product_idStr);
 				String comment_text = req.getParameter("comment");
+				if (comment_text != null && comment_text.length() > 50) {
+					comment_text =comment_text.substring(0, 50); // Cắt bớt nếu vượt quá 50 ký tự
+				}
 			
 				
 				long millis = System.currentTimeMillis();

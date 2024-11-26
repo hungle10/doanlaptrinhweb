@@ -48,31 +48,24 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 	
 			return list;
 	}
-	
+	//products bán trên 10 sản phẩm của các shop sắp xếp từ lớn đến nhỏ
 	@Override
-	public List<ProductModel> getDiscountedProducts() {
-		List<ProductModel> list = new ArrayList<ProductModel>();
+	public List<String> getProductsIdSoldOver10() {
+		List<String> list = new ArrayList<String>();
 		try {
 			conn = super.getConnection();
-			String query = "select * from products where discount >= 30 order by discount desc";
+			String query = "SELECT od.product_id, SUM(od.number_of_products) AS total_quantity\r\n"
+					+ "FROM order_details od\r\n"
+					+ "JOIN orders o ON od.order_id = o.id\r\n"
+					+ "WHERE o.status = 'Delivered'\r\n"
+					+ "  AND o.payment_status = 'paid'\r\n"
+					+ "GROUP BY od.product_id\r\n"
+					+ "HAVING SUM(od.number_of_products) > 10\r\n"
+					+ "ORDER BY total_quantity DESC;";
 			Statement statement = this.conn.createStatement();
 			ResultSet rs = statement.executeQuery(query);
 			while (rs.next()) {
-				list.add(
-						new ProductModel(
-						rs.getLong("id"),
-						rs.getString("name"),
-						rs.getFloat("price"),
-						rs.getString("description"),
-						rs.getInt("quantity"),
-						rs.getInt("discount"),
-						rs.getString("image"),
-						rs.getLong("category_id"),
-						rs.getTimestamp("created_at"),
-						rs.getTimestamp("updated_at"),
-						rs.getLong("shop_id")
-						)
-						);
+				 list.add(String.valueOf(rs.getLong("product_id")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -12,9 +12,18 @@ public class CommentModel {
 	private Timestamp created_at;
 	private Timestamp updated_at;
 	private String username;
+	private String image_user;
 	
 	
 	
+	public String getImage_user() {
+		return image_user;
+	}
+
+	public void setImage_user(String image_user) {
+		this.image_user = image_user;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -45,6 +54,17 @@ public class CommentModel {
 		this.image = image;
 		this.video = video;
 		this.created_at = created_at;
+		this.updated_at = updated_at;
+	}
+	public CommentModel(long id, long user_id, long product_id, String comment_text, String image, String video,
+		 Timestamp updated_at) {
+		super();
+		this.id = id;
+		this.user_id = user_id;
+		this.product_id = product_id;
+		this.comment_text = comment_text;
+		this.image = image;
+		this.video = video;
 		this.updated_at = updated_at;
 	}
 

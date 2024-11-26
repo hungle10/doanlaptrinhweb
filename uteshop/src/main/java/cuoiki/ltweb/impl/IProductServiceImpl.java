@@ -2,6 +2,9 @@ package cuoiki.ltweb.impl;
 import cuoiki.ltweb.models.ProductModel;
 import cuoiki.ltweb.models.ShopModel;
 import cuoiki.ltweb.services.*;
+
+import java.util.List;
+
 import cuoiki.ltweb.dao.*;
 public class IProductServiceImpl implements IProductService{
 	IProductDAO productdao = new ProductDAOImpl();
@@ -27,6 +30,10 @@ public class IProductServiceImpl implements IProductService{
 	@Override
 	public int getProductQuantityById(long pid) {
 		return productdao.getProductQuantityById(pid);
+	}
+	@Override
+	public List<String> getProductsIdSoldOver10(){
+		return productdao.getProductsIdSoldOver10();
 	}
 
 }

@@ -62,12 +62,24 @@
     <ul class="m-b-0" id="chatHistory">
     <!-- code phần code tin nhắn trong database lên đây -->
     <!-- phần chat sẽ được js generate ở đây -->
-        <!--  <li class="clearfix">
-            <div class="message other-message float-right"> <!-- người khác gửi </div>
-        </li>
-        <li class="clearfix">
-            <div class="message my-message"> <!-- mình gửi </div>                                  
-        </li>         -->                      
+                 <c:forEach var="chat" items="${chat_list}">
+    
+             <c:forEach var="chat_mine" items="${chat_list_opposite}">
+                   <c:if test="${chat_mine.chatId == chat.chatId}">
+           
+            <li class="clearfix">
+            <div class="message my-message">${chat_mine.message_content}</div>                                  
+        </li>  
+        </c:if>
+             </c:forEach>
+             <c:forEach var="chat_opp" items="${chat_list_mine}">
+              <c:if test="${chat_opp.chatId == chat.chatId}">
+           <li class="clearfix">
+                <div class="message other-message float-right">${chat_opp.message_content}</div>
+            </li> 
+               </c:if>
+        </c:forEach>    
+        </c:forEach>                     
     </ul>
 </div>
                 <div class="chat-message clearfix">
@@ -89,7 +101,7 @@
 
     <script>
         // Kết nối WebSocket tới server
-        var ws = new WebSocket("ws://172.20.10.5:8082/uteshop/chat1");
+        var ws = new WebSocket("ws://localhost:8082/uteshop/chat1");
         // Xử lý khi nhận tin nhắn từ server
             ws.onopen = function(event) {
             	 var userId = "${requestScope.userid}"; // ID của user đang kết nối
@@ -164,6 +176,26 @@
 
              // Gửi tin nhắn theo format: "userID_from|userID_to|message"
              ws.send(userId + "|" + toUser + "|" + message);
+             
+             // Gửi tin nhắn qua servlet
+             fetch("/uteshop/user/chat/saveMessage", { // URL phù hợp với mapping trong servlet
+                 method: "POST",
+                 headers: {
+                     "Content-Type": "application/json"
+                 },
+                 body: JSON.stringify({
+                     userId: userId,
+                     toUser: toUser,
+                     message: message
+                 })
+             })
+             .then(response => {
+                 if (!response.ok) {
+                     throw new Error("Có lỗi xảy ra khi gửi tin nhắn!");
+                 }
+                 return response.json();
+             })
+           
 
              // Thêm tin nhắn vào lịch sử chat (gửi)
              var chatHistory = document.getElementById("chatHistory");

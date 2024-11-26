@@ -39,13 +39,13 @@ public class ChatWebSocket {
 
 		// Tìm session của người nhận
 	    Session recipientSession = WebSocketManager.getSession(receiverId);
-	    
+	    Session sendSession = WebSocketManager.getSession(senderId);
 	    if (recipientSession != null) {
 	        // Gửi tin nhắn tới người nhận
 	        recipientSession.getAsyncRemote().sendText(senderId  + "|" + chatMessage);
 	    } else {
 	        // Người nhận không trực tuyến
-	    	session.getAsyncRemote().sendText("Người dùng đang offline");
+	    	sendSession.getAsyncRemote().sendText(receiverId  + "|" + "Người dùng hiện chưa online");
 	    }
 	}
 

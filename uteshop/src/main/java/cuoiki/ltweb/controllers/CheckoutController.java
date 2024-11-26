@@ -54,6 +54,7 @@ public class CheckoutController extends HttpServlet{
 		        return;
 		       
 		}
+		if(req.getParameter("from")!=null) {
 		String from = req.getParameter("from");
 		if(from.equals("buynow")) {
 			session.setAttribute("from", from);
@@ -61,12 +62,13 @@ public class CheckoutController extends HttpServlet{
 			
 			ProductModel prod = product_service.getProductsByProductId(Long.valueOf(pidStr));
 			float totalPrice = product_service.getProductPriceAfterDiscount(prod.getDiscount(),prod.getPrice());
+			session.setAttribute("productBuyNow",prod);
 			session.setAttribute("totalPrice",totalPrice );
 			session.setAttribute("totalProduct",1);
 			req.getRequestDispatcher("/views/checkout.jsp").forward(req, resp);
 			return;
 		}
-		
+		}
 		
 		
 		ICartService cart_service = new ICartServiceImpl();
