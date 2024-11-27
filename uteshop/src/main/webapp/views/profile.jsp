@@ -20,9 +20,14 @@
 	color: #2874f0 !important;
 }
 </style>
+
+
+   
+
 </head>
 <body>
-<!--navbar -->
+
+
 	<%@include file="/Components/navbar.jsp"%>
 
 	<div class="container-fluid px-3 py-5">
@@ -131,7 +136,29 @@
 				$('#wishlist-btn').removeClass('cus-active');
 			});
 		});
+		
+		 $(document).ready(function() {
+	            $('#tableOrder').DataTable({
+	                "paging": true,        // Bật phân trang
+	                "searching": true,    // Bật tìm kiếm
+	                "ordering": true,     // Bật sắp xếp cột
+	                "info": true,         // Hiển thị thông tin bảng
+	                "lengthMenu": [5, 10, 25, 50], // Số hàng mỗi trang
+	                "language": {
+	                    "zeroRecords": "Không tìm thấy dữ liệu",
+	                    "infoEmpty": "Không có dữ liệu",
+	                    "infoFiltered": "(lọc từ MAX dòng)",
+	                    "search": "Tìm kiếm:",
+	                    "paginate": {
+	                        "first": "Đầu",
+	                        "last": "Cuối",
+	                        "next": "Tiếp",
+	                        "previous": "Trước"
+	                    }
+	                }
+	            });
+	        });
 	</script>
-
+	
 </body>
 </html>

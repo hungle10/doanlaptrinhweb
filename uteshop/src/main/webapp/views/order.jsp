@@ -12,7 +12,8 @@
             <h4>My Order</h4>
             <hr>
             <div class="container">
-                <table class="table table-hover">
+                <table id="tableOrder" class="table table-hover">
+                <thead>
                     <tr class="text-center table-secondary">
                         <th>Product</th>
                         <th>Order ID</th>
@@ -24,7 +25,8 @@
                         <th>Payment Type</th>
                         <th>Status</th>
                     </tr>
-        
+                    </thead>
+                   <tbody>
                     <c:forEach var="order" items="${orderList}">
               
                         <c:forEach var="orderProduct" items="${order.order_detail_list}">
@@ -43,8 +45,10 @@
                             </tr>
                         </c:forEach>
                     </c:forEach>
+                      </tbody>
                 </table>
             </div>
         </c:otherwise>
     </c:choose>
+    
 </div>

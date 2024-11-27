@@ -124,6 +124,11 @@
                                 <c:out value="${sessionScope.activeUser.username}"/>
                             </a>
                         </li>
+                        <li class="nav-item">
+                             <a class="nav-link chat-button" href="/uteshop/user/registerShop" role="button" aria-expanded="false">
+                                 <i class="fas fa-store"></i> Register Shop
+                            </a>
+                        </li>
                          <li class="nav-item">
                        <a class="nav-link chat-button" href="/uteshop/user/chat" role="button" aria-expanded="false">
                            <i class="fas fa-comment-dots"></i>
