@@ -33,6 +33,7 @@ public class ChatController extends HttpServlet{
 		String userid = String.valueOf(user.getId());
 		req.setAttribute("userid", userid);
 		
+		
 		String path = req.getServletPath();
 		System.out.println("123");
 		
@@ -61,6 +62,8 @@ public class ChatController extends HttpServlet{
 		
 		
 		System.out.println("101112");
+		String vendor_id = req.getParameter("vendorid");
+		req.setAttribute("vendorid", vendor_id);
 		req.getRequestDispatcher("/views/userchat.jsp").forward(req, resp);
 		
 	}

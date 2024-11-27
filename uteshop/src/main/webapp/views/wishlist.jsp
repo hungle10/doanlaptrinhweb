@@ -30,7 +30,7 @@
                                 &#8377;<c:out value="${p.price_after_discount}" />
                             </td>
                             <td>
-                                <a href="WishlistServlet?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=delete"
+                                <a href=" /uteshop/user/wishlist?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=delete"
                                    class="btn btn-secondary" role="button">Remove</a>
                             </td>
                         </tr>

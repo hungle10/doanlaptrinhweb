@@ -27,4 +27,8 @@ public interface IProductDAO {
 
 	public List<String> getProductsIdSoldOver10();
 
+	List<ProductModel> getAllProductsByShopId(long shopId, int currentpage);
+
+	List<ProductModel> getAllProductsByShopId(long shopId);
+
 }

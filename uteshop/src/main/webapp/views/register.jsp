@@ -20,6 +20,11 @@ label {
 			<div class="col-md-6 offset-md-3">
 				<div class="card">
 					<div class="card-body px-5">
+					<c:if test="${not empty alert}">
+				<div class="message">
+        <i class="fas fa-exclamation-circle"></i> ${alert}
+    </div>
+    </c:if>
 
 						<div class="container text-center">
 							<img src="/uteshop/Images/signUp.png" style="max-width: 80px;"

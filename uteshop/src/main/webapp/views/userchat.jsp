@@ -14,6 +14,19 @@
 <body>
 <!--navbar -->
 <%@include file="/Components/navbar.jsp"%>
+
+<script>
+function goToUserController(userId) {
+	// Mở controller với userId trong cùng tab
+	window.open('/uteshop/user/chat/refresh?useridReceiver=' + userId, '_self');
+}
+    window.onload = function() {
+        <c:if test="${not empty vendorid}">
+            goToUserController(${vendorid});
+        </c:if>
+    }
+</script>
+
 <div class="container-fluid px-3 py-3">
 <div class="row clearfix">
     <div class="col-lg-12">
@@ -208,10 +221,7 @@
              // Xóa ô nhập tin nhắn sau khi gửi
              document.getElementById("message").value = "";
         }
-        function goToUserController(userId) {
-        	// Mở controller với userId trong cùng tab
-        	window.open('/uteshop/user/chat/refresh?useridReceiver=' + userId, '_self');
-        }
+       
         function handleIncomingMessage(senderId, message) {
             // Kiểm tra nếu `chat-header` không hiển thị thông tin của `senderId` hoặc cần cập nhật
             const userId = document.querySelector('.chat-header').getAttribute('data-user-id');

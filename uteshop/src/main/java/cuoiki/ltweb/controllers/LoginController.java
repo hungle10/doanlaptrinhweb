@@ -24,7 +24,9 @@ import cuoiki.ltweb.entities.*;
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = "/login")
 public class LoginController extends HttpServlet {
-    private static final String SECRET_KEY = "mySecretKeyForJWT1234567890!@#$%^&*()"; // Khóa bí mật JWT
+  //  private static final String SECRET_KEY = "mySecretKeyForJWT1234567890!@#$%^&*()"; // Khóa bí mật JWT
+    public static final String SESSION_USERNAME = "username";
+	public static final String COOKIE_REMEMBER = "username";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,6 +39,7 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
         boolean isRememberMe = false;
         String remember = req.getParameter("remember");
+        System.out.println(remember);
 
         if ("on".equals(remember)) {
             isRememberMe = true;
@@ -57,11 +60,9 @@ public class LoginController extends HttpServlet {
         System.out.println(user);
         System.out.println("helo tdt");
        if (user != null && user.getIsActive() == true ) {
-            // Tạo JWT
-            String jwtToken = createJWTToken(user.getUsername());
 			session.setAttribute("account", user);
             if (isRememberMe) {
-                saveRememberMe(resp, jwtToken);
+                saveRememberMe(resp,username);
             }
 
             resp.sendRedirect(req.getContextPath() + "/waiting"); // Phần waiting(controller) kiểm tra role của user
@@ -98,19 +99,17 @@ public class LoginController extends HttpServlet {
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("jwtToken")) {
-                    String jwtToken = cookie.getValue();
-                    // Xác thực JWT
-                    if (validateJWTToken(jwtToken)) {
-                        resp.sendRedirect(req.getContextPath() + "/waiting");
-                        return;
-                    }
-                }
+            	if (cookie.getName().equals("username")) {
+					session = req.getSession(true);
+					session.setAttribute("username", cookie.getValue());
+					resp.sendRedirect(req.getContextPath() + "/waiting");
+					return;
+				}
             }
         }
         req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
 }
-    private boolean validateJWTToken(String jwtToken) {
+   /* private boolean validateJWTToken(String jwtToken) {
         try {
             Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
             Jwts.parserBuilder()
@@ -121,8 +120,8 @@ public class LoginController extends HttpServlet {
         } catch (Exception e) {
             return false;
         }
-    }
-    private String createJWTToken(String username) {
+    }*/
+ /*   private String createJWTToken(String username) {
         long currentTimeMillis = System.currentTimeMillis();
         Date expiryDate = new Date(currentTimeMillis + 30 * 60 * 1000); // JWT hết hạn sau 30 phút
         Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
@@ -133,11 +132,11 @@ public class LoginController extends HttpServlet {
                 .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-    }
-    private void saveRememberMe(HttpServletResponse response, String jwtToken) {
-        Cookie cookie = new Cookie("jwtToken", jwtToken);
-        cookie.setMaxAge(30 * 60);
-        response.addCookie(cookie);
+    }*/
+    private void saveRememberMe(HttpServletResponse response, String username) {
+    	Cookie cookie = new Cookie(COOKIE_REMEMBER, username);
+		cookie.setMaxAge(30 * 60);
+		response.addCookie(cookie);
     }
     private void getLogOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     	
@@ -151,7 +150,7 @@ public class LoginController extends HttpServlet {
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("jwtToken")) {
+                if (cookie.getName().equals("username")) {
                     cookie.setMaxAge(0);
                     resp.addCookie(cookie);
                     break;

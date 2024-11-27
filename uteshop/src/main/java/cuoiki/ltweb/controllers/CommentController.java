@@ -25,7 +25,7 @@ import cuoiki.ltweb.services.*;
 @WebServlet(urlPatterns = { "/user/comment","/user/comment/add", "/user/comment/remove","/user/comment/edit" })
 @MultipartConfig
 public class CommentController extends HttpServlet {
-	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Admin\\git\\repositorydoanlaptrinhweb\\uteshop\\src\\main\\webapp\\uploads";
+	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Admin\\git\\repositorydoanlaptrinhweb\\uteshop\\src\\main\\webapp\\Images";
 	public static final String DEFAULT_FILENAME = "default.file";
 	
 	ICommentService comment_service = new ICommentServiceImpl();

@@ -32,7 +32,19 @@
 					<div class="row mt-2 mb-2">
 						<div class="col-md-4">
 							<div class="container text-center">
-								<img src="/uteshop/Images/${sessionScope.activeUser.image}" style="max-width: 60px;"
+							 
+		   <c:if test="${sessionScope.activeUser.image != ''}">
+                 
+                          <c:if test ="${sessionScope.activeUser.image.substring(0,5) != 'https' }">
+                         
+                           <c:url value="/image?fname=${sessionScope.activeUser.image}" var="imgUrl"></c:url>
+                        </c:if>
+
+                       <c:if test ="${sessionScope.activeUser.image.substring(0,5) == 'https' }">
+                            <c:url value="${sessionScope.activeUser.image}" var="imgUrl"></c:url>
+                       </c:if>
+                 </c:if>      
+								<img src="${imgUrl }" style="max-width: 60px;"
 									class="img-fluid">
 							</div>
 						</div>
@@ -42,12 +54,20 @@
 						</div>
 					</div>  
 				</div>
+				<c:if test="${not empty message1}">
+				<div class="message">
+        <i class="fas fa-exclamation-circle"></i> ${message1}
+    </div>
+    </c:if>
 
 				<div class="card mt-3">
 					<div class="list-group">
 						<button type="button" id="profile-btn"
 							class="list-group-item list-group-item-action cus-active list-btn"
 							aria-current="true">Profile Information</button>
+							
+  
+							
 						<button type="button" id="wishlist-btn"
 							class="list-group-item list-group-item-action list-btn">My
 							Wishlist</button>

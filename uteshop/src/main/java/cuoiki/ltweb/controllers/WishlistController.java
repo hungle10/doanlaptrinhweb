@@ -36,7 +36,7 @@ public class WishlistController extends HttpServlet {
 		}else if(op.trim().equals("delete"))
 		{
 			wishlistDao.deleteWishlist(uid, pid);
-			resp.sendRedirect("/uteshop/user/products");
+			resp.sendRedirect("/uteshop/user/profile");
 	}
 	
 }

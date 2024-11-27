@@ -113,6 +113,7 @@ public class OrderController extends HttpServlet{
 
 				//removing all product from cart after successful order
 				cart_service.removeAllProductInCartByUserId(user.getId());
+				session.setAttribute("cartCount",0);
 
 			} catch (Exception e) {
 				e.printStackTrace();

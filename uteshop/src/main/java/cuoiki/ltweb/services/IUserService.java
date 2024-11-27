@@ -15,5 +15,6 @@ public interface IUserService {
 	public List<UserModel> findAll();
 	UserModel findByEmail(String id);
 	void update(UserModel user);
+	boolean checkExistPhoneNumber(String phonenumber);
 
 }

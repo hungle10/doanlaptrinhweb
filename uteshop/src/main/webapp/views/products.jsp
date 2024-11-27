@@ -8,13 +8,54 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="/Components/common_css_js.jsp" %>
+
 <style>
 <%@include file="/CSS/style.css"%>
+
+
+
 </style>
 </head>
 <body style="background-color: #f0f0f0;">
 	<!--navbar -->
-	<%@include file="/Components/navbar.jsp"%>
+	<%@include file="/Components/navbar.jsp"%> <!-- Header -->
+	<!-- them if test thuoc tinh -->
+	<c:if test="${not empty shopmodel}">
+      <div class="shop-info">
+        <div class="shop-details">
+            <div class="shop-logo">
+            
+               <c:if test="${shopmodel.logo != ''}">
+                 
+                          <c:if test ="${shopmodel.logo.substring(0,5) != 'https' }">
+                         
+                           <c:url value="/image?fname=${shopmodel.logo}" var="imgUrl"></c:url>
+                        </c:if>
+
+                       <c:if test ="${shopmodel.logo.substring(0,5) == 'https' }">
+                            <c:url value="${shopmodel.logo}" var="imgUrl"></c:url>
+                       </c:if>
+                        <img src="${imgUrl}" alt="Unilever Logo">
+                 </c:if>      
+               
+            </div>
+            <div class="shop-name">
+                <h1>${shopmodel.name }</h1>
+            
+            </div>
+           <div class="shop-actions">
+               <button onclick="location.href='/uteshop/user/chat?vendorid=${shopmodel.vendor_id}'">Chat</button>
+         </div>
+        </div>
+        <div class="shop-stats">
+            <p>Tham gia: <span>${shopmodel.created_at }</span></p>
+            <p>Miêu tả: <span>${shopmodel.description }</span></p>
+        </div>
+    </div>
+</c:if>
+ 
+
+    
 	<!--show products-->
 	<h4 class="text-center mt-2">${requestScope.message}</h4>
 	<div class="container-fluid my-3 px-5">

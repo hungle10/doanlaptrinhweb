@@ -23,7 +23,7 @@ import cuoiki.ltweb.dao.*;
 @WebServlet(urlPatterns = "/waiting")
 public class WaitingController extends HttpServlet {
 
-	private static final String SECRET_KEY = "mySecretKeyForJWT1234567890!@#$%^&*()"; // Khóa bí mật JWT
+//	private static final String SECRET_KEY = "mySecretKeyForJWT1234567890!@#$%^&*()"; // Khóa bí mật JWT
 	IUserDAO user = new UserDAOImpl();
 
 	@Override
@@ -38,6 +38,9 @@ public class WaitingController extends HttpServlet {
 				return;
 			} else if (u.getRoleId() == 2) {
 				session.setAttribute("activeUser",u);
+				ICartService cart_service = new ICartServiceImpl();
+				int cart_count = cart_service.getCartCountByUserId(u.getId());
+				session.setAttribute("cartCount",cart_count);
 				resp.sendRedirect(req.getContextPath() + "/home");
 				return;
 			}
@@ -52,8 +55,9 @@ public class WaitingController extends HttpServlet {
 		Cookie[] cookies = req.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("jwtToken")) {
-					String username = decodeJWT(cookie.getValue());
+				if (cookie.getName().equals("username")) {
+					session = req.getSession(true);
+					String username = (String) session.getAttribute("username");
 					UserModel u = user.findByUserName(username);
 					if (u.getRoleId() == 1) {
 						session.setAttribute("activeAdmin",u);
@@ -61,11 +65,11 @@ public class WaitingController extends HttpServlet {
 						return;
 					} else if (u.getRoleId() == 2) {
 						session.setAttribute("activeUser",u);
-						resp.sendRedirect(req.getContextPath() + "/vendor/home");
+						resp.sendRedirect(req.getContextPath() + "/home");
 						return;
 					} else {
 						session.setAttribute("activeUser",u);
-						resp.sendRedirect(req.getContextPath() + "/home");
+						resp.sendRedirect(req.getContextPath() + "/shipper/home");
 						return;
 					}
 				}
@@ -73,12 +77,12 @@ public class WaitingController extends HttpServlet {
 		}
 	}
 
-	public static String decodeJWT(String jwt) {
+	/*public static String decodeJWT(String jwt) {
 		Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 
 		return claims.getSubject(); // returns the username
-	}
+	}*/
 
 }

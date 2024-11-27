@@ -62,12 +62,13 @@
                                      Currently Out of stock
                              </c:otherwise>
                        </c:choose>
-					</span><br> <span class="fs-5"><b>Category : </b></span> <a href="/uteshop/view/product?category=${requestScope.category.name}">
+					</span><br> <span class="fs-5"><b>Category : </b></span> <a href="/uteshop/user/products?category=${requestScope.category.id}">
                                                                      ${requestScope.category.name}
                                                                         </a>
-					<br> <span class="fs-5"><b>Shop : </b></span> <a href="/uteshop/view/shop?id=${requestScope.shop.id}" >
+					<br> <span class="fs-5"><b>Shop : </b></span> <a href="/uteshop/user/products?shopid=${requestScope.shop.id}" >
                                                                      ${requestScope.shop.name}
                                                                         </a>
+                                                                    
 					<form method="post">
 						<div class="container-fluid text-center mt-3">
 							<c:if test="${sessionScope.activeUser != null}">

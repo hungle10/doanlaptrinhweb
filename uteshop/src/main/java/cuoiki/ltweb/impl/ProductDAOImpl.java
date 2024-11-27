@@ -98,7 +98,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 				product.setCategory_id(rs.getInt("category_id"));
 				product.setCreatedAt(rs.getTimestamp("created_at"));
 				product.setUpdatedAt(rs.getTimestamp("updated_at"));
-				product.setShop_id(rs.getInt("shop_id"));
+				product.setShop_id(rs.getLong("shop_id"));
 				list.add(product);
 			}
 		} catch (Exception e) {
@@ -132,7 +132,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 				product.setCategory_id(rs.getInt("category_id"));
 				product.setCreatedAt(rs.getTimestamp("created_at"));
 				product.setUpdatedAt(rs.getTimestamp("updated_at"));
-				product.setShop_id(rs.getInt("shop_id"));
+				product.setShop_id(rs.getLong("shop_id"));
 				list.add(product);
 			}
 		} catch (Exception e) {
@@ -164,7 +164,68 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 				product.setCategory_id(rs.getInt("category_id"));
 				product.setCreatedAt(rs.getTimestamp("created_at"));
 				product.setUpdatedAt(rs.getTimestamp("updated_at"));
-				product.setShop_id(rs.getInt("shop_id"));
+				product.setShop_id(rs.getLong("shop_id"));
+				list.add(product);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+
+	@Override
+	public List<ProductModel> getAllProductsByShopId(long shopId) {
+		List<ProductModel> list = new ArrayList<ProductModel>();
+		try {
+			conn = super.getConnection();
+			String query = "select * from products where shop_id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1, shopId);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				ProductModel product = new ProductModel();
+				product.setId(rs.getLong("id"));
+				product.setName(rs.getString("name"));
+				product.setDescription(rs.getString("description"));
+				product.setPrice(rs.getFloat("price"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setDiscount(rs.getInt("discount"));
+				product.setImage(rs.getString("image"));
+				product.setCategory_id(rs.getInt("category_id"));
+				product.setCreatedAt(rs.getTimestamp("created_at"));
+				product.setUpdatedAt(rs.getTimestamp("updated_at"));
+				product.setShop_id(rs.getLong("shop_id"));
+				list.add(product);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<ProductModel> getAllProductsByShopId(long shopId,int currentpage) {
+		List<ProductModel> list = new ArrayList<ProductModel>();
+		try {
+			conn = super.getConnection();
+			String query = "select * from products where shop_id = ? ORDER BY id OFFSET (("+currentpage+"- 1) * 2)  ROWS FETCH NEXT 2 ROWS ONLY";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setLong(1, shopId);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				ProductModel product = new ProductModel();
+				product.setId(rs.getLong("id"));
+				product.setName(rs.getString("name"));
+				product.setDescription(rs.getString("description"));
+				product.setPrice(rs.getFloat("price"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setDiscount(rs.getInt("discount"));
+				product.setImage(rs.getString("image"));
+				product.setCategory_id(rs.getInt("category_id"));
+				product.setCreatedAt(rs.getTimestamp("created_at"));
+				product.setUpdatedAt(rs.getTimestamp("updated_at"));
+				product.setShop_id(rs.getLong("shop_id"));
 				list.add(product);
 			}
 		} catch (Exception e) {
@@ -194,7 +255,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 				product.setCategory_id(rs.getInt("category_id"));
 				product.setCreatedAt(rs.getTimestamp("created_at"));
 				product.setUpdatedAt(rs.getTimestamp("updated_at"));
-				product.setShop_id(rs.getInt("shop_id"));
+				product.setShop_id(rs.getLong("shop_id"));
 				list.add(product);
 			}
 		} catch (Exception e) {
@@ -224,7 +285,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 				product.setCategory_id(rs.getInt("category_id"));
 				product.setCreatedAt(rs.getTimestamp("created_at"));
 				product.setUpdatedAt(rs.getTimestamp("updated_at"));
-				product.setShop_id(rs.getInt("shop_id"));
+				product.setShop_id(rs.getLong("shop_id"));
 				list.add(product);
 			}
 		} catch (Exception e) {
@@ -254,7 +315,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 				product.setCategory_id(rs.getInt("category_id"));
 				product.setCreatedAt(rs.getTimestamp("created_at"));
 				product.setUpdatedAt(rs.getTimestamp("updated_at"));
-				product.setShop_id(rs.getInt("shop_id"));
+				product.setShop_id(rs.getLong("shop_id"));
 				list.add(product);
 			}
 		} catch (Exception e) {
@@ -284,7 +345,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			product.setCategory_id(rs.getInt("category_id"));
 			product.setCreatedAt(rs.getTimestamp("created_at"));
 			product.setUpdatedAt(rs.getTimestamp("updated_at"));
-			product.setShop_id(rs.getInt("shop_id"));
+			product.setShop_id(rs.getLong("shop_id"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -296,7 +357,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 		ShopModel shop = new ShopModel();
 		try {
 			conn = super.getConnection();
-			String query = "select s.* from shops s inner join products p on p.id = s.id where p.id = ?";
+			String query = "select s.* from shops s inner join products p on p.shop_id = s.id where p.id = ?";
 			PreparedStatement psmt = this.conn.prepareStatement(query);
 			psmt.setLong(1, product_id);
 			ResultSet rs = psmt.executeQuery();
@@ -351,5 +412,9 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 		}
 		return qty;
 	}
+
+	
+
+	 
 
 }

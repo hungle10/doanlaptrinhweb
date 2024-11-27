@@ -5,7 +5,7 @@ label {
 </style>
 <div class="container px-3 py-3">
 	<h3>Personal Information</h3>
-	<form id="update-user" action="UpdateUserServlet" method="post"> <!-- update user here -->
+	<form id="update-user" action="/uteshop/user/profile/update" method="post" enctype="multipart/form-data"> <!-- update user here -->
 		<input type="hidden" name="operation" value="updateUser">
 		<div class="row">
 			<div class="col-md-6 mt-2">
@@ -25,7 +25,10 @@ label {
 					name="mobile_no" placeholder="Mobile number" class="form-control"
 					value="${sessionScope.activeUser.phoneNumber }">
 			</div>
-		
+			<div class="col-md-6 mt-2">
+                    <label class="form-label">Date of Birth</label>
+                            <input type="date" name="dateOfBirth" class="form-control" value="${sessionScope.activeUser.dateOfBirth }"required>
+           </div>
 		</div>
 		<div class="mt-2">
 			<label class="form-label">Address</label> <input type="text"

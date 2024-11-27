@@ -92,6 +92,20 @@ public class UserModel {
 
 
 
+	public UserModel(long id, String fullname, String phoneNumber, String address, String email, Date dateOfBirth,
+			String image, Timestamp updatedAt) {
+		super();
+		this.id = id;
+		this.fullname = fullname;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.email = email;
+		this.dateOfBirth = dateOfBirth;
+		this.image = image;
+		this.updatedAt = updatedAt;
+	}
+
+
 	public UserModel(String username, String fullname, String phoneNumber, String address, String email,
 			String password, Boolean isActive, Date dateOfBirth, String image, int roleId, Timestamp createdAt, Timestamp updatedAt) {
 		super();

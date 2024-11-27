@@ -22,6 +22,7 @@ import cuoiki.ltweb.impl.ICommentServiceImpl;
 import cuoiki.ltweb.impl.IProductServiceImpl;
 import cuoiki.ltweb.impl.IUserServiceImpl;
 import cuoiki.ltweb.impl.ProductDAOImpl;
+import cuoiki.ltweb.impl.ShopDAOImpl;
 import cuoiki.ltweb.impl.WishlistDAOImpl;
 import cuoiki.ltweb.services.*;
 
@@ -37,9 +38,12 @@ public class ProductController extends HttpServlet{
 
         // Kiểm tra xem URL có chứa 'forgotPassword' hay không
         if (path.contains("user")) {
+        	String shopId ="";
 		String searchKey = req.getParameter("search");
 		String catId = req.getParameter("category");
-		
+		if(req.getParameter("shopid")!=null) {
+		 shopId = req.getParameter("shopid");
+		}
 		HttpSession session  = req.getSession();
 		ICategoryDAO categoryDao = new CategoryDAOImpl();
 		
@@ -49,6 +53,7 @@ public class ProductController extends HttpServlet{
 		IWishlistDAO wdao = new WishlistDAOImpl();
 		IProductService productService = new IProductServiceImpl();
 		IProductDAO productDao = new ProductDAOImpl();
+		IShopDAO shopDao = new ShopDAOImpl();
 		
 		
 		
@@ -82,6 +87,14 @@ public class ProductController extends HttpServlet{
 			//phân trang
 			prodListFiltered = productDao.getAllProductsByCategoryId(Integer.parseInt(catId.trim()),currentPage);
 			message = "Showing results for \"" + categoryDao.getCategoryName(Integer.parseInt(catId.trim())) + "\"";
+		}
+		else if(shopId != "") {
+			prodList = productDao.getAllProductsByShopId(Integer.parseInt(shopId.trim()));
+			//phân trang
+			prodListFiltered = productDao.getAllProductsByShopId(Integer.parseInt(shopId.trim()),currentPage);
+			message = "Showing results for \"" + shopDao.findById(Integer.parseInt(shopId.trim())).getName() + "\"";
+			ShopModel shopmodel = shopDao.findById(Long.valueOf(shopId.trim()));
+			req.setAttribute("shopmodel",shopmodel);
 		}
 		// tk user này nhấn chữ product kế bên UTE
 		else {
@@ -154,7 +167,11 @@ public class ProductController extends HttpServlet{
         	ICommentService comment_service = new ICommentServiceImpl();	
         	IUserService user_service = new IUserServiceImpl();
         	
-        	ProductModel product = productService.getProductsByProductId(Integer.parseInt(req.getParameter("pid")));
+        	long prodid = Long.valueOf(req.getParameter("pid"));
+        	
+        	ProductModel product = productService.getProductsByProductId(prodid);
+        	
+        	System.out.println("hahaha"+product.getName());
         	
         	List<CommentModel> commentList = comment_service.getAllCommentsOfProduct(product.getId());
         	List<UserModel> userList =  user_service.findAll();
@@ -175,8 +192,10 @@ public class ProductController extends HttpServlet{
         	int price_after_discount = productService.getProductPriceAfterDiscount(product.getDiscount(),product.getPrice());
         	product.setPrice_after_discount(price_after_discount);
         	CategoryModel category = category_service.getCategoryById(product.getCategory_id());
+        	
         	ShopModel shop = productService.getShopByProductId(product.getId());
         	
+        	System.out.println(shop.getName());
         	//khi bấm detail trong danh sách list product gọi đến đây set attribute cho session
         	req.setAttribute("shop",shop);
         	req.setAttribute("category", category);

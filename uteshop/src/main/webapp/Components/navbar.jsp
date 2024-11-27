@@ -115,7 +115,7 @@
                             <a class="nav-link position-relative" aria-current="page" href="/uteshop/user/cart">
                                 <i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i> &nbsp;Cart
                                 <span class="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-danger">
-                                    ${cartCount}
+                                    ${sessionScope.cartCount}
                                 </span>
                             </a>
                         </li>
@@ -144,7 +144,7 @@
                             </a>
                         </li>
                         <li class="nav-item pe-2">
-                            <a class="nav-link" aria-current="page" href="/uteshop/views/login.jsp">
+                            <a class="nav-link" aria-current="page" href="/uteshop/login">
                                 <i class="fa-solid fa-user-lock" style="color: #fafafa;"></i>&nbsp;Login
                             </a>
                         </li>

@@ -3,7 +3,7 @@
       
         <c:when test="${empty orderList}">
             <div class="container mt-5 mb-5 text-center">
-                <img src="Images/empty-cart.png" style="max-width: 200px;" class="img-fluid">
+                <img src="/uteshop/Images/empty-cart.png" style="max-width: 200px;" class="img-fluid">
                 <h4 class="mt-3">Zero Order found</h4>
                 Looks like you haven't placed any order!
             </div>
@@ -20,6 +20,7 @@
                         <th>Quantity</th>
                         <th>Total Price</th>
                         <th>Date and Time</th>
+                        <th>Payment status</th>
                         <th>Payment Type</th>
                         <th>Status</th>
                     </tr>
@@ -34,8 +35,9 @@
                                 <td class="text-start">${order.id}</td>
                                 <td class="text-start">${orderProduct.product.name}</td>
                                 <td>${orderProduct.numberOfProducts}</td>
-                                <td>${orderProduct.product.price * orderProduct.numberOfProducts}</td>
+                                <td>${orderProduct.product.price_after_discount * orderProduct.numberOfProducts}</td>
                                 <td>${order.orderdate}</td>
+                                <td>${order.payment_status}</td>
                                 <td>${order.payment_method}</td>
                                 <td class="fw-semibold" style="color: green;">${order.status}</td>
                             </tr>

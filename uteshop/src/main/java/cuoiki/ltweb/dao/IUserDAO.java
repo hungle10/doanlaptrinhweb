@@ -21,4 +21,6 @@ public interface IUserDAO {
 	
 	void update(UserModel user);
 
+	boolean checkExistPhoneNumber(String phonenumber);
+
 }

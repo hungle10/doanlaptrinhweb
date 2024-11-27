@@ -1,19 +1,26 @@
 package cuoiki.ltweb.controllers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import cuoiki.ltweb.impl.*;
+import cuoiki.ltweb.models.CommentModel;
 import cuoiki.ltweb.models.OrderDetailModel;
 import cuoiki.ltweb.models.OrderModel;
 import cuoiki.ltweb.models.ProductModel;
@@ -22,8 +29,11 @@ import cuoiki.ltweb.models.WishlistModel;
 import cuoiki.ltweb.services.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = {"/v1/api/getUserInfo","/user/profile"})
+@WebServlet(urlPatterns = {"/v1/api/getUserInfo","/user/profile","/user/profile/update"})
+@MultipartConfig
 public class UserController extends HttpServlet{
+	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Admin\\git\\repositorydoanlaptrinhweb\\uteshop\\src\\main\\webapp\\Images";
+	public static final String DEFAULT_FILENAME = "default.file";
 	IUserService user_service = new IUserServiceImpl();
 	IWishlistService wishlist_service = new IWishlistServiceImpl();
 	IProductService product_service = new IProductServiceImpl();
@@ -86,6 +96,9 @@ public class UserController extends HttpServlet{
           List<OrderDetailModel> order_detail_list = order_detail_service.getAllOrderedProduct(order.getId());
           for(OrderDetailModel order_detail : order_detail_list) {
           ProductModel prod = product_service.getProductsByProductId(order_detail.getProductId());
+          int price_after_discount = product_service.getProductPriceAfterDiscount(prod.getDiscount(), prod.getPrice());
+      	
+    	  prod.setPrice_after_discount(price_after_discount);
           order_detail.setProduct(prod);
           }
           order.setOrder_detail_list(order_detail_list);
@@ -100,8 +113,94 @@ public class UserController extends HttpServlet{
 	    }
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		String path = req.getServletPath();
+	     HttpSession session = req.getSession();
+	     UserModel user = (UserModel)session.getAttribute("activeUser");
+		if(path.contains("update")) {
+			System.out.print("Cuc cu 2222");
+			String uploadPath = File.separator + UPLOAD_DIRECTORY; // upload vào thư mục bất kỳ
+			// String uploadPath = getServletContext().getRealPath("") + File.separator +
+			// UPLOAD_DIRECTORY; //upload vào thư mục project
+
+			System.out.print(uploadPath);
+			File uploadDir = new File(uploadPath);
+			if (!uploadDir.exists())
+				uploadDir.mkdir();
+			try { 
+				String fileName = "";
+				String image = "";
+				// vì đọc(dịch input) thành cái part chỉ 1 lần nên cần lưu trong list để cần thì
+				// duyệt lại
+				List<Part> fileParts = (List<Part>) req.getParts();
+				    
+				for (Part part : fileParts) {
+					fileName = getFileName(part);
+					if (fileName !=  "") {
+						
+						String partName = part.getName();
+						   if ("fileimage".equals(partName)) {
+							   image = fileName; // Lưu tên ảnh
+							   
+					        } 
+						part.write(uploadPath + File.separator + fileName);
+					}else
+					{
+						
+						
+					}
+
+				}
+				
+				String fullname = req.getParameter("name");
+				String email = req.getParameter("email");
+				String phone_number = req.getParameter("mobile_no");
+				String dateStr = req.getParameter("dateOfBirth");
+				Date date = Date.valueOf(dateStr);
+				String address = req.getParameter("address");
+				
+				if(user.getEmail().equals(email)!=true) {
+				if(user_service.checkExistEmail(email)==true )
+				{
+					String message = "Email is registered by other user ";
+					session.setAttribute("message1",message);
+					resp.sendRedirect("/uteshop/user/profile");
+					return;
+				}
+				}
+				if(user.getPhoneNumber().equals(phone_number)!=true) {
+					if(user_service.checkExistEmail(phone_number)==true )
+					{
+						String message = "Phone number is registered by other user ";
+						session.setAttribute("message1",message);
+						resp.sendRedirect("/uteshop/user/profile");
+						return;
+					}
+					}
+				long millis = System.currentTimeMillis();
+				java.sql.Timestamp timestamp = new java.sql.Timestamp(millis);
+				timestamp.setNanos(0);
+				
+				UserModel user_updated = new UserModel(user.getId(),fullname,phone_number,address,email,date,image,timestamp);
+				
+				 user_service.update(user_updated);
+				
+				 String message = "Updated successfully";
+				 session.setAttribute("message1",message);
+			} catch (FileNotFoundException fne) {
+				String message = "message1"+ "There was an error: " + fne.getMessage();
+			    session.setAttribute("message1",message);
+			}
+			UserModel user_up = user_service.findById(user.getId());
+			session.setAttribute("activeUser",user_up);
+			resp.sendRedirect("/uteshop/user/profile");
+		}
+	}
+	private String getFileName(Part part) {
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename"))
+				return content.substring(content.indexOf("=") + 2, content.length() - 1);
+		}
+		return DEFAULT_FILENAME;
 	}
 
 }

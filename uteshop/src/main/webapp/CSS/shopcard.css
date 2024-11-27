@@ -1,0 +1,59 @@
+/* Reset và cấu trúc cơ bản */
+
+
+/* Shop Info */
+.shop-info {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+}
+
+.shop-logo img {
+    border-radius: 50%;
+    border: 2px solid #d32330;
+}
+
+.shop-name h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
+}
+
+.shop-name p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.shop-actions button {
+    background-color: #d32330;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.shop-actions button:hover {
+    background-color: #b71c24;
+    transform: scale(1.1);
+}
+
+/* Shop Stats */
+.shop-stats p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.shop-stats span {
+    font-weight: bold;
+}
+

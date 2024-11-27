@@ -66,5 +66,9 @@ public class IUserServiceImpl implements IUserService {
 	public void update(UserModel user) {
 	    userDao.update(user);
 	}
+	@Override
+	public boolean checkExistPhoneNumber(String phonenumber) {
+		return userDao.checkExistPhoneNumber(phonenumber);
+	}
 
 }

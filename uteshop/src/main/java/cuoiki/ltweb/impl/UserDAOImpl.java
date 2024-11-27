@@ -1,4 +1,4 @@
-package cuoiki.ltweb.impl;
+ package cuoiki.ltweb.impl;
 
 import cuoiki.ltweb.configs.*;
 
@@ -231,6 +231,28 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 	}
 
 	@Override
+	public boolean checkExistPhoneNumber(String phonenumber) {
+		String sql = "SELECT * FROM users WHERE phone_number = ?";
+		boolean duplicate = false;
+		try 
+		{
+		    conn = super.getConnection();
+		    ps=conn.prepareStatement(sql);
+		    ps.setString(1,phonenumber);
+		    rs=ps.executeQuery();
+		    if(rs.next()) {
+		    	duplicate=true;
+		    }
+		    ps.close();
+		    conn.close();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return duplicate;
+	}
+
+	@Override
 	public boolean checkExistUsername(String username) {
 		String sql = "SELECT * FROM users WHERE username = ?";
 		boolean duplicate = false;
@@ -253,7 +275,7 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 	}
 	@Override
 	public void update(UserModel user) {
-		 String sql = "UPDATE users SET fullname = ? , phone_number = ? , address = ? , email = ? ,password = ? ,date_of_birth = ? , image = ?, updated_at = ? WHERE id = ?";
+		 String sql = "UPDATE users SET fullname = ? , phone_number = ? , address = ? , email = ? ,date_of_birth = ? , image = ?, updated_at = ? WHERE id = ?";
 		    try {
 		        conn = super.getConnection();
 		        ps = conn.prepareStatement(sql);
@@ -261,11 +283,10 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 		        ps.setString(2, user.getPhoneNumber());
 		        ps.setString(3, user.getAddress());
 		        ps.setString(4, user.getEmail());
-		        ps.setString(5, user.getPassword());
-		        ps.setDate(6,user.getDateOfBirth());
-		        ps.setString(7,user.getImage());
-		        ps.setTimestamp(8,user.getUpdatedAt());
-		        ps.setLong(9,user.getId());
+		        ps.setDate(5,user.getDateOfBirth());
+		        ps.setString(6,user.getImage());
+		        ps.setTimestamp(7,user.getUpdatedAt());
+		        ps.setLong(8,user.getId());
 		        ps.executeUpdate();
 		    } catch (Exception e) {
 		        e.printStackTrace();

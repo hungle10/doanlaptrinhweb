@@ -26,6 +26,7 @@ public class CartController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		HttpSession session = req.getSession();
+		UserModel user = (UserModel)session.getAttribute("activeUser");
 	
 		String path = req.getServletPath();
 		if(path.contains("cartoperation")) {
@@ -47,6 +48,7 @@ public class CartController extends HttpServlet{
 					cart_service.updateQuantity(cid, qty+1);
 					//updating(decreasing) quantity of product in database
 					 product_service.updateQuantity(pid,  product_service.getProductQuantityById(pid) - 1);
+					 session.setAttribute("cartCount",cart_service.getCartCountByUserId(user.getId()));
 					resp.sendRedirect("/uteshop/user/cart");
 					return;
 					
@@ -62,6 +64,7 @@ public class CartController extends HttpServlet{
 				
 				//updating(increasing) quantity of product in database
 				product_service.updateQuantity(pid,  product_service.getProductQuantityById(pid) + 1);
+				session.setAttribute("cartCount",cart_service.getCartCountByUserId(user.getId()));
 				resp.sendRedirect("/uteshop/user/cart");
 				return;
 				
@@ -74,12 +77,13 @@ public class CartController extends HttpServlet{
 				//updating quantity of product in database
 				//adding all the product qty back to database
 				product_service.updateQuantity(pid, product_service.getProductQuantityById(pid) + qty);
+				session.setAttribute("cartCount",cart_service.getCartCountByUserId(user.getId()));
 				resp.sendRedirect("/uteshop/user/cart");
 				return;
 			}
 			
 		}
-		UserModel user = (UserModel)session.getAttribute("activeUser");
+	
 		ICartService cart_service = new ICartServiceImpl();
 		List<CartModel> listOfCart = cart_service.getCartListByUserId(user.getId());
 		List<ProductModel> listOfProduct = new ArrayList<ProductModel>();
@@ -106,6 +110,7 @@ public class CartController extends HttpServlet{
 		String message = "";
 		String path = req.getServletPath();
 		HttpSession session = req.getSession();
+		UserModel user = (UserModel)session.getAttribute("activeUser");
 		if(path.contains("addcart"))
 		{
 			ICartService cart_service = new ICartServiceImpl();
@@ -118,6 +123,7 @@ public class CartController extends HttpServlet{
 			if (quantity == 0) {
 				CartModel cart = new CartModel(user_id,product_id, quantity + 1);
 				cart_service.addToCart(cart);
+				 session.setAttribute("cartCount",cart_service.getCartCountByUserId(user.getId()));
 			    message = "Product is added to cart successfully!";
 				
 			}else {
