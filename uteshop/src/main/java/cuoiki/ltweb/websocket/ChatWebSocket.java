@@ -7,12 +7,29 @@ import jakarta.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import jakarta.websocket.*;
 @ServerEndpoint("/chat1")
 public class ChatWebSocket {
 	// Map lưu trữ session của người dùng (userID -> session)
 	private static Map<String,Session> userSessions = new ConcurrentHashMap<>();
+	  // Executor để lên lịch gọi hàm broadcastUserList
+    private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+    // Khởi tạo task định kỳ
+    static {
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                broadcastUserList();
+            } catch (Exception e) {
+                System.err.println("Error during broadcast: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }, 0, 5, TimeUnit.SECONDS); // Chạy ngay lập tức và lặp lại mỗi 5 giây
+    }
 
 	@OnOpen
 	public void onOpen(Session session) {
@@ -45,7 +62,7 @@ public class ChatWebSocket {
 	        recipientSession.getAsyncRemote().sendText(senderId  + "|" + chatMessage);
 	    } else {
 	        // Người nhận không trực tuyến
-	    	sendSession.getAsyncRemote().sendText(receiverId  + "|" + "Người dùng hiện chưa online");
+	    //	sendSession.getAsyncRemote().sendText(receiverId  + "|" + "Người dùng hiện chưa online");
 	    }
 	}
 
@@ -57,8 +74,8 @@ public class ChatWebSocket {
             
             System.out.println("User disconnected with ID: " + userId);
 
-            // Cập nhật và gửi danh sách user sau khi user ngắt kết nối
-            broadcastUserList();
+            // Cập nhật và gửi danh sách user sau khi user ngắt kết nốin
+           // broadcastUserList();
             WebSocketManager.removeSession(userId);
         }
 	}
@@ -69,7 +86,7 @@ public class ChatWebSocket {
 	    throwable.printStackTrace(); // Ghi lại stack trace của lỗi
 	}
 	// Hàm để gửi danh sách user tới tất cả các client
-    private void broadcastUserList() {
+	static synchronized void broadcastUserList() {
         String userList = "userList|" + String.join(",", userSessions.keySet());
         for (Session session : userSessions.values()) {
             session.getAsyncRemote().sendText(userList);

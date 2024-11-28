@@ -82,6 +82,7 @@ public class OrderDAOImpl extends DBConnectSQLServer implements IOrderDAO{
 		}
 		return order;
 	}
+	
 
 	@Override
 	public List<OrderModel> getOrders(long user_id) {
@@ -116,6 +117,41 @@ public class OrderDAOImpl extends DBConnectSQLServer implements IOrderDAO{
 	    
 	    return orders;
 	}
+	
+	
+	@Override
+	public List<OrderModel> getAllOrders() {
+	    List<OrderModel> orders = new ArrayList<>();
+	    try {
+	        conn = super.getConnection();
+	        String query = "SELECT * FROM orders";
+	        PreparedStatement psmt = this.conn.prepareStatement(query);
+	        
+	  
+	        ResultSet rs = psmt.executeQuery();
+	        
+	        while (rs.next()) {
+	            OrderModel order = new OrderModel();
+	            order.setId(rs.getLong("id"));
+	            order.setUserid(rs.getLong("user_id"));
+	            order.setShippingcompanyid(rs.getLong("shippingcompany_id"));
+	            order.setOrderdate(rs.getDate("order_date"));
+	            order.setStatus(rs.getString("status"));
+	            order.setTotalmoney(rs.getFloat("total_money"));
+	            order.setPayment_method(rs.getString("payment_method"));
+	            order.setPayment_status(rs.getString("payment_status"));
+	            order.setCreatedAt(rs.getTimestamp("created_at"));
+	            order.setUpdatedAt(rs.getTimestamp("updated_at"));
+	            orders.add(order);
+	        }
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return orders;
+	}
+
 
 	
 

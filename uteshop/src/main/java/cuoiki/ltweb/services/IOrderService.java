@@ -13,4 +13,6 @@ public interface IOrderService {
 
     public List<OrderModel> getOrders(long user_id);
 
+	List<OrderModel> getAllOrders();
+
 }

@@ -158,6 +158,83 @@
     <c:remove var="order" scope="session"/>
 </c:if>
 <!-- end of message -->
+<c:if test="${not empty sessionScope.shopregistersuccess}">
+    <script type="text/javascript">
+        console.log("Shop registration notification...");
+        Swal.fire({
+            icon: 'success',
+            title: 'Registration Successful!',
+            text: '${sessionScope.shopregistersuccess}',
+            text: 'Confirmation will be sent to ${user.email}',
+            width: 600,
+            padding: '3em',
+            showConfirmButton: false,
+            timer: 3500,
+            backdrop: `
+                rgba(0,0,123,0.4)
+            `
+        });
+    </script>
+    <!-- Xóa giá trị của "shopregistersuccess" trong session -->
+    <c:remove var="shopregistersuccess" scope="session"/>
+</c:if>
+<c:if test="${not empty sessionScope.shopregisterfail}">
+    <script type="text/javascript">
+        console.log("Shop registration failed notification...");
+        Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed!',
+            text: '${sessionScope.shopregisterfail}',
+            width: 600,
+            padding: '3em',
+            showConfirmButton: false,
+            timer: 3500,
+            backdrop: `
+                rgba(255,0,0,0.4)
+            `
+        });
+    </script>
+    <!-- Xóa giá trị của "shopregisterfail" trong session -->
+    <c:remove var="shopregisterfail" scope="session"/>
+</c:if>
+<c:if test="${not empty sessionScope.shopeditfail}">
+    <script type="text/javascript">
+        console.log("Shop edit failed notification...");
+        Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed!',
+            text: '${sessionScope.shopeditfail}',
+            width: 600,
+            padding: '3em',
+            showConfirmButton: false,
+            timer: 3500,
+            backdrop: `
+                rgba(255,0,0,0.4)
+            `
+        });
+    </script>
+    <!-- Xóa giá trị của "shopregisterfail" trong session -->
+    <c:remove var="shopeditfail" scope="session"/>
+</c:if>
+<c:if test="${not empty sessionScope.shopeditsuccess}">
+    <script type="text/javascript">
+        console.log("Shop registration notification...");
+        Swal.fire({
+            icon: 'success',
+            title: 'Shop has been edited successfully!',
+            text: '${sessionScope.shopeditsuccess}',
+            width: 600,
+            padding: '3em',
+            showConfirmButton: false,
+            timer: 3500,
+            backdrop: `
+                rgba(0,0,123,0.4)
+            `
+        });
+    </script>
+    <!-- Xóa giá trị của "shopregistersuccess" trong session -->
+    <c:remove var="shopeditsuccess" scope="session"/>
+</c:if>
 
 
 </body>

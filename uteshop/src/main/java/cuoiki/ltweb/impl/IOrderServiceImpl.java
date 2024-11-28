@@ -24,5 +24,9 @@ public class IOrderServiceImpl extends DBConnectSQLServer implements IOrderServi
 	public List<OrderModel> getOrders(long user_id){
 		return orderdao.getOrders(user_id);
 	}
+	@Override
+	public List<OrderModel> getAllOrders(){
+		return orderdao.getAllOrders();
+	}
 
 }

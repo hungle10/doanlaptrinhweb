@@ -17,7 +17,21 @@ public class OrderModel {
     private Timestamp createdAt;
 	private Timestamp updatedAt;
 	private List<OrderDetailModel> order_detail_list;
+	private UserModel user;
+	private ShippingCompanyModel shipunit ;
 	
+	public ShippingCompanyModel getShipunit() {
+		return shipunit;
+	}
+	public void setShipunit(ShippingCompanyModel shipunit) {
+		this.shipunit = shipunit;
+	}
+	public UserModel getUser() {
+		return user;
+	}
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
 	public List<OrderDetailModel> getOrder_detail_list() {
 		return order_detail_list;
 	}

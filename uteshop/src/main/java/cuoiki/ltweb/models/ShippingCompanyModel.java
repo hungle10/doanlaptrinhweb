@@ -13,7 +13,9 @@ public class ShippingCompanyModel {
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 	
-	
+	public ShippingCompanyModel() {
+		
+	}
 	
 	public ShippingCompanyModel(long id, String name, String contact_number, String email, String address,
 			float delivery_fee, Timestamp createdAt, Timestamp updatedAt) {

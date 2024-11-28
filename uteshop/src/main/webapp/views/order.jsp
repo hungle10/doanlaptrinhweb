@@ -41,7 +41,24 @@
                                 <td>${order.orderdate}</td>
                                 <td>${order.payment_status}</td>
                                 <td>${order.payment_method}</td>
-                                <td class="fw-semibold" style="color: green;">${order.status}</td>
+                               <td class="fw-semibold">
+                                    <c:choose>
+                                         <c:when test="${order.status == 'Pending'}">
+                                              <span style="color: red;">${order.status}</span>
+                                        </c:when>
+                                        <c:when test="${order.status == 'Cancelled'}">
+                                           <span style="color: red;">${order.status}</span>
+                                              </c:when>
+                                       <c:when test="${order.status == 'Returned-Refunded'}">
+                                      <span style="color: yellow;">${order.status}</span>
+                                    </c:when>
+                                <c:otherwise>
+                                <span style="color: green;">${order.status}</span>
+                               </c:otherwise>
+                          </c:choose>
+                              </td>
+
+ 
                             </tr>
                         </c:forEach>
                     </c:forEach>

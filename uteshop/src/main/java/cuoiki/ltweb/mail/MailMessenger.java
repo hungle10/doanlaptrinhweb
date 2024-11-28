@@ -19,6 +19,21 @@ public class MailMessenger {
 		}
 	}
 
+	public static void successfullyRegisteredShopOwner(String userName, String userEmail, String shopName) {
+	    String subject = "Shop Registration Confirmation - Welcome to UTEShop!";
+	    String body = "Hi " + userName
+	            + ",<p>Congratulations! Your shop, <b>" + shopName + "</b>, has been successfully registered on UTEShop.</p>"
+	            + "<p>We are thrilled to welcome you to our community of shop owners. Your shop registration is now under review by our team. Once it is approved, you'll be able to start managing your shop and connecting with customers.</p>"
+	            + "<p>Shop Details: <br>" + "Shop Name: " + shopName + "</p>"
+	            + "<p>If you have any questions or need assistance, please feel free to reach out to our support team. We're here to help you every step of the way.</p>"
+	            + "<p>Thank you for trusting UTEShop. We look forward to seeing your shop thrive on our platform.</p>"
+	            + "<p>Warm regards,<br><b>UTEShop Team</b></p>";
+	    try {
+	        Mail.sendMail(userEmail, subject, body);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 	public static void successfullyOrderPlaced(String userName, String userEmail, String orderId, String OrderDate) {
 		String subject = "Order Confirmation - Your Product is on its way!";
 		String body = "Hi " + userName
@@ -33,6 +48,23 @@ public class MailMessenger {
 			e.printStackTrace();
 		}
 	}
+	public static void RegisteredShopOwnerWaitToAccepted(String userName, String userEmail, String shopName) {
+	    String subject = "Shop Registration Pending Approval - UTEShop";
+	    String body = "Hi " + userName
+	            + ",<p>Thank you for registering your shop, <b>" + shopName + "</b>, on UTEShop!</p>"
+	            + "<p>We are excited to welcome you to our platform. Your shop registration is currently under review by our admin team to ensure compliance with our guidelines. This process typically takes up to 24-48 hours.</p>"
+	            + "<p>Shop Details: <br>" + "Shop Name: " + shopName + "</p>"
+	            + "<p>Once your shop is approved, you will receive a confirmation email, and you'll be able to start managing your shop and engaging with customers.</p>"
+	            + "<p>If you have any questions in the meantime, feel free to contact our support team. We are here to assist you.</p>"
+	            + "<p>Thank you for choosing UTEShop. We are committed to helping your shop succeed on our platform!</p>"
+	            + "<p>Warm regards,<br><b>UTEShop Team</b></p>";
+	    try {
+	        Mail.sendMail(userEmail, subject, body);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
 
 	public static void orderShipped(String userName, String userEmail, String orderId, String OrderDate) {
 		String subject = "Your Order is Out for Delivery!";

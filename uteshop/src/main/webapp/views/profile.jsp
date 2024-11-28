@@ -79,6 +79,9 @@
 						<button type="button" id="order-btn"
 							class="list-group-item list-group-item-action list-btn">My
 							Orders</button>
+						<button type="button" id="shops-btn"
+							class="list-group-item list-group-item-action list-btn">My
+							Shops</button>
 					</div>
 				</div>
 			</div>
@@ -93,13 +96,17 @@
 					</div>
 					<div id="order" style="display: none;">
 						<%@include file="order.jsp"%>    
-					</div>  
+					</div> 
+					<div id="shops" style="display: none;">
+						<%@include file="shops.jsp"%>    
+					</div>   
 				</div>
 			</div>  
 		</div>
 	</div>
 
 	<script>
+	
 		$(document).ready(function() {
 
 			$('#profile-btn').click(function() {
@@ -107,22 +114,38 @@
 				$('#profile').show();
 				$('#wishlist').hide();
 				$('#order').hide();
+				$('#shops').hide();
 				
 				$(this).addClass('cus-active');
 				$('#wishlist-btn').removeClass('cus-active');
 				$('#order-btn').removeClass('cus-active');
+				$('#shops-btn').removeClass('cus-active');
 				
 
+			});
+			$('#shops-btn').click(function() {
+
+				$('#shops').show();
+				$('#profile').hide();
+				$('#wishlist').hide();
+				$('#order').hide();
+				
+				$(this).addClass('cus-active');
+				$('#wishlist-btn').removeClass('cus-active');
+				$('#order-btn').removeClass('cus-active');
+				$('#profile-btn').removeClass('cus-active');
 			});
 			$('#wishlist-btn').click(function() {
 
 				$('#wishlist').show();
 				$('#profile').hide();
 				$('#order').hide();
+				$('#shops').hide();
 				
 				$(this).addClass('cus-active');
 				$('#profile-btn').removeClass('cus-active');
 				$('#order-btn').removeClass('cus-active');
+				$('#shops-btn').removeClass('cus-active');
 				
 			});
 			$('#order-btn').click(function() {
@@ -130,15 +153,38 @@
 				$('#order').show();
 				$('#profile').hide();
 				$('#wishlist').hide();
+				$('#shops').hide();
 				
 				$(this).addClass('cus-active');
 				$('#profile-btn').removeClass('cus-active');
 				$('#wishlist-btn').removeClass('cus-active');
+				$('#shops-btn').removeClass('cus-active');
 			});
 		});
 		
 		 $(document).ready(function() {
 	            $('#tableOrder').DataTable({
+	                "paging": true,        // Bật phân trang
+	                "searching": true,    // Bật tìm kiếm
+	                "ordering": true,     // Bật sắp xếp cột
+	                "info": true,         // Hiển thị thông tin bảng
+	                "lengthMenu": [5, 10, 25, 50], // Số hàng mỗi trang
+	                "language": {
+	                    "zeroRecords": "Không tìm thấy dữ liệu",
+	                    "infoEmpty": "Không có dữ liệu",
+	                    "infoFiltered": "(lọc từ MAX dòng)",
+	                    "search": "Tìm kiếm:",
+	                    "paginate": {
+	                        "first": "Đầu",
+	                        "last": "Cuối",
+	                        "next": "Tiếp",
+	                        "previous": "Trước"
+	                    }
+	                }
+	            });
+	        });
+		 $(document).ready(function() {
+	            $('#tableShop').DataTable({
 	                "paging": true,        // Bật phân trang
 	                "searching": true,    // Bật tìm kiếm
 	                "ordering": true,     // Bật sắp xếp cột

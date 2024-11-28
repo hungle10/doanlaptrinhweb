@@ -14,5 +14,6 @@ public interface IProductService {
 	void updateQuantity(long id, int qty);
 	int getProductQuantityById(long pid);
 	List<String> getProductsIdSoldOver10();
+	List<ProductModel> getAllProductsByShopId(long shopId);
     
 }

@@ -61,7 +61,7 @@ public class OrderController extends HttpServlet{
 		long order_id = 0;
 		String status = "Order Placed";
 			try {
-				OrderModel order = new OrderModel(user.getId(),shippingcompany_id,currentDate,"New",totalmoney,paymentmethod,"paid",shippingaddress,timestamp,timestamp);
+				OrderModel order = new OrderModel(user.getId(),shippingcompany_id,currentDate,"Pending",totalmoney,paymentmethod,"paid",shippingaddress,timestamp,timestamp);
 			
 			
 				boolean isSucess = order_service.insertOrder(order);

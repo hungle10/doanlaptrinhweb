@@ -125,7 +125,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                             <a class="nav-link chat-button" href="/uteshop/user/registerShop" role="button" aria-expanded="false">
+                             <a class="nav-link chat-button" href="/uteshop/views/registerShop.jsp" role="button" aria-expanded="false">
                                  <i class="fas fa-store"></i> Register Shop
                             </a>
                         </li>

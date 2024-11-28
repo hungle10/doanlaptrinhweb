@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 
 import cuoiki.ltweb.configs.DBConnectSQLServer;
 import cuoiki.ltweb.dao.*;
+import cuoiki.ltweb.models.ShippingCompanyModel;
+import cuoiki.ltweb.models.ShopModel;
 
 public class ShippingCompanyDAOImpl extends DBConnectSQLServer implements IShippingCompanyDAO{
 	public Connection conn = null;
@@ -30,6 +32,40 @@ public class ShippingCompanyDAOImpl extends DBConnectSQLServer implements IShipp
 		}
 		return cid;
 	}
+
+	@Override
+	public ShippingCompanyModel findById(long id) {
+		String sql = "SELECT * FROM shippingcompanys WHERE id = ?";
+		ShippingCompanyModel shippingunit = new ShippingCompanyModel();
+
+		try {
+		    conn = super.getConnection();
+		    ps = conn.prepareStatement(sql);
+		    ps.setLong(1,id); 
+		    rs = ps.executeQuery(); 
+		    while(rs.next())
+			{
+		    	shippingunit.setId(rs.getLong("id"));
+		    	shippingunit.setName(rs.getString("name"));
+		    	shippingunit.setContact_number(rs.getString("contact_number"));
+		    	shippingunit.setEmail(rs.getString("email"));
+		    	shippingunit.setAddress(rs.getString("address"));
+		    	shippingunit.setDelivery_fee(rs.getFloat("delivery_fee"));
+		    	shippingunit.setCreatedAt(rs.getTimestamp("created_at"));
+		    	shippingunit.setUpdatedAt(rs.getTimestamp("updated_at"));
+			}
+		    return shippingunit;
+		    }
+		   catch (Exception e) 
+		{
+		    e.printStackTrace();
+		} finally 
+		{
+		   
+		}
+		return null;
+	}
+	
 	
 	
 

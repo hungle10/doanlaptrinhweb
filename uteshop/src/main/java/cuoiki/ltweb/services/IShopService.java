@@ -1,4 +1,4 @@
-package cuoiki.ltweb.dao;
+package cuoiki.ltweb.services;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.Map;
 
 import cuoiki.ltweb.models.ShopModel;
 
-public interface IShopDAO {
-
-	ShopModel findById(long id);
+public interface IShopService {
 
 	boolean insertShop(ShopModel shop);
 
 	List<ShopModel> getShopsByVendorId(long vendorid);
+
+	ShopModel findById(long id);
 
 	List<Map<String, Object>> getMonthlyRevenue(long shopId) throws SQLException, ClassNotFoundException;
 

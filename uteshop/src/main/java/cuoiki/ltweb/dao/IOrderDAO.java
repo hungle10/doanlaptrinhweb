@@ -12,4 +12,6 @@ public interface IOrderDAO {
 	public OrderModel getOrderByUserIdAndCreatedAt(long user_id, Timestamp created_at);
 
 	public List<OrderModel> getOrders(long user_id);
+
+	List<OrderModel> getAllOrders();
 }

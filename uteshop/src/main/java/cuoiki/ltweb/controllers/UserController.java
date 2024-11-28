@@ -24,6 +24,7 @@ import cuoiki.ltweb.models.CommentModel;
 import cuoiki.ltweb.models.OrderDetailModel;
 import cuoiki.ltweb.models.OrderModel;
 import cuoiki.ltweb.models.ProductModel;
+import cuoiki.ltweb.models.ShopModel;
 import cuoiki.ltweb.models.UserModel;
 import cuoiki.ltweb.models.WishlistModel;
 import cuoiki.ltweb.services.*;
@@ -39,6 +40,7 @@ public class UserController extends HttpServlet{
 	IProductService product_service = new IProductServiceImpl();
 	IOrderDetailService order_detail_service = new IOrderDetailServiceImpl();
 	IOrderService order_service = new IOrderServiceImpl();
+	IShopService shop_service = new IShopServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -104,6 +106,10 @@ public class UserController extends HttpServlet{
           order.setOrder_detail_list(order_detail_list);
           }
           
+          List<ShopModel> shop_list = shop_service.getShopsByVendorId(user1.getId());
+          
+          
+          req.setAttribute("shopList",shop_list);
           req.setAttribute("orderList",order_list);
           req.setAttribute("prodsinwishlist", list_product);
           req.getRequestDispatcher("/views/profile.jsp").forward(req, resp);
