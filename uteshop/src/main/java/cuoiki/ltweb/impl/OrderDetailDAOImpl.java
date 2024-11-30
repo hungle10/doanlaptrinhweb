@@ -22,13 +22,14 @@ public class OrderDetailDAOImpl extends DBConnectSQLServer implements IOrderDeta
 	public void insertOrderedProduct(OrderDetailModel ordProduct) {
 		try {
 			conn = super.getConnection();
-			String query = "insert into order_details(order_id,product_id, price,number_of_products,total_money) values(?, ?, ?, ?, ?)";
+			String query = "insert into order_details(order_id,product_id, price,number_of_products,total_money,status) values(?, ?, ?, ?, ?, ?)";
 			PreparedStatement psmt = this.conn.prepareStatement(query);
 			psmt.setLong(1, ordProduct.getOrderId());
 			psmt.setLong(2, ordProduct.getProductId());
 			psmt.setFloat(3,ordProduct.getPrice());
 			psmt.setInt(4, ordProduct.getNumberOfProducts());
 			psmt.setFloat(5, ordProduct.getTotalMoney());
+			psmt.setString(6,ordProduct.getStatus());
 
 			psmt.executeUpdate();
 
@@ -53,6 +54,7 @@ public class OrderDetailDAOImpl extends DBConnectSQLServer implements IOrderDeta
 				orderProd.setPrice(rs.getFloat("price"));
 				orderProd.setNumberOfProducts(rs.getInt("number_of_products"));
 				orderProd.setTotalMoney(rs.getFloat("total_money"));
+				orderProd.setStatus(rs.getString("status"));
 				list.add(orderProd);
 			}
 		} catch (Exception e) {

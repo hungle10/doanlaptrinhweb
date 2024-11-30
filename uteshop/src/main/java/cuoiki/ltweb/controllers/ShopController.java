@@ -43,6 +43,8 @@ public class ShopController extends HttpServlet{
 	IProductService product_service = new IProductServiceImpl();
 	IUserService user_service = new IUserServiceImpl();
 	IShippingCompanyService shipping_company_service = new IShippingCompanyServiceImpl();
+	ICategoryService category_service = new ICategoryServiceImpl();
+	
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -84,12 +86,18 @@ public class ShopController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
 		if(path.contains("viewshop")) {
+		
 			String shopidStr = req.getParameter("shopid");
 			long shopid = Long.valueOf(shopidStr);
 			ShopModel shop = shop_service.findById(shopid);
+			if(shop.getIs_active()==false)
+				return;
 			List<OrderModel> order_list = order_service.getAllOrders();
 			List<ProductModel> product_list = product_service.getAllProductsByShopId(shopid);
+			for(ProductModel product : product_list) {
 			
+				product.setCategory_name(category_service.getCategoryName(product.getCategory_id()));
+			}
 			
 			for (OrderModel order : order_list) {
 			List<OrderDetailModel> order_detail_list = order_detail_service.getAllOrderedProduct(order.getId());
@@ -117,6 +125,15 @@ public class ShopController extends HttpServlet{
 			order.setOrder_detail_list(order_detail_list);
 			
 			}
+			
+			
+			
+			for(ProductModel product11 : product_list)
+			{
+				System.out.println("thaihung");
+				System.out.println(product11.getId());
+			}
+			req.setAttribute("prodList", product_list);
 			req.setAttribute("orderList", order_list);
 			req.setAttribute("shop",shop);
 			req.getRequestDispatcher("/views/viewDetailShop.jsp").forward(req, resp);

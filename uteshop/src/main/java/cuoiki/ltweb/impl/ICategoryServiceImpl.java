@@ -10,4 +10,9 @@ public class ICategoryServiceImpl implements ICategoryService{
 		return categorydao.getCategoryById(cid);
 	}
 
+	@Override
+	public String getCategoryName(long catId) {
+		return categorydao.getCategoryName(catId);
+	}
+
 }

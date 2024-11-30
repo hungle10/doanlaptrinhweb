@@ -8,8 +8,17 @@ public class OrderDetailModel {
 	private int numberOfProducts;
 	private float totalMoney;
 	private ProductModel product;
+	private String status;
 	
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public ProductModel getProduct() {
 		return product;
 	}

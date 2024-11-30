@@ -16,6 +16,15 @@ public class ProductModel {
 	private Timestamp updatedAt;
 	private long shop_id;
 	private int price_after_discount;
+	private String category_name;
+
+	public String getCategory_name() {
+		return category_name;
+	}
+
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
 
 	public ProductModel(long id, String name, float price, String description, int quantity, int discount, String image,
 			long category_id, Timestamp createdAt, Timestamp updatedAt, long shop_id, int price_after_discount) {

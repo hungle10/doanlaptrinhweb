@@ -27,7 +27,7 @@ import cuoiki.ltweb.impl.WishlistDAOImpl;
 import cuoiki.ltweb.services.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = {"/user/products","/view/product"})
+@WebServlet(urlPatterns = {"/user/products","/view/product","/user/updateproduct","/user/deleteproduct"})
 public class ProductController extends HttpServlet{
 
 	@SuppressWarnings("null")

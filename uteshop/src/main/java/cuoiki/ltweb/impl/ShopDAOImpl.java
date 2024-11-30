@@ -166,6 +166,8 @@ public class ShopDAOImpl extends DBConnectSQLServer implements IShopDAO{
 	                 "JOIN orders o ON od.order_id = o.id " +
 	                 "JOIN products p ON od.product_id = p.id " +
 	                 "WHERE p.shop_id = ? " +
+	                 "AND o.payment_status = 'paid'"+
+	                 "AND od.status = 'Delivered'"+
 	                 "GROUP BY CAST(o.created_at AS DATE) " +
 	                 "ORDER BY day;";
 

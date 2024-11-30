@@ -6,4 +6,6 @@ public interface ICategoryService {
 
 	public CategoryModel getCategoryById(long cid);
 
+	String getCategoryName(long catId);
+
 }

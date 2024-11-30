@@ -46,13 +46,13 @@ public class CategoryDAOImpl extends DBConnectSQLServer implements ICategoryDAO{
 		return null;
 	}
 	@Override
-	public String getCategoryName(int catId) {
+	public String getCategoryName(long catId) {
 		String category = "";
 		try {
 			conn = super.getConnection();
 			String query = "select * from categories where id = ?";
 			PreparedStatement psmt = this.conn.prepareStatement(query);
-			psmt.setInt(1, catId);
+			psmt.setLong(1, catId);
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
 				category = rs.getString("name");

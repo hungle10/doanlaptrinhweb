@@ -72,7 +72,7 @@
 							</c:choose>
 						</td>
 						<!-- remove product in cart :v -->
-						<td>&#8377;${cart.quantity * product.price_after_discount}</td>
+						<td>&#8363;<span id="total-amount">${cart.quantity * product.price_after_discount}</span></td>
 						<td><a href="/uteshop/user/cartoperation?cid=${cart.cartId}&opt=3" class="btn btn-secondary" role="button">Remove</a></td>
 					</tr>
 					</c:if>
@@ -81,8 +81,8 @@
 				<tr>
     <td class="text-end" colspan="8">
         <h4 class='pe-5'>
-            Total Amount : &#8377;
-            <c:out value="${totalPrice}" />
+            Total Amount : &#8363;
+            <span id="total-price">${totalPrice}</span>
         </h4>
     </td>
 </tr>
@@ -95,5 +95,31 @@
 </div>
 </div>
 </c:if>
+<script>
+        // Chuyển đổi giá trị dạng khoa học thành dạng số bình thường
+        var totalAmountElement = document.getElementById('total-amount');
+        var totalAmountValue = totalAmountElement.innerText;
+
+        if (totalAmountValue.includes('E')) {
+            // Chuyển sang dạng số bình thường
+            totalAmountValue = Number(totalAmountValue).toLocaleString('vi-VN');
+            totalAmountElement.innerText = totalAmountValue;
+        }
+     // Lấy phần tử có id 'total-price'
+        var totalAmountElement1 = document.getElementById('total-price');
+
+        // Lấy giá trị của phần tử
+         var totalAmountValue1 = totalAmountElement1.innerText;
+
+        // Kiểm tra xem giá trị có chứa ký tự 'E' (chỉ thị số ở dạng khoa học) hay không
+        if (totalAmountValue1.includes('E')) {
+            // Chuyển sang dạng số bình thường với phân cách hàng nghìn
+            totalAmountValue1 = Number(totalAmountValue1).toLocaleString('vi-VN');
+            
+            // Cập nhật lại giá trị sau khi chuyển đổi
+            totalAmountElement1.innerText = totalAmountValue1;
+        }
+
+    </script>
 </body>
 </html>

@@ -57,8 +57,8 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			String query = "SELECT od.product_id, SUM(od.number_of_products) AS total_quantity\r\n"
 					+ "FROM order_details od\r\n"
 					+ "JOIN orders o ON od.order_id = o.id\r\n"
-					+ "WHERE o.status = 'Delivered'\r\n"
-					+ "  AND o.payment_status = 'paid'\r\n"
+					+ "WHERE o.payment_status = 'paid'\r\n"
+					+ "  AND od.status = 'Delivered'\r\n"
 					+ "GROUP BY od.product_id\r\n"
 					+ "HAVING SUM(od.number_of_products) > 10\r\n"
 					+ "ORDER BY total_quantity DESC;";

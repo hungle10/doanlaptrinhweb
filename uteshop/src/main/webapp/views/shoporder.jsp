@@ -23,12 +23,13 @@
                         <th>Total money</th>
                         <th>Payment method</th>
                         <th>Payment status</th>
+                       <th colspan="1" class="text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="order" items="${orderList}">
                         <c:forEach var="orderProduct" items="${order.order_detail_list}">
-                            <form action="/uteshop/user/order/update?oid=${order.id}" method="post">
+                      
                                 <tr>
                                     <td class="text-center">
                                      <c:if test="${orderProduct.product.image != ''}">
@@ -48,10 +49,8 @@
                                     <td>
                                         ${orderProduct.product.name}<br>
                                         Quantity: ${orderProduct.numberOfProducts}<br>
-                                        Total Price: &#8377;<fmt:formatNumber value="${orderProduct.price * orderProduct.numberOfProducts}" 
-                  type="number" 
-                  maxFractionDigits="2" 
-                  groupingUsed="true"/>
+                                        Total Price: &#8377;${orderProduct.price * orderProduct.numberOfProducts}
+             
                                         
 
                                     </td>
@@ -62,13 +61,21 @@
                                     </td>
                                     <td>${order.orderdate}</td>
                                    
-                                    <td>${order.status}</td>
+                                    <td>${orderProduct.status}
+                                    
+                                    </td>
                                     <td>${order.shipunit.name }</td>
                                     <td>${order.totalmoney }</td>
                                      <td>${order.payment_method}</td>
                                      <td>${order.payment_status }</td>
+                           <td>
+                                <a href="/uteshop/user/orderdetail/update?odid=${orderProduct.id}" role="button" class="btn btn-secondary">Update</a>
+                                &emsp;
+                                
+                            </td>
+                                    
                                 </tr>
-                            </form>
+                
                         </c:forEach>
                     </c:forEach>
                     </tbody>
@@ -78,6 +85,7 @@
     </c:choose>
 </div>
 <script>
+
  $(document).ready(function() {
 	            $('#table-order').DataTable({
 	                "paging": true,        // Bật phân trang

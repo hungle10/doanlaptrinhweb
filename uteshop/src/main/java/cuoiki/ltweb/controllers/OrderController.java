@@ -21,7 +21,7 @@ import cuoiki.ltweb.impl.*;
 import cuoiki.ltweb.mail.MailMessenger;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = { "/user/order/add"})
+@WebServlet(urlPatterns = { "/user/order/add","/user/order/update"})
 public class OrderController extends HttpServlet{
 
 	@Override
@@ -33,6 +33,16 @@ public class OrderController extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String path = req.getServletPath();
+		if(path.contains("update")) {
+			
+			String order_detail_idStr = req.getParameter("odid");
+			long order_detail = Long.valueOf(order_detail_idStr);
+			String status = req.getParameter("status");
+			
+			
+			return;
+		}
 		IShippingCompanyService shippingcompany_service = new IShippingCompanyServiceImpl();
 		ICartService cart_service = new ICartServiceImpl();
 		IOrderDetailService orderdetail_service = new IOrderDetailServiceImpl();
@@ -59,10 +69,18 @@ public class OrderController extends HttpServlet{
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(millis);
 		timestamp.setNanos(0);
 		long order_id = 0;
-		String status = "Order Placed";
+		String status_payment = "paid";
 			try {
-				OrderModel order = new OrderModel(user.getId(),shippingcompany_id,currentDate,"Pending",totalmoney,paymentmethod,"paid",shippingaddress,timestamp,timestamp);
-			
+				String status = "";
+				if(paymentmethod.equals("COD")) {
+					status = "COD";
+					status_payment = "unpaid";
+				}
+				else {
+					status ="cardpayment";
+				}
+				OrderModel order = new OrderModel(user.getId(),shippingcompany_id,currentDate,"Order Placed",totalmoney,status,status_payment,shippingaddress,timestamp,timestamp);
+
 			
 				boolean isSucess = order_service.insertOrder(order);
 				if(isSucess==true)
@@ -87,6 +105,7 @@ public class OrderController extends HttpServlet{
 					float price = product_service.getProductPriceAfterDiscount(prod.getDiscount(),prod.getPrice()); //tính toán sau khi giảm
 					float totalMoney = prodQty * price;
 					OrderDetailModel orderedProduct = new OrderDetailModel(order_added.getId(),prod.getId(),price,prodQty,totalMoney);
+					orderedProduct.setStatus("Pending"); //chỉnh sửa đây nè 
 					orderdetail_service.insertOrderedProduct(orderedProduct);
 					session.removeAttribute("productBuyNow");
 					session.removeAttribute("from");
@@ -102,6 +121,7 @@ public class OrderController extends HttpServlet{
 					float price = product_service.getProductPriceAfterDiscount(prod.getDiscount(),prod.getPrice()); //tính toán sau khi giảm
 					float totalMoney = prodQty * price;
 					OrderDetailModel orderedProduct = new OrderDetailModel(order_added.getId(),item.getProductId(),price,prodQty,totalMoney);
+					orderedProduct.setStatus("Pending");
 					orderdetail_service.insertOrderedProduct(orderedProduct);
 				}
 				}
