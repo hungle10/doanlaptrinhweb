@@ -17,5 +17,9 @@ public void insertOrderedProduct(OrderDetailModel ordProduct) {
 public List<OrderDetailModel>getAllOrderedProduct(long oid){
 	return orderdetaildao.getAllOrderedProduct(oid);
 }
+@Override
+public void updateOrderDetail(long id, String status) {
+	orderdetaildao.updateOrderDetail(id, status);
+}
 
 }

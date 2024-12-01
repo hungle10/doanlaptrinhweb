@@ -9,7 +9,7 @@
             </div>
         </c:when>
         <c:otherwise>
-            <div class="container-fluid">
+            <div class="container">
                 <table id="table-order" class="table  table-hover">
                  <thead>
                     <tr class="table-primary" style="font-size: 18px;">
@@ -29,8 +29,8 @@
                     <tbody>
                     <c:forEach var="order" items="${orderList}">
                         <c:forEach var="orderProduct" items="${order.order_detail_list}">
-                      
                                 <tr>
+                                <form action="/uteshop/user/orderdetail/update?odid=${orderProduct.id}&shopid=${requestScope.shop.id}" method="post">
                                     <td class="text-center">
                                      <c:if test="${orderProduct.product.image != ''}">
                  
@@ -69,14 +69,28 @@
                                      <td>${order.payment_method}</td>
                                      <td>${order.payment_status }</td>
                            <td>
-                                <a href="/uteshop/user/orderdetail/update?odid=${orderProduct.id}" role="button" class="btn btn-secondary">Update</a>
-                                &emsp;
-                                
+                              	<c:choose>
+                                      <c:when test="${orderProduct.status == 'Delivered'}">
+                                          <button type="submit" class="btn btn-success disabled">Update</button>
+                                      </c:when>
+                                   <c:otherwise>
+                                     <button type="submit" class="btn btn-secondary">Update</button>
+                                  </c:otherwise>
+                             </c:choose>
+                 
+                                <select id="operation" name="status" class="form-select">
+							<option>--Select Operation--</option>
+							<option value="Order Confirmed">Order Confirmed</option>
+						  	<option value="Pending">Pending</option>
+							<!--<option value="Out For Delivery">Out For Delivery</option>
+							<option value="Delivered">Delivered</option> -->
+					        </select>
                             </td>
-                                    
+                            </form>
                                 </tr>
-                
+                         
                         </c:forEach>
+                       
                     </c:forEach>
                     </tbody>
                 </table>

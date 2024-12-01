@@ -31,4 +31,6 @@ public interface IProductDAO {
 
 	List<ProductModel> getAllProductsByShopId(long shopId);
 
+	void insert(ProductModel product);
+
 }

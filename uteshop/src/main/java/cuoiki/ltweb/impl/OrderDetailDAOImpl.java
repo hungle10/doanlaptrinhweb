@@ -63,4 +63,21 @@ public class OrderDetailDAOImpl extends DBConnectSQLServer implements IOrderDeta
 		return list;
 	}
 
+	@Override
+	public void updateOrderDetail(long id, String status) {
+
+		try {
+			conn = super.getConnection();
+			String query = "update order_details set status = ? where id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setString(1, status);
+			psmt.setLong(2, id);
+
+			psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

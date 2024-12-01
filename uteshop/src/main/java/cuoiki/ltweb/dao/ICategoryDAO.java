@@ -10,4 +10,6 @@ public interface ICategoryDAO {
 	public CategoryModel getCategoryById(long cid);
 
 	String getCategoryName(long catId);
+
+	CategoryModel getCategoryByCategoryName(String categoryname);
 }

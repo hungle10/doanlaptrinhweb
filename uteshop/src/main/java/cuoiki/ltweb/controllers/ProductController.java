@@ -1,6 +1,9 @@
 package cuoiki.ltweb.controllers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +13,13 @@ import cuoiki.ltweb.models.ProductModel;
 import cuoiki.ltweb.models.ShopModel;
 import cuoiki.ltweb.models.UserModel;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import cuoiki.ltweb.dao.*;
 import cuoiki.ltweb.impl.CategoryDAOImpl;
 import cuoiki.ltweb.impl.ICategoryServiceImpl;
@@ -27,8 +32,13 @@ import cuoiki.ltweb.impl.WishlistDAOImpl;
 import cuoiki.ltweb.services.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = {"/user/products","/view/product","/user/updateproduct","/user/deleteproduct"})
+@WebServlet(urlPatterns = {"/user/products","/view/product","/user/updateproduct","/user/deleteproduct","/user/addproduct"})
+@MultipartConfig
 public class ProductController extends HttpServlet{
+	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Admin\\git\\repositorydoanlaptrinhweb\\uteshop\\src\\main\\webapp\\Images";
+	public static final String DEFAULT_FILENAME = "default.file";
+
+
 
 	@SuppressWarnings("null")
 	@Override
@@ -204,5 +214,84 @@ public class ProductController extends HttpServlet{
         	req.getRequestDispatcher("/views/viewDetailProduct.jsp").forward(req, resp);
         }
 	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String path = req.getServletPath();
+		if(path.contains("/user/addproduct")) {
+			String shopidStr = req.getParameter("shopid");
+			
+			long shopid = Long.valueOf(shopidStr);
+			
+			
+			String nameProd = req.getParameter("name");
+			String descriptionProd = req.getParameter("description");
+			String priceProdStr = req.getParameter("price");
+			float pricePrd = Float.valueOf(priceProdStr);
+			String discountProdStr = req.getParameter("discount");
+			int discount = Integer.valueOf(discountProdStr);
+			String quantityProdStr = req.getParameter("quantity");
+			int quantity = Integer.valueOf(quantityProdStr);
+			String categoryId = req.getParameter("categoryType");
+			
+			IProductService product_service = new IProductServiceImpl();
+			ICategoryService category_service = new ICategoryServiceImpl();
+			
+			CategoryModel cate = category_service.getCategoryById(Long.valueOf(categoryId));
+		    
+			String uploadPath = File.separator + UPLOAD_DIRECTORY; // upload vào thư mục bất kỳ
+			// String uploadPath = getServletContext().getRealPath("") + File.separator +
+			// UPLOAD_DIRECTORY; //upload vào thư mục project
+
+			System.out.print(uploadPath);
+			File uploadDir = new File(uploadPath);
+			if (!uploadDir.exists())
+				uploadDir.mkdir();
+			try { 
+				String fileName = "";
+				String image = "";
+				// vì đọc(dịch input) thành cái part chỉ 1 lần nên cần lưu trong list để cần thì
+				// duyệt lại
+				List<Part> fileParts = (List<Part>) req.getParts();
+				    
+				for (Part part : fileParts) {
+					fileName = getFileName(part);
+					if (fileName !=  "") {
+						
+						String partName = part.getName();
+						   if ("fileimage".equals(partName)) {
+							   image = fileName; // Lưu tên ảnh
+							   
+					        }
+						part.write(uploadPath + File.separator + fileName);
+					}
+
+				}
+		
+			    
+				
+				long millis = System.currentTimeMillis();
+				java.sql.Timestamp timestamp = new java.sql.Timestamp(millis);
+				timestamp.setNanos(0);
+				
+				ProductModel prod = new ProductModel(nameProd,pricePrd,descriptionProd,quantity,discount,image,cate.getId(),timestamp,timestamp,shopid);
+				product_service.insert(prod);
+				
+				
+				req.setAttribute("message", "Product has uploaded successfully!");
+			} catch (FileNotFoundException fne) {
+				req.setAttribute("message", "There was an error: " + fne.getMessage());
+			}
+			req.getRequestDispatcher("/user/viewshop?shopid=" + shopidStr).forward(req, resp);
+		}
+	}
+	private String getFileName(Part part) {
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			if (content.trim().startsWith("filename"))
+				return content.substring(content.indexOf("=") + 2, content.length() - 1);
+		}
+		return DEFAULT_FILENAME;
+	}
+	
 
 }

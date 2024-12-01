@@ -9,6 +9,7 @@ import java.util.List;
 
 import cuoiki.ltweb.configs.DBConnectSQLServer;
 import cuoiki.ltweb.dao.IProductDAO;
+import cuoiki.ltweb.models.CommentModel;
 import cuoiki.ltweb.models.ProductModel;
 import cuoiki.ltweb.models.ShopModel;
 
@@ -411,6 +412,31 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			e.printStackTrace();
 		}
 		return qty;
+	}
+	@Override
+	public void insert(ProductModel product) {
+		String sql = "INSERT INTO products (name,price,description,quantity,discount,image,category_id,created_at,updated_at,shop_id)\r\n"
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+		try
+		{
+			conn=super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,product.getName());
+			ps.setFloat(2, product.getPrice());
+			ps.setString(3, product.getDescription());
+			ps.setInt(4, product.getQuantity());
+			ps.setInt(5, product.getDiscount());
+			ps.setString(6,product.getImage());
+			ps.setLong(7,product.getCategory_id());
+			ps.setTimestamp(8, product.getCreatedAt());
+			ps.setTimestamp(9,product.getUpdatedAt());
+			ps.setLong(10,product.getShop_id());
+			int i = ps.executeUpdate();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 	

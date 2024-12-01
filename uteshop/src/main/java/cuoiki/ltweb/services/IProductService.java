@@ -15,5 +15,6 @@ public interface IProductService {
 	int getProductQuantityById(long pid);
 	List<String> getProductsIdSoldOver10();
 	List<ProductModel> getAllProductsByShopId(long shopId);
+	void insert(ProductModel product);
     
 }

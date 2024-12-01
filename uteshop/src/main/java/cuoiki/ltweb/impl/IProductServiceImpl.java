@@ -39,5 +39,9 @@ public class IProductServiceImpl implements IProductService{
 	public List<ProductModel> getAllProductsByShopId(long shopId){
 		return productdao.getAllProductsByShopId(shopId);
 	}
+	@Override
+	public void insert(ProductModel product) {
+		productdao.insert(product);
+	}
 
 }

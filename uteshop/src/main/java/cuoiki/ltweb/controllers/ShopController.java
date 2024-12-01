@@ -18,6 +18,7 @@ import cuoiki.ltweb.models.ProductModel;
 import cuoiki.ltweb.models.ShippingCompanyModel;
 import cuoiki.ltweb.models.ShopModel;
 import cuoiki.ltweb.models.UserModel;
+import cuoiki.ltweb.models.CategoryModel;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -32,7 +33,7 @@ import cuoiki.ltweb.mail.MailMessenger;
 import cuoiki.ltweb.services.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = {"/user/registerShop","/user/viewshop","/revenue","/user/updateShop"})
+@WebServlet(urlPatterns = {"/user/registerShop","/user/viewshop","/revenue","/user/updateShop","/user/orderdetail/update"})
 @MultipartConfig
 public class ShopController extends HttpServlet{
 	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Admin\\git\\repositorydoanlaptrinhweb\\uteshop\\src\\main\\webapp\\Images";
@@ -85,6 +86,20 @@ public class ShopController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
+		if(path.contains("orderdetail/update")) {
+			String odidStr = req.getParameter("odid");
+			String status = req.getParameter("status");
+			String shopidStr = req.getParameter("shopid");
+			
+		
+			long odid = Long.valueOf(odidStr);
+			
+			order_detail_service.updateOrderDetail(odid, status);
+			
+			req.setAttribute("shopid", shopidStr);
+			req.getRequestDispatcher("/user/viewshop").forward(req, resp);
+			return;
+		}
 		if(path.contains("viewshop")) {
 		
 			String shopidStr = req.getParameter("shopid");
@@ -94,6 +109,8 @@ public class ShopController extends HttpServlet{
 				return;
 			List<OrderModel> order_list = order_service.getAllOrders();
 			List<ProductModel> product_list = product_service.getAllProductsByShopId(shopid);
+			List<CategoryModel> category_list = category_service.findAll();
+			
 			for(ProductModel product : product_list) {
 			
 				product.setCategory_name(category_service.getCategoryName(product.getCategory_id()));
@@ -135,6 +152,7 @@ public class ShopController extends HttpServlet{
 			}
 			req.setAttribute("prodList", product_list);
 			req.setAttribute("orderList", order_list);
+			req.setAttribute("categoryList", category_list);
 			req.setAttribute("shop",shop);
 			req.getRequestDispatcher("/views/viewDetailShop.jsp").forward(req, resp);
 			return;

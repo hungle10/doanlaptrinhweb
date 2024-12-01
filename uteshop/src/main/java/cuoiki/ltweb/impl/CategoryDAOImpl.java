@@ -84,6 +84,28 @@ public class CategoryDAOImpl extends DBConnectSQLServer implements ICategoryDAO{
 		}
 		return category;
 	}
+	
+	@Override
+	public CategoryModel getCategoryByCategoryName(String categoryname) {
+		CategoryModel category = new CategoryModel();
+		try {
+			conn = super.getConnection();
+			String query = "select * from categories where name = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setString(1, categoryname);
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				category.setId(rs.getLong("id"));
+				category.setName(rs.getString("name"));
+				category.setImage(rs.getString("image"));
+				category.setCreatedAt(rs.getTimestamp("created_at"));
+				category.setCreatedAt(rs.getTimestamp("updated_at"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return category;
+	}
 
 	
 

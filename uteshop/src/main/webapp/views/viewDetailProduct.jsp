@@ -147,9 +147,10 @@
       <!-- modal ở đây nè :vv -->
     <button type="button" class="btn btn-link text-secondary p-0"
 									data-bs-toggle="modal" data-bs-target="#exampleModal"
-									 data-comment-id="${comment.id}"
-									  data-comment-text="${comment.comment_text}" 
-							
+									data-comment-id="${comment.id}"
+									data-comment-text="${comment.comment_text}" 
+							        data-comment-image="${comment.image }"
+							        data-comment-video="${comment.video }"
 									
 		
 									style="border: none; background: none;">
@@ -246,7 +247,7 @@
                         <label for="images">Images:</label><br>
                          <input type="file" id="images" name="fileimage" onchange="chooseFile1(this)" ><br>
                         
-                         <img id="imagess1" src="" width="80" height="70" /><br>  
+                         <img id="imagess1" width="80" height="70" /><br>  
                          
 
                       <label for="videos">Videos :</label><br>
@@ -255,7 +256,7 @@
 
                       
                  <video  id="videoElement1" width="120" height="100" controls >
-                     <source  src= ""  type="video/mp4">
+                     <source  type="video/mp4">
                      </video>   
                     </div>
                 </div>
@@ -324,23 +325,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // Lấy dữ liệu từ data-*
         const commentId = button.getAttribute('data-comment-id');
         const commentText = button.getAttribute('data-comment-text');
- 
-
-  
-
-
+        const commentImage = button.getAttribute('data-comment-image');
+        const commentVideo = button.getAttribute('data-comment-video');
 
         // Gán dữ liệu vào modal
         const modalCommentId = editCommentModal.querySelector('#modalCommentId');
         const modalCommentText = editCommentModal.querySelector('#modalCommentText');
-
-     
-
+        const modalCommentImage = editCommentModal.querySelector('#imagess1');
+        const modalCommentVideo = editCommentModal.querySelector('#videoElement1');
 
 
         modalCommentId.value = commentId;
         modalCommentText.value = commentText;
-     
+        modalCommentImage.src = '/uteshop/Images/'+commentImage;
+        modalCommentVideo.src = '/uteshop/Images/'+commentVideo;
 
         
        

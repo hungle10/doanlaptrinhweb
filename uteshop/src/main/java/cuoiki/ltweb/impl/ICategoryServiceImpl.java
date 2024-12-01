@@ -1,6 +1,9 @@
 package cuoiki.ltweb.impl;
 import cuoiki.ltweb.models.CategoryModel;
 import cuoiki.ltweb.services.*;
+
+import java.util.List;
+
 import cuoiki.ltweb.dao.*;
 
 public class ICategoryServiceImpl implements ICategoryService{
@@ -13,6 +16,14 @@ public class ICategoryServiceImpl implements ICategoryService{
 	@Override
 	public String getCategoryName(long catId) {
 		return categorydao.getCategoryName(catId);
+	}
+	@Override
+	public List<CategoryModel> findAll() {
+		return categorydao.findAll();
+	}
+	@Override
+	public CategoryModel getCategoryByCategoryName(String categoryname) {
+		return categorydao.getCategoryByCategoryName(categoryname);
 	}
 
 }

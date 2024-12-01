@@ -10,4 +10,6 @@ public interface IOrderDetailService {
 
 	List<OrderDetailModel> getAllOrderedProduct(long oid);
 
+	void updateOrderDetail(long id, String status);
+
 }

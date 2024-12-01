@@ -10,4 +10,6 @@ public interface IOrderDetailDAO {
 
 	List<OrderDetailModel> getAllOrderedProduct(long oid);
 
+	void updateOrderDetail(long id, String status);
+
 }

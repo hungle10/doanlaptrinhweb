@@ -43,17 +43,17 @@
                                 <td>${order.payment_method}</td>
                                <td class="fw-semibold">
                                     <c:choose>
-                                         <c:when test="${order.status == 'Pending'}">
-                                              <span style="color: red;">${order.status}</span>
+                                         <c:when test="${orderProduct.status == 'Pending'}">
+                                              <span style="color: red;">${orderProduct.status}</span>
                                         </c:when>
-                                        <c:when test="${order.status == 'Cancelled'}">
-                                           <span style="color: red;">${order.status}</span>
+                                        <c:when test="${orderProduct.status == 'Cancelled'}">
+                                           <span style="color: red;">${orderProduct.status}</span>
                                               </c:when>
-                                       <c:when test="${order.status == 'Returned-Refunded'}">
-                                      <span style="color: yellow;">${order.status}</span>
+                                       <c:when test="${orderProduct.status == 'Returned-Refunded'}">
+                                      <span style="color: yellow;">${orderProduct.status}</span>
                                     </c:when>
                                 <c:otherwise>
-                                <span style="color: green;">${order.status}</span>
+                                <span style="color: green;">${orderProduct.status}</span>
                                </c:otherwise>
                           </c:choose>
                               </td>
