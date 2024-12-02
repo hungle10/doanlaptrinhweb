@@ -97,16 +97,16 @@
 							</tr>
 							<tr>
 								<td>Total Price</td>
-								 <td>&#8377; <span id="totalPrice"><c:out value="${totalPrice}"/></span></td>
+								 <td> <span id="totalPrice"><c:out value="${totalPrice}"/></span>&#8363;</td>
 							</tr>
 							<tr>
 								<td>Delivery Charges</td>
-								<td>&#8377; <span id="cost">0.00</span></td>
+								<td><span id="cost">0.00</span></td>
 							</tr>
 							<tr>
 								<td><h5>Amount Payable :</h5></td>
                                    <td>
-                                        <h5>&#8377; <span id="amountPayable"><c:out value="${totalPrice}"/></span></h5>
+                                        <h5><span id="amountPayable"><c:out value="${totalPrice}"/></span></h5>
 
                                   </td>
 							</tr>
@@ -119,25 +119,48 @@
 	</div>
 	<script>
 	function calculateShipping(selectElement) {
-    const carrier = selectElement.value; // Lấy giá trị của nhà vận chuyển
-    const totalPrice = parseFloat(document.getElementById("totalPrice").innerText);
+	    const carrier = selectElement.value; // Lấy giá trị của nhà vận chuyển
+	    // Loại bỏ ký tự không phải số và chuyển thành số thực
+	    const totalPrice = parseFloat(document.getElementById("totalPrice").innerText.replace(/[^\d]/g, ""));
 
-    // Gửi yêu cầu đến servlet
-    fetch('/uteshop/user/checkout/shippingcaculator?carrier='+ carrier)
-        .then(response => response.json()) // Đọc dữ liệu trả về dưới dạng JSON
-        .then(data => {
-        	 const deliveryCharge = data.cost;
-            // Hiển thị phí vận chuyển
-            document.getElementById("cost").innerText = data.cost.toFixed(2);
-            // Cập nhật Amount Payable (tổng giá trị sản phẩm + phí vận chuyển)
-            const totalAmountPayable = totalPrice + deliveryCharge;
-            document.getElementById("amountPayable").innerText = totalAmountPayable.toFixed(2); // Hiển thị tổng tiền phải trả
-        })
-        .catch(error => {
-            console.error("Error fetching shipping cost:", error);
-            document.getElementById("cost").innerText = "Error";
-        });
-       }
+	    fetch('/uteshop/user/checkout/shippingcaculator?carrier=' + carrier)
+	        .then(response => response.json()) // Đọc dữ liệu trả về dưới dạng JSON
+	        .then(data => {
+	            const deliveryCharge = parseFloat(data.cost); // Chuyển thành số thực
+	            // Hiển thị phí vận chuyển
+	            document.getElementById("cost").innerText = deliveryCharge.toLocaleString('vi-VN') + '₫';
+
+	            // Tính toán tổng tiền phải trả
+	            const totalAmountPayable = totalPrice + deliveryCharge;
+
+	            // Định dạng và hiển thị tổng tiền phải trả
+	            document.getElementById("amountPayable").innerText = totalAmountPayable.toLocaleString('vi-VN') + '₫';
+	        })
+	        .catch(error => {
+	            console.error("Error fetching shipping cost:", error);
+	            document.getElementById("cost").innerText = "Error";
+	        });
+	}
+
+	function formatPrice(elementId) {
+	    var element = document.getElementById(elementId);
+	    var value = element.innerText;
+
+	    // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
+	    value = value.replace('₫', '').trim();
+
+	    if (value.includes('E')) {
+	        // Chuyển sang dạng số bình thường và thêm định dạng
+	        value = Number(value).toLocaleString('vi-VN');
+	        element.innerText = value;
+	    }
+	}
+
+	// Gọi hàm formatPrice cho từng phần tử
+	formatPrice('totalPrice');
+	formatPrice('cost');
+	formatPrice('amountPayable');
+
 	</script>
 </body>
 </html>

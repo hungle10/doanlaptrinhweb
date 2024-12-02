@@ -49,7 +49,7 @@
                                     <td>
                                         ${orderProduct.product.name}<br>
                                         Quantity: ${orderProduct.numberOfProducts}<br>
-                                        Total Price: &#8377;${orderProduct.price * orderProduct.numberOfProducts}
+                                        Total Price:<span class="product-price-shop-owner">${orderProduct.price * orderProduct.numberOfProducts}</span> &#8363;
              
                                         
 
@@ -121,4 +121,21 @@
 	                }
 	            });
 	        });
+ function formatPrices(className) {
+	    var elements = document.querySelectorAll('.' + className);
+	    elements.forEach(function(element) {
+	        var value = element.innerText;
+
+	        // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
+	        value = value.replace('₫', '').trim();
+
+	     
+	            value = Number(value).toLocaleString('vi-VN');
+	            element.innerText = value;
+	    
+	    });
+	}
+
+	// Gọi hàm formatPrices cho từng loại giá
+	formatPrices('product-price-shop-owner');
  </script>

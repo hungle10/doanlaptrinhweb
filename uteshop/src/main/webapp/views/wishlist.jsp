@@ -27,7 +27,7 @@
                                 <c:out value="${p.name}" />
                             </td>
                             <td>
-                                &#8377;<c:out value="${p.price_after_discount}" />
+                                <span class="product-price1111"><c:out value="${p.price_after_discount}" /></span>&#8363;
                             </td>
                             <td>
                                 <a href=" /uteshop/user/wishlist?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=delete"
@@ -40,3 +40,24 @@
         </c:otherwise>
     </c:choose>
 </div>
+<script>
+function formatPrices(className) {
+    var elements = document.querySelectorAll('.' + className);
+    elements.forEach(function(element) {
+        var value = element.innerText;
+
+        // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
+        value = value.replace('₫', '').trim();
+
+     
+            value = Number(value).toLocaleString('vi-VN');
+            element.innerText = value;
+    
+    });
+}
+
+// Gọi hàm formatPrices cho từng loại giá
+formatPrices('product-price1111');
+
+
+</script>	

@@ -50,8 +50,9 @@
 				<div class="container-fluid my-5">
 					<h4>${requestScope.product.name}</h4>
 					<span class="fs-5"><b>Description</b></span><br> <span>${requestScope.product.description}</span><br>
-					<span class="real-price">&#8363;${requestScope.product.price}</span>&ensp;
-					<span class="product-price">&#8363;${requestScope.product.price_after_discount}</span>&ensp;
+				    <span class="real-price">${requestScope.product.price_after_discount}&#8363;</span>&ensp;
+					<span class="product-price">${requestScope.product.price}&#8363;</span>&ensp;
+		
 					<span class="product-discount">${requestScope.product.discount}&#37;off</span><br>
 					<span class="fs-5"><b>Status : </b></span> <span id="availability">
 						<c:choose>
@@ -345,7 +346,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+function formatPrices(className) {
+    var elements = document.querySelectorAll('.' + className);
+    elements.forEach(function(element) {
+        var value = element.innerText;
+
+        // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
+        value = value.replace('₫', '').trim();
+
+     
+            value = Number(value).toLocaleString('vi-VN') + '₫';
+            element.innerText = value;
+    
+    });
+}
+
+// Gọi hàm formatPrices cho từng loại giá
+formatPrices('real-price');
+formatPrices('product-price');
+
 </script>
+
+
 </body>
 </body>
 </html>

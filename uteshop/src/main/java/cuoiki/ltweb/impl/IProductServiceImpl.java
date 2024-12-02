@@ -43,5 +43,13 @@ public class IProductServiceImpl implements IProductService{
 	public void insert(ProductModel product) {
 		productdao.insert(product);
 	}
+	@Override
+	public void update(ProductModel product) {
+		productdao.update(product);
+	}
+	@Override
+	public void delete(long idprod) {
+		productdao.delete(idprod);
+	}
 
 }

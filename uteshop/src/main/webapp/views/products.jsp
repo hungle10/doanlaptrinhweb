@@ -85,8 +85,8 @@
 							</div>
 							<h5 class="card-title text-center">${p.name}</h5>
 							<div class="container text-center">
-								<span class="real-price">&#8363;${p.price_after_discount}</span>&ensp;
-								<span class="product-price">&#8363;${p.price}</span>&ensp;
+								<span class="real-price">${p.price_after_discount}&#8363;</span>&ensp;
+								<span class="product-price">${p.price}&#8363;</span>&ensp;
 								<span class="product-discount">${p.discount}&#37;off</span>
 							</div>
 							<div class="container text-center mb-2 mt-2">
@@ -121,6 +121,27 @@
     </c:if>
   </ul>
 </div>
-	
+<script>
+function formatPrices(className) {
+    var elements = document.querySelectorAll('.' + className);
+    elements.forEach(function(element) {
+        var value = element.innerText;
+
+        // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
+        value = value.replace('₫', '').trim();
+
+     
+            value = Number(value).toLocaleString('vi-VN') + '₫';
+            element.innerText = value;
+    
+    });
+}
+
+// Gọi hàm formatPrices cho từng loại giá
+formatPrices('real-price');
+formatPrices('product-price');
+
+
+</script>	
 </body>
 </html>

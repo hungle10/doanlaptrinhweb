@@ -16,5 +16,7 @@ public interface IProductService {
 	List<String> getProductsIdSoldOver10();
 	List<ProductModel> getAllProductsByShopId(long shopId);
 	void insert(ProductModel product);
+	void update(ProductModel product);
+	void delete(long idprod);
     
 }

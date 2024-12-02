@@ -81,11 +81,11 @@
                                 </h5>
                                 <div class="container text-center">
                                     <!-- Display price, discount, and final price -->
-                                    <span class="real-price">
+                                    <span id="real-price" class="real-price">
                                         <c:out value="${product.price_after_discount}" />&#8363;
                                     </span>
                                     &ensp;
-                                    <span class="product-price">
+                                    <span id = "product-price" class="product-price">
                                         <c:out value="${product.price}" />&#8363;
                                     </span>
                                     &ensp;
@@ -235,7 +235,27 @@
     <!-- Xóa giá trị của "shopregistersuccess" trong session -->
     <c:remove var="shopeditsuccess" scope="session"/>
 </c:if>
+<script>
+function formatPrices(className) {
+    var elements = document.querySelectorAll('.' + className);
+    elements.forEach(function(element) {
+        var value = element.innerText;
 
+        // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
+        value = value.replace('₫', '').trim();
+
+     
+            value = Number(value).toLocaleString('vi-VN') + '₫';
+            element.innerText = value;
+    
+    });
+}
+
+// Gọi hàm formatPrices cho từng loại giá
+formatPrices('real-price');
+formatPrices('product-price');
+
+</script>
 
 </body>
 </html>

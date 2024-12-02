@@ -79,7 +79,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 		List<ProductModel> list = new ArrayList<ProductModel>();
 		try {
 			conn = super.getConnection();
-			String query = "select * from products where lower(name) like ? or lower(description) like ? ORDER BY id OFFSET (("+currentpage+"- 1) * 2)  ROWS FETCH NEXT 2 ROWS ONLY"; //tìm kiếm theo name và mô tả
+			String query = "select * from products where lower(name) like ? or lower(description) like ? ORDER BY id OFFSET (("+currentpage+"- 1) * 20)  ROWS FETCH NEXT 20 ROWS ONLY"; //tìm kiếm theo name và mô tả
 			PreparedStatement psmt = this.conn.prepareStatement(query);
 			search = "%" + search + "%";
 			search.toLowerCase();
@@ -149,7 +149,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 		List<ProductModel> list = new ArrayList<ProductModel>();
 		try {
 			conn = super.getConnection();
-			String query = "select * from products where category_id = ? ORDER BY id OFFSET (("+currentpage+"- 1) * 2)  ROWS FETCH NEXT 2 ROWS ONLY";
+			String query = "select * from products where category_id = ? ORDER BY id OFFSET (("+currentpage+"- 1) * 20)  ROWS FETCH NEXT 20 ROWS ONLY";
 			PreparedStatement psmt = this.conn.prepareStatement(query);
 			psmt.setInt(1, catId);
 			ResultSet rs = psmt.executeQuery();
@@ -210,7 +210,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 		List<ProductModel> list = new ArrayList<ProductModel>();
 		try {
 			conn = super.getConnection();
-			String query = "select * from products where shop_id = ? ORDER BY id OFFSET (("+currentpage+"- 1) * 2)  ROWS FETCH NEXT 2 ROWS ONLY";
+			String query = "select * from products where shop_id = ? ORDER BY id OFFSET (("+currentpage+"- 1) * 20)  ROWS FETCH NEXT 20 ROWS ONLY";
 			PreparedStatement psmt = this.conn.prepareStatement(query);
 			psmt.setLong(1, shopId);
 			ResultSet rs = psmt.executeQuery();
@@ -300,7 +300,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 		List<ProductModel> list = new ArrayList<ProductModel>();
 		try {
 			conn = super.getConnection();
-			String query = "select * from products ORDER BY id OFFSET (("+currentpage+"- 1) * 2)  ROWS FETCH NEXT 2 ROWS ONLY";
+			String query = "select * from products ORDER BY id OFFSET (("+currentpage+"- 1) * 20)  ROWS FETCH NEXT 20 ROWS ONLY";
 			Statement statement = this.conn.createStatement();
 
 			ResultSet rs = statement.executeQuery(query);
@@ -396,6 +396,30 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void update(ProductModel product) {
+		try {
+			conn = super.getConnection();
+			String query = "update products set name = ?, price = ?, description = ?, quantity = ?, discount = ?, image= ?,category_id= ?,updated_at= ?,shop_id = ?  where id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setString(1, product.getName());
+			psmt.setFloat(2, product.getPrice());
+			psmt.setString(3, product.getDescription());
+			psmt.setInt(4, product.getQuantity());
+			psmt.setInt(5, product.getDiscount());
+			psmt.setString(6, product.getImage());
+			psmt.setLong(7, product.getCategory_id());
+			psmt.setTimestamp(8, product.getUpdatedAt());
+			psmt.setLong(9, product.getShop_id());
+			psmt.setLong(10, product.getId());
+
+			psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public int getProductQuantityById(long pid) {
 		int qty = 0;
@@ -412,6 +436,25 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			e.printStackTrace();
 		}
 		return qty;
+	}
+	
+
+	@Override
+	public void delete(long idprod) {
+		String sql = "DELETE from products where id= ?";
+		try {
+			conn=super.getConnection();
+			ps=conn.prepareStatement(sql);
+			ps.setLong(1,idprod);
+
+			ps.executeUpdate();
+			conn.close();
+			ps.close();
+			rs.close();
+		}catch(Exception e)
+		{
+			
+		}
 	}
 	@Override
 	public void insert(ProductModel product) {

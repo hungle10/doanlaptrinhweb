@@ -39,7 +39,7 @@
                                 </td>
                                 <td class="text-start">${prod.name}</td>
                                 <td>${prod.category_name}</td>
-                                <td>${prod.price}&#8377;</td>
+                                <td><span class="product-shop-owner-11">${prod.price}</span>&#8363;</td>
                                 <td>${prod.quantity}</td>
                                 <td>${prod.discount}%</td>
                                 <td>
@@ -58,7 +58,10 @@
 									><small>Update</small></button>
                   
                                     &emsp;
-                                    <a href="/uteshop/user/deleteproduct?pid=${prod.id}" class="btn btn-danger" role="button">Delete</a>
+                                     <form action="/uteshop/user/deleteproduct?shopid=${prod.shop_id }" method="post" style="display: inline;">
+                                        <input type="hidden" name="pid" value="${prod.id}">
+                                          <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -139,7 +142,7 @@
                 <h1 class="modal-title fs-5" id="addProductModalLabel">Edit Product Here</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/uteshop/user/addproduct?shopid=${requestScope.shop.id}" method="post" enctype="multipart/form-data">
+            <form action="/uteshop/user/updateproduct?shopid=${requestScope.shop.id}" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="operation" value="addProduct">
                     <div>
@@ -276,4 +279,21 @@
             
         });
     });
+    function formatPrices(className) {
+        var elements = document.querySelectorAll('.' + className);
+        elements.forEach(function(element) {
+            var value = element.innerText;
+
+            // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
+            value = value.replace('₫', '').trim();
+
+         
+                value = Number(value).toLocaleString('vi-VN');
+                element.innerText = value;
+        
+        });
+    }
+
+    // Gọi hàm formatPrices cho từng loại giá
+    formatPrices('product-shop-owner-11');
 </script>

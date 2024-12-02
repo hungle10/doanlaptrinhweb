@@ -50,7 +50,7 @@
 				    <tr class="text-center">
 						<td><img src="/uteshop/Images/${product.image}" style="width: 50px; height: 50px; width: auto;"></td>
 						<td class="text-start">${product.name}</td>
-						<td>&#8377;${product.price_after_discount}</td>
+						<td>${product.price_after_discount}&#8363;</td>
 						<td>
 							<a href="/uteshop/user/cartoperation?cid=${cart.cartId}&opt=1" role="button" class="btn btn-light" style="border-radius: 50%; font-size: 8px;">
 								<i class="fa-regular fa-plus fa-2xl"></i>
@@ -72,7 +72,7 @@
 							</c:choose>
 						</td>
 						<!-- remove product in cart :v -->
-						<td>&#8363;<span id="total-amount">${cart.quantity * product.price_after_discount}</span></td>
+						<td><span id="total-amount">${cart.quantity * product.price_after_discount}</span>&#8363;</td>
 						<td><a href="/uteshop/user/cartoperation?cid=${cart.cartId}&opt=3" class="btn btn-secondary" role="button">Remove</a></td>
 					</tr>
 					</c:if>
@@ -81,8 +81,8 @@
 				<tr>
     <td class="text-end" colspan="8">
         <h4 class='pe-5'>
-            Total Amount : &#8363;
-            <span id="total-price">${totalPrice}</span>
+            Total Amount : 
+            <span id="total-price">${totalPrice}</span>&#8363;
         </h4>
     </td>
 </tr>
@@ -100,11 +100,11 @@
         var totalAmountElement = document.getElementById('total-amount');
         var totalAmountValue = totalAmountElement.innerText;
 
-        if (totalAmountValue.includes('E')) {
+  
             // Chuyển sang dạng số bình thường
             totalAmountValue = Number(totalAmountValue).toLocaleString('vi-VN');
             totalAmountElement.innerText = totalAmountValue;
-        }
+   
      // Lấy phần tử có id 'total-price'
         var totalAmountElement1 = document.getElementById('total-price');
 
@@ -112,13 +112,13 @@
          var totalAmountValue1 = totalAmountElement1.innerText;
 
         // Kiểm tra xem giá trị có chứa ký tự 'E' (chỉ thị số ở dạng khoa học) hay không
-        if (totalAmountValue1.includes('E')) {
+   
             // Chuyển sang dạng số bình thường với phân cách hàng nghìn
             totalAmountValue1 = Number(totalAmountValue1).toLocaleString('vi-VN');
             
             // Cập nhật lại giá trị sau khi chuyển đổi
             totalAmountElement1.innerText = totalAmountValue1;
-        }
+ 
 
     </script>
 </body>

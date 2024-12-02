@@ -158,8 +158,8 @@ public class ProductController extends HttpServlet{
 		    
 		}
 		
-		int endPage = (prodList.size())/2;
-    	if ( prodList.size() % 2 != 0) {
+		int endPage = (prodList.size())/20;
+    	if ( prodList.size() % 20 != 0) {
     		endPage ++;
     	}
 		
@@ -283,6 +283,98 @@ public class ProductController extends HttpServlet{
 				req.setAttribute("message", "There was an error: " + fne.getMessage());
 			}
 			req.getRequestDispatcher("/user/viewshop?shopid=" + shopidStr).forward(req, resp);
+			return;
+		}
+		if(path.contains("/user/updateproduct")) {
+			
+String shopidStr = req.getParameter("shopid");
+			
+			long shopid = Long.valueOf(shopidStr);
+			
+			String idProdStr = req.getParameter("id");
+			long idProd = Long.valueOf(idProdStr);
+			
+			String nameProd = req.getParameter("name");
+			String descriptionProd = req.getParameter("description");
+			String priceProdStr = req.getParameter("price");
+			float pricePrd = Float.valueOf(priceProdStr);
+			String discountProdStr = req.getParameter("discount");
+			int discount = Integer.valueOf(discountProdStr);
+			String quantityProdStr = req.getParameter("quantity");
+			int quantity = Integer.valueOf(quantityProdStr);
+			String categoryId = req.getParameter("categoryType");
+			
+			IProductService product_service = new IProductServiceImpl();
+			ICategoryService category_service = new ICategoryServiceImpl();
+			
+			CategoryModel cate = category_service.getCategoryById(Long.valueOf(categoryId));
+		    
+			String uploadPath = File.separator + UPLOAD_DIRECTORY; // upload vào thư mục bất kỳ
+			// String uploadPath = getServletContext().getRealPath("") + File.separator +
+			// UPLOAD_DIRECTORY; //upload vào thư mục project
+
+			System.out.print(uploadPath);
+			File uploadDir = new File(uploadPath);
+			if (!uploadDir.exists())
+				uploadDir.mkdir();
+			try { 
+				String fileName = "";
+				String image = "";
+				// vì đọc(dịch input) thành cái part chỉ 1 lần nên cần lưu trong list để cần thì
+				// duyệt lại
+				List<Part> fileParts = (List<Part>) req.getParts();
+				    
+				for (Part part : fileParts) {
+					fileName = getFileName(part);
+					if (fileName !=  "") {
+						
+						String partName = part.getName();
+						   if ("fileimage".equals(partName)) {
+							   image = fileName; // Lưu tên ảnh
+							   
+					        }
+						part.write(uploadPath + File.separator + fileName);
+					}
+
+				}
+		
+			    
+				
+				long millis = System.currentTimeMillis();
+				java.sql.Timestamp timestamp = new java.sql.Timestamp(millis);
+				timestamp.setNanos(0);
+				
+				ProductModel prod = product_service.getProductsByProductId(idProd);
+				prod.setName(nameProd);
+				prod.setPrice(pricePrd);
+				prod.setDescription(descriptionProd);
+				prod.setQuantity(quantity);
+				prod.setDiscount(discount);
+				prod.setImage(image);
+				prod.setCategory_id(cate.getId());
+				prod.setUpdatedAt(timestamp);
+				prod.setShop_id(shopid);
+				
+				
+				product_service.update(prod);
+				
+				
+				req.setAttribute("message", "Product has uploaded successfully!");
+			} catch (FileNotFoundException fne) {
+				req.setAttribute("message", "There was an error: " + fne.getMessage());
+			}
+			req.getRequestDispatcher("/user/viewshop?shopid=" + shopidStr).forward(req, resp);
+			return;
+		}
+		if(path.contains("/user/deleteproduct")) {
+			
+			String shopidStr = req.getParameter("shopid");
+			String prodIdStr = req.getParameter("pid");
+			long proId = Long.valueOf(prodIdStr);
+			IProductService product_service = new IProductServiceImpl();
+		    product_service.delete(proId);
+		    req.getRequestDispatcher("/user/viewshop?shopid=" + shopidStr).forward(req, resp);
+		    return;
 		}
 	}
 	private String getFileName(Part part) {

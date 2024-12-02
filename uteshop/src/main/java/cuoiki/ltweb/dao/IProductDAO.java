@@ -33,4 +33,8 @@ public interface IProductDAO {
 
 	void insert(ProductModel product);
 
+	void update(ProductModel product);
+
+	void delete(long idprod);
+
 }

@@ -20,6 +20,7 @@
                         <th>Name</th>
                         <th>Quantity</th>
                         <th>Total Price</th>
+         
                         <th>Date and Time</th>
                         <th>Payment status</th>
                         <th>Payment Type</th>
@@ -37,7 +38,8 @@
                                 <td class="text-start">${order.id}</td>
                                 <td class="text-start">${orderProduct.product.name}</td>
                                 <td>${orderProduct.numberOfProducts}</td>
-                                <td>${orderProduct.product.price_after_discount * orderProduct.numberOfProducts}</td>
+                                <td><span class = "totalmoney11">${order.totalmoney}</span>&#8363;</td>
+                    
                                 <td>${order.orderdate}</td>
                                 <td>${order.payment_status}</td>
                                 <td>${order.payment_method}</td>
@@ -69,3 +71,22 @@
     </c:choose>
     
 </div>
+<script>
+function formatPrices(className) {
+    var elements = document.querySelectorAll('.' + className);
+    elements.forEach(function(element) {
+        var value = element.innerText;
+
+        // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
+        value = value.replace('₫', '').trim();
+
+     
+            value = Number(value).toLocaleString('vi-VN');
+            element.innerText = value;
+    
+    });
+}
+
+// Gọi hàm formatPrices cho từng loại giá
+formatPrices('totalmoney11');
+</script>
