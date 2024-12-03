@@ -65,7 +65,18 @@
 				<div class="col">
 					<div class="card h-100 px-2 py-2">
 						<div class="container text-center">
-							<img src="/uteshop/Images/${p.image}"
+						 <c:if test="${p.image != ''}">
+                 
+                          <c:if test ="${p.image.substring(0,5) != 'https' }">
+                         
+                           <c:url value="/image?fname=${p.image}" var="imgUrl"></c:url>
+                        </c:if>
+
+                       <c:if test ="${p.image.substring(0,5) == 'https' }">
+                            <c:url value="${p.image}" var="imgUrl"></c:url>
+                       </c:if>
+                       </c:if>      
+							<img src="${imgUrl}"
 								class="card-img-top m-2"
 								style="max-width: 100%; max-height: 200px; width: auto;">
 							<div class="wishlist-icon">

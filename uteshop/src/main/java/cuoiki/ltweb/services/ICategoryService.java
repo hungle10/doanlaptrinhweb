@@ -14,4 +14,10 @@ public interface ICategoryService {
 
 	CategoryModel getCategoryByCategoryName(String categoryname);
 
+	void update(CategoryModel category);
+
+	void delete(CategoryModel category);
+
+	void insert(CategoryModel category);
+
 }

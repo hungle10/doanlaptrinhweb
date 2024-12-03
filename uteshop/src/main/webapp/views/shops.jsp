@@ -9,7 +9,7 @@
         </c:when>
         <c:otherwise>
             <div class="container-fluid">
-                <table id="tableShop" class="table table-hover">
+                <table id="tableShop" class="table table-hover table-sm small">
                 <thead>
                     <tr class="table-primary" style="font-size: 18px;">
                     <th class="text-center">Shop</th>

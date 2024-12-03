@@ -11,6 +11,7 @@ import java.util.List;
 import cuoiki.ltweb.configs.DBConnectSQLServer;
 import cuoiki.ltweb.dao.ICategoryDAO;
 import cuoiki.ltweb.models.CategoryModel;
+import cuoiki.ltweb.models.CommentModel;
 
 
 public class CategoryDAOImpl extends DBConnectSQLServer implements ICategoryDAO{
@@ -106,6 +107,68 @@ public class CategoryDAOImpl extends DBConnectSQLServer implements ICategoryDAO{
 		}
 		return category;
 	}
+
+	@Override
+	public void update(CategoryModel category) {
+		String sql = "UPDATE categories \r\n"
+			    +"SET name=?,image=?,updated_at=?\r\n"
+				+"WHERE id=?";
+		try {
+			conn = DBConnectSQLServer.getConnection();
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, category.getName());
+			ps.setString(2, category.getImage());
+			ps.setTimestamp(3,category.getUpdatedAt());
+			ps.setLong(4,category.getId() );
+			ps.executeUpdate();
+			conn.close();
+			ps.close();
+			rs.close();
+		}catch(Exception e)
+		{
+			
+		}
+		
+	}
+
+	@Override
+	public void delete(CategoryModel category) {
+		String sql = "DELETE FROM categories where id= ?";
+		try {
+			conn=super.getConnection();
+			ps=conn.prepareStatement(sql);
+			ps.setLong(1,category.getId());
+
+			ps.executeUpdate();
+			conn.close();
+			ps.close();
+			rs.close();
+		}catch(Exception e)
+		{
+			
+		}
+	}
+
+	@Override
+	public void insert(CategoryModel category) {
+		String sql = "INSERT INTO categories (name,image,created_at,updated_at)\r\n"
+				+ "VALUES (?,?,?,?)";
+		try
+		{
+			conn=super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,category.getName());
+			ps.setString(2,category.getImage());
+			ps.setTimestamp(3,category.getCreatedAt());
+			ps.setTimestamp(4,category.getUpdatedAt());
+			int i = ps.executeUpdate();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+
 
 	
 

@@ -56,10 +56,12 @@ public class LoginController extends HttpServlet {
         }
         System.out.println("helo spkt");
         IUserService service = new IUserServiceImpl();
+        
         UserModel user = service.login(username, password);
         System.out.println(user);
         System.out.println("helo tdt");
-       if (user != null && user.getIsActive() == true ) {
+        if(user != null) {
+       if (user.getIsActive() == true ) {
 			session.setAttribute("account", user);
             if (isRememberMe) {
                 saveRememberMe(resp,username);
@@ -67,14 +69,16 @@ public class LoginController extends HttpServlet {
 
             resp.sendRedirect(req.getContextPath() + "/waiting"); // Phần waiting(controller) kiểm tra role của user
         } else {
-        	if(user.getIsActive() == true)
-            alertMsg = "Tài khoản hoặc mật khẩu không đúng";
-        	else {
-             alertMsg = "Tài khoản đã bị khóa";
-        	}
+        	
+            alertMsg = "Tài khoản đã bị khóa";
             req.setAttribute("alert", alertMsg);
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         }
+        }else {
+            alertMsg = "Tài khoản hoặc mật khẩu không đúng";
+            req.setAttribute("alert", alertMsg);
+            req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
+       	}
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

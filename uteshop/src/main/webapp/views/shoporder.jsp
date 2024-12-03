@@ -10,9 +10,9 @@
         </c:when>
         <c:otherwise>
             <div class="container">
-                <table id="table-order" class="table  table-hover">
+                 <table id="tableOrder" class="table table-hover table-sm small">
                  <thead>
-                    <tr class="table-primary" style="font-size: 18px;">
+                 <tr class="text-center table-secondary"> 
                         <th class="text-center">Product</th>
                         <th>Order ID</th>
                         <th>Product detail</th>
@@ -20,10 +20,9 @@
                         <th>Date & Time</th>
                         <th>Status</th>
                         <th>Shipping unit</th>
-                        <th>Total money</th>
                         <th>Payment method</th>
                         <th>Payment status</th>
-                       <th colspan="1" class="text-center">Action</th>
+                       <th class="text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,7 +42,7 @@
                             <c:url value="${orderProduct.product.image}" var="imgUrl"></c:url>
                        </c:if>
                        </c:if>
-                                        <img src="/uteshop/Images/${orderProduct.product.image}" style="width: 50px; height: 50px; width: auto;">
+                                        <img src="${imgUrl}" style="width: 50px; height: 50px; width: auto;">
                                     </td>
                                     <td>${order.id}</td>
                                     <td>
@@ -65,7 +64,7 @@
                                     
                                     </td>
                                     <td>${order.shipunit.name }</td>
-                                    <td>${order.totalmoney }</td>
+                            
                                      <td>${order.payment_method}</td>
                                      <td>${order.payment_status }</td>
                            <td>
@@ -79,8 +78,7 @@
                              </c:choose>
                  
                                 <select id="operation" name="status" class="form-select">
-							<option>--Select Operation--</option>
-							<option value="Order Confirmed">Order Confirmed</option>
+							<option value="OrderConfirmed">Order Confirmed</option>
 						  	<option value="Pending">Pending</option>
 							<!--<option value="Out For Delivery">Out For Delivery</option>
 							<option value="Delivered">Delivered</option> -->
@@ -100,27 +98,28 @@
 </div>
 <script>
 
- $(document).ready(function() {
-	            $('#table-order').DataTable({
-	                "paging": true,        // Bật phân trang
-	                "searching": true,    // Bật tìm kiếm
-	                "ordering": true,     // Bật sắp xếp cột
-	                "info": true,         // Hiển thị thông tin bảng
-	                "lengthMenu": [5, 10, 25, 50], // Số hàng mỗi trang
-	                "language": {
-	                    "zeroRecords": "No result found",
-	                    "infoEmpty": "No result",
-	                    "infoFiltered": "(lọc từ MAX dòng)",
-	                    "search": "Search",
-	                    "paginate": {
-	                        "first": "First",
-	                        "last": "Last",
-	                        "next": "Next",
-	                        "previous": "Previous"
-	                    }
-	                }
-	            });
-	        });
+$(document).ready(function() {
+    $('#tableOrder').DataTable({
+        "paging": true,        // Bật phân trang
+        "searching": true,    // Bật tìm kiếm
+        "ordering": true,     // Bật sắp xếp cột
+        "info": true,         // Hiển thị thông tin bảng
+        "lengthMenu": [5, 10, 25, 50], // Số hàng mỗi trang
+        "language": {
+            "zeroRecords": "No result found",
+            "infoEmpty": "No result",
+            "infoFiltered": "(lọc từ MAX dòng)",
+            "search": "Search",
+            "paginate": {
+                "first": "First",
+                "last": "Last",
+                "next": "Next",
+                "previous": "Previous"
+            }
+        }
+    });
+});
+
  function formatPrices(className) {
 	    var elements = document.querySelectorAll('.' + className);
 	    elements.forEach(function(element) {

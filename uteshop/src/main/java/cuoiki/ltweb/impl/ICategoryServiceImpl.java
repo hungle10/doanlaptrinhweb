@@ -25,5 +25,17 @@ public class ICategoryServiceImpl implements ICategoryService{
 	public CategoryModel getCategoryByCategoryName(String categoryname) {
 		return categorydao.getCategoryByCategoryName(categoryname);
 	}
+	@Override
+	public void update(CategoryModel category) {
+		categorydao.update(category);
+	}
+	@Override
+	public void delete(CategoryModel category) {
+		categorydao.delete(category);
+	}
+	@Override
+	public void insert(CategoryModel category) {
+		categorydao.insert(category);
+	}
 
 }

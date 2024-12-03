@@ -41,7 +41,18 @@
 		<div class="row border border-3">
 			<div class="col-md-6">
 				<div class="container-fluid text-end my-3">
-					<img src="<c:url value='/Images/${requestScope.product.image}'/>"
+				 <c:if test="${requestScope.product.image != ''}">
+                 
+                          <c:if test ="${requestScope.product.image.substring(0,5) != 'https' }">
+                         
+                           <c:url value="/image?fname=${requestScope.product.image}" var="imgUrl"></c:url>
+                        </c:if>
+
+                       <c:if test ="${requestScope.product.image.substring(0,5) == 'https' }">
+                            <c:url value="${requestScope.product.image}" var="imgUrl"></c:url>
+                       </c:if>
+                       </c:if>      
+					<img src="${imgUrl}"
 						class="card-img-top"
 						style="max-width: 100%; max-height: 500px; width: auto;">
 				</div>

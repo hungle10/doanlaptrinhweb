@@ -23,7 +23,7 @@
 	<!-- admin nav bar -->
 	<c:if test="${not empty sessionScope.activeAdmin}">
     <div class="container">
-        <a class="navbar-brand" href="admin.jsp">
+        <a class="navbar-brand" href="/uteshop/admin/home">
             <i class="fa-sharp fa-solid fa-house" style="color: #ffffff;"></i>&ensp;UTEShop
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -35,18 +35,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="container text-end">
                 <ul class="navbar-nav justify-content-end">
-                    <li class="nav-item">
-                        <button type="button" class="btn nav-link" data-bs-toggle="modal"
-                            data-bs-target="#add-category">
-                            <i class="fa-solid fa-plus fa-xs"></i>Add Category
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="btn nav-link" data-bs-toggle="modal"
-                            data-bs-target="#add-product">
-                            <i class="fa-solid fa-plus fa-xs"></i>Add Product
-                        </button>
-                    </li>
+                 	<li class="nav-item"><button type="button"
+							class="btn nav-link" data-bs-toggle="modal"
+							data-bs-target="#add-category"><i class="fa-solid fa-plus fa-xs"></i>Add Category</button></li>
+        
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="admin.jsp">
                             <c:out value="${activeAdmin.username}"/>

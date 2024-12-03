@@ -21,5 +21,9 @@ public List<OrderDetailModel>getAllOrderedProduct(long oid){
 public void updateOrderDetail(long id, String status) {
 	orderdetaildao.updateOrderDetail(id, status);
 }
+@Override
+public void delete(long id) {
+	orderdetaildao.delete(id);
+}
 
 }

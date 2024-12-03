@@ -87,6 +87,15 @@ public class ShopController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
 		if(path.contains("orderdetail/update")) {
+			if(req.getParameter("from")!=null)
+			{
+				String odidStr = req.getParameter("odid");
+				String status = req.getParameter("status");
+				long odid = Long.valueOf(odidStr);
+				order_detail_service.updateOrderDetail(odid, status);
+				resp.sendRedirect("/uteshop/user/profile");
+				return;
+			}
 			String odidStr = req.getParameter("odid");
 			String status = req.getParameter("status");
 			String shopidStr = req.getParameter("shopid");
@@ -97,6 +106,7 @@ public class ShopController extends HttpServlet{
 			order_detail_service.updateOrderDetail(odid, status);
 			
 			req.setAttribute("shopid", shopidStr);
+			
 			req.getRequestDispatcher("/user/viewshop").forward(req, resp);
 			return;
 		}
@@ -106,7 +116,10 @@ public class ShopController extends HttpServlet{
 			long shopid = Long.valueOf(shopidStr);
 			ShopModel shop = shop_service.findById(shopid);
 			if(shop.getIs_active()==false)
+			{
+				resp.sendRedirect("/uteshop/user/profile");				
 				return;
+			}
 			List<OrderModel> order_list = order_service.getAllOrders();
 			List<ProductModel> product_list = product_service.getAllProductsByShopId(shopid);
 			List<CategoryModel> category_list = category_service.findAll();

@@ -3,4 +3,5 @@
   <mapping path="/user/chat/*" exclude="true"/>
   <mapping path="/user/chat" exclude="true"/>
   <mapping path="/*" decorator="web.jsp"/>
+  <mapping path="/admin*" decorator="admin.jsp"/>
 </sitemesh>

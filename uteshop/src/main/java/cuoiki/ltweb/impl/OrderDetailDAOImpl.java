@@ -79,5 +79,22 @@ public class OrderDetailDAOImpl extends DBConnectSQLServer implements IOrderDeta
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public void delete(long id) {
+		String sql = "DELETE order_details where id= ?";
+		try {
+			conn=super.getConnection();
+			ps=conn.prepareStatement(sql);
+			ps.setLong(1,id);
+	
+			ps.executeUpdate();
+			conn.close();
+			ps.close();
+			rs.close();
+		}catch(Exception e)
+		{
+			
+		}
+	}
 
 }

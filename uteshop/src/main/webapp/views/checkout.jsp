@@ -149,11 +149,11 @@
 	    // Loại bỏ ký hiệu tiền tệ (₫) và khoảng trắng
 	    value = value.replace('₫', '').trim();
 
-	    if (value.includes('E')) {
+	   
 	        // Chuyển sang dạng số bình thường và thêm định dạng
 	        value = Number(value).toLocaleString('vi-VN');
 	        element.innerText = value;
-	    }
+
 	}
 
 	// Gọi hàm formatPrice cho từng phần tử

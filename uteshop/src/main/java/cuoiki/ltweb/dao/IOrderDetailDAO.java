@@ -12,4 +12,6 @@ public interface IOrderDetailDAO {
 
 	void updateOrderDetail(long id, String status);
 
+	void delete(long id);
+
 }

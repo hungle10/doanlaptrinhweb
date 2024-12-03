@@ -51,5 +51,9 @@ public class IProductServiceImpl implements IProductService{
 	public void delete(long idprod) {
 		productdao.delete(idprod);
 	}
+	@Override
+	public List<ProductModel> getAllProducts(){
+		return productdao.getAllProducts();
+	}
 
 }

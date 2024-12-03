@@ -18,7 +18,17 @@
                    style="text-decoration: none;">
                     <div class="card cus-card h-100">
                         <div class="container text-center">
-                            <img src="<c:url value='/Images/${category.image}'/>" class="mt-3" 
+                        <c:if test="${category.image != ''}">
+                                        <c:choose>
+                                            <c:when test="${category.image.substring(0, 5) != 'https'}">
+                                                <c:url value="/image?fname=${category.image}" var="imgUrl"></c:url>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="${category.image}" var="imgUrl"></c:url>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                            <img src="${imgUrl }" class="mt-3" 
                                  style="max-width: 100%; max-height: 100px; width: auto; height: auto;">
                         </div>
                         <h6><c:out value="${category.name}"/></h6>
@@ -73,7 +83,17 @@
                     <a href="/uteshop/view/product?pid=${product.id}" style="text-decoration: none;">
                         <div class="card h-100">
                             <div class="container text-center">
-                                <img src="/uteshop/Images/${product.image}" class="card-img-top m-2" style="max-width: 100%; max-height: 200px; width: auto;">     
+                            <c:if test="${product.image != ''}">
+                                        <c:choose>
+                                            <c:when test="${product.image.substring(0, 5) != 'https'}">
+                                                <c:url value="/image?fname=${product.image}" var="imgUrl"></c:url>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="${product.image}" var="imgUrl"></c:url>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                <img src="${imgUrl}" class="card-img-top m-2" style="max-width: 100%; max-height: 200px; width: auto;">     
                        </div>
                          <div class="card-body">
                                 <h5 class="card-title text-center">
