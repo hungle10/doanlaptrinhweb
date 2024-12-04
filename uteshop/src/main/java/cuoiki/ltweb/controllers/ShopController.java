@@ -117,6 +117,9 @@ public class ShopController extends HttpServlet{
 			ShopModel shop = shop_service.findById(shopid);
 			if(shop.getIs_active()==false)
 			{
+				String message = "Shop của bạn chưa được duyệt";
+				HttpSession session = req.getSession();
+				session.setAttribute("message", message);
 				resp.sendRedirect("/uteshop/user/profile");				
 				return;
 			}

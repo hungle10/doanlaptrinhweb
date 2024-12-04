@@ -52,11 +52,13 @@ public class OrderController extends HttpServlet{
 		HttpSession session = req.getSession();
 		
 		String paymentmethod = req.getParameter("payementMode");
-		String shippingcompany = (String)session.getAttribute("shippingcompany");
-		System.out.println(shippingcompany);
+		
+	
 		float totalmoney = (float)session.getAttribute("totalMoney");
 	
-		long shippingcompany_id = shippingcompany_service.getIdShippingCompanyByName(shippingcompany);
+		long shippingcompany_id = (long)session.getAttribute("shippingcompanyId"); //
+		
+		
 		System.out.println(shippingcompany_id);
 		UserModel user = (UserModel) session.getAttribute("activeUser");
 		
@@ -127,7 +129,7 @@ public class OrderController extends HttpServlet{
 				}
 				
 				session.removeAttribute("totalMoney");
-				session.removeAttribute("shippingcompany");
+				session.removeAttribute("shippingcompanyId"); //
 			
 				session.removeAttribute("deliverycharge"); //remove luôn cái thuộc tính này đã được set bên checkout controller , phục vụ cho giao diện
 

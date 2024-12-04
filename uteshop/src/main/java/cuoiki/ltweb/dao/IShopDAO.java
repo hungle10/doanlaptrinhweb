@@ -20,4 +20,6 @@ public interface IShopDAO {
 
 	void update(ShopModel shop);
 
+	List<ShopModel> findAll();
+
 }

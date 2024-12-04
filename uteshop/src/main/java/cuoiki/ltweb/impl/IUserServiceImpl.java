@@ -70,5 +70,9 @@ public class IUserServiceImpl implements IUserService {
 	public boolean checkExistPhoneNumber(String phonenumber) {
 		return userDao.checkExistPhoneNumber(phonenumber);
 	}
+	@Override
+	public void delete(long id) {
+		userDao.delete(id);
+	}
 
 }

@@ -56,9 +56,9 @@
             </div>
         </div>
         <div class="container">
-            <div class="row px-3">
-                <div class="col-md-4 offset-md-2">
-                    <a href="display_users.jsp">
+            <div class="row px-3 py-3">
+                <div class="col-md-4">
+                    <a href="/uteshop/admin/users">
                         <div class="card text-bg-light mb-3 text-center">
                             <div class="card-body">
                                 <img src="/uteshop/Images/users.png" style="max-width: 80px;" class="img-fluid">
@@ -68,11 +68,22 @@
                     </a>
                 </div>
                  <div class="col-md-4">
-                    <a href="display_users.jsp">
+                    <a href="/uteshop/admin/shippingunits">
                         <div class="card text-bg-light mb-3 text-center">
                             <div class="card-body">
                                 <img src="/uteshop/Images/shipping.png" style="max-width: 80px;" class="img-fluid">
                                 <h4 class="card-title mt-3">Shipping Unit</h4>
+                            </div>
+                        </div>
+                    </a>
+                  
+                </div>
+                 <div class="col-md-4">
+                    <a href="/uteshop/admin/shops">
+                        <div class="card text-bg-light mb-3 text-center">
+                            <div class="card-body">
+                                <img src="/uteshop/Images/logoshopforapp.png" style="max-width: 80px;" class="img-fluid">
+                                <h4 class="card-title mt-3">Shops</h4>
                             </div>
                         </div>
                     </a>
@@ -104,6 +115,47 @@
             <br>
             <img id="imagess2323" width="80" height="70" />
             <br>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary me-3">Add Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+	<!-- end of modal -->
+		<!-- Modal -->
+<div class="modal fade" id="add-shippingunit" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addCategoryModalLabel">Add Shipping Unit Here</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/uteshop/admin/shippingunit/add" method="post">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label"><b>Shipping unit name</b></label>
+            <input type="text" name="shippingunit_name" placeholder="Enter shipping unit here" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"><b>Shipping unit email</b></label>
+            <input type="text" name="shippingunit_email" placeholder="Enter shipping unit here" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"><b>Shipping unit contact number</b></label>
+            <input type="number" name="shippingunit_contact_number" placeholder="Enter shipping unit here" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"><b>Shipping unit address</b></label>
+            <input type="text" name="shippingunit_address" placeholder="Enter shipping unit here" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"><b>Shipping unit fee</b></label>
+            <input type="number" name="shippingunit_delivery_fee" placeholder="Enter shipping unit here" class="form-control" required>
           </div>
         </div>
         <div class="modal-footer">

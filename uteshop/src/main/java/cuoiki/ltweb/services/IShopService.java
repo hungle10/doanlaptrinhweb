@@ -20,4 +20,6 @@ public interface IShopService {
 
 	void update(ShopModel shop);
 
+	List<ShopModel> findAll();
+
 }

@@ -28,12 +28,15 @@
     <div class="alert">
         <i class="fas fa-exclamation-circle"></i> ${alert}
     </div>
+       <c:remove var="alert" scope="session" />
 </c:if>
                      <!-- Alert Message -->
 <c:if test="${not empty message}">
     <div class="message">
         <i class="fas fa-exclamation-circle"></i> ${message}
     </div>
+       <c:remove var="alert" scope="session" />
+    
 </c:if>
                     <!-- login-form -->
                     <form id="login-form" action="/uteshop/login" method="post">

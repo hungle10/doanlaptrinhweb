@@ -13,7 +13,7 @@
     <!-- update product -->
     <div class="container mt-3">
     
-        <table class="table table-hover">
+        <table id="table-admin-product" class="table table-hover">
             <thead>
                 <tr class="table-primary text-center" style="font-size: 20px;">
                     <th>Image</th>
@@ -62,6 +62,27 @@
         </table>
     </div>
     <script>
+    $(document).ready(function() {
+	    $('#table-admin-product').DataTable({
+	        "paging": true,        // Bật phân trang
+	        "searching": true,    // Bật tìm kiếm
+	        "ordering": true,     // Bật sắp xếp cột
+	        "info": true,         // Hiển thị thông tin bảng
+	        "lengthMenu": [5, 10, 25, 50], // Số hàng mỗi trang
+	        "language": {
+	            "zeroRecords": "No result found",
+	            "infoEmpty": "No result",
+	            "infoFiltered": "(lọc từ MAX dòng)",
+	            "search": "Search",
+	            "paginate": {
+	                "first": "First",
+	                "last": "Last",
+	                "next": "Next",
+	                "previous": "Previous"
+	            }
+	        }
+	    });
+	});
     function formatPrices(className) {
         var elements = document.querySelectorAll('.' + className);
         elements.forEach(function(element) {

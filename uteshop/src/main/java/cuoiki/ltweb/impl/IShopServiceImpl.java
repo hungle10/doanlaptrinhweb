@@ -37,5 +37,10 @@ public ShopModel findById(long id) {
 	public void update(ShopModel shop) {
 		shopdao.update(shop);
 	}
+	@Override
+	public List<ShopModel> findAll() {
+	   return shopdao.findAll();
+	}
+
 
 }

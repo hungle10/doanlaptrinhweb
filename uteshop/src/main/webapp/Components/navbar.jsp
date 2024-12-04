@@ -38,6 +38,9 @@
                  	<li class="nav-item"><button type="button"
 							class="btn nav-link" data-bs-toggle="modal"
 							data-bs-target="#add-category"><i class="fa-solid fa-plus fa-xs"></i>Add Category</button></li>
+					<li class="nav-item"><button type="button"
+							class="btn nav-link" data-bs-toggle="modal"
+							data-bs-target="#add-shippingunit"><i class="fa-solid fa-plus fa-xs"></i>Add Shipping Unit</button></li>
         
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="admin.jsp">

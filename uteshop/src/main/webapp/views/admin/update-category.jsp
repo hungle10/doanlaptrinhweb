@@ -55,6 +55,7 @@
     </div>
     <!-- End -->
     <script>
+    
     function chooseFile(fileInput) {
         if (fileInput.files && fileInput.files[0]) {
             var reader = new FileReader();

@@ -29,6 +29,18 @@ public class ShippingCompanyModel {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
+	public ShippingCompanyModel(long id, String name, String contact_number, String email, String address,
+			float delivery_fee,  Timestamp updatedAt) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.contact_number = contact_number;
+		this.email = email;
+		this.address = address;
+		this.delivery_fee = delivery_fee;
+
+		this.updatedAt = updatedAt;
+	}
 	
 	public ShippingCompanyModel(String name, String contact_number, String email, String address, float delivery_fee,
 			Timestamp createdAt, Timestamp updatedAt) {

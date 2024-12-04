@@ -19,6 +19,13 @@
 .list-btn:hover {
 	color: #2874f0 !important;
 }
+.alert {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 </style>
 
@@ -30,7 +37,13 @@
 
 
 	<%@include file="/Components/navbar.jsp"%>
-
+<!-- Alert Message -->
+<c:if test="${not empty message}">
+    <div class="message">
+        <i class="fas fa-exclamation-circle"></i> ${message}
+    </div>
+    <c:remove var="message" scope="session" />
+</c:if>
 	<div class="container-fluid px-3 py-5">
 		<div class="row">
 			<div class="col-md-3">

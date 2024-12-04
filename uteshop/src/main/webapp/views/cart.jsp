@@ -18,7 +18,7 @@
 			class="img-fluid">
 		<h4 class="mt-5">Your cart is empty!</h4>
 		<p>Add items to it now.</p>
-		<a href="products.jsp" class="btn btn-primary btn-lg" role="button"
+		<a href="/uteshop/user/products" class="btn btn-primary btn-lg" role="button"
 			aria-disabled="true">Shop Now</a>
 	</div>
 </c:if>

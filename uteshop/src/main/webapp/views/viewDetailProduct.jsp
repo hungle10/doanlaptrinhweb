@@ -36,6 +36,7 @@
 			<c:if test="${not empty message}">
     <div class="message">
         <i class="fas fa-exclamation-circle"></i> ${message}
+          <c:remove var="message" scope="session"/>
     </div>
 </c:if>
 		<div class="row border border-3">

@@ -21,7 +21,8 @@
 			</c:when>
 			<c:otherwise>
 				<div class="container-fluid">
-					<table class="table table-hover">
+					<table id="admin-table-order" class="table table-hover">
+					<thead>
 						<tr class="table-primary" style="font-size: 18px;">
 							<th class="text-center">Product</th>
 							<th>Order ID</th>
@@ -30,8 +31,10 @@
 							<th>Date & Time</th>
 							<th>Payment Type</th>
 							<th>Status</th>
-							<th colspan="2" class="text-center">Action</th>
+							<th class="text-center">Action</th>
 						</tr>
+					   </thead>
+					      <tbody>
 						<c:forEach var="order" items="${orderList}">
 							<c:set var="ordProdList" value="${order.order_detail_list}" />
 							<c:forEach var="orderProduct" items="${ordProdList}">
@@ -79,23 +82,43 @@
 											</select>
 										
 												</form>
-										</td>
-										<td>
-									
 											<form action="/uteshop/admin/order/delete?odid=${orderProduct.id}" method="post">
 											   <button type="submit" class="btn btn-secondary">Delete</button>
 											</form>
 										</td>
+										
 									</tr>
 							
 							</c:forEach>
 						</c:forEach>
+						   <tbody>
 					</table>
 				</div>
 			</c:otherwise>
 		</c:choose>
 	</div>
 	<script>
+	$(document).ready(function() {
+	    $('#admin-table-order').DataTable({
+	        "paging": true,        // Bật phân trang
+	        "searching": true,    // Bật tìm kiếm
+	        "ordering": true,     // Bật sắp xếp cột
+	        "info": true,         // Hiển thị thông tin bảng
+	        "lengthMenu": [5, 10, 25, 50], // Số hàng mỗi trang
+	        "language": {
+	            "zeroRecords": "No result found",
+	            "infoEmpty": "No result",
+	            "infoFiltered": "(lọc từ MAX dòng)",
+	            "search": "Search",
+	            "paginate": {
+	                "first": "First",
+	                "last": "Last",
+	                "next": "Next",
+	                "previous": "Previous"
+	            }
+	        }
+	    });
+	});
 	function formatPrices(className) {
 	    var elements = document.querySelectorAll('.' + className);
 	    elements.forEach(function(element) {

@@ -36,8 +36,9 @@
                 <label for="shippingOption" class="form-label">Select Shipping Unit:</label>
                 <select id="shippingOption" class="form-select" name="shippingCarrier" onchange="calculateShipping(this)" required>
                     <option value="" disabled selected>Select a shipping unit</option>
-                    <option value="Viettel">Viettel Post</option>
-                    <option value="NinjaVan">NinjaVan</option>
+                   <c:forEach var="shippingunit" items="${shippingUnits}">
+                             <option value="${shippingunit.id}">${shippingunit.name}</option>
+                  </c:forEach>
                 </select>
                      </div>
 

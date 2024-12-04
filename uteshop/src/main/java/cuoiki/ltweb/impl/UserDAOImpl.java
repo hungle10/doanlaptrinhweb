@@ -275,7 +275,7 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 	}
 	@Override
 	public void update(UserModel user) {
-		 String sql = "UPDATE users SET fullname = ? , phone_number = ? , address = ? , email = ? ,date_of_birth = ? , image = ?, updated_at = ? WHERE id = ?";
+		 String sql = "UPDATE users SET fullname = ? , phone_number = ? , address = ? , email = ? ,date_of_birth = ? , image = ?,is_active = ? ,updated_at = ? WHERE id = ?";
 		    try {
 		        conn = super.getConnection();
 		        ps = conn.prepareStatement(sql);
@@ -285,13 +285,31 @@ public class UserDAOImpl extends DBConnectSQLServer implements IUserDAO{
 		        ps.setString(4, user.getEmail());
 		        ps.setDate(5,user.getDateOfBirth());
 		        ps.setString(6,user.getImage());
-		        ps.setTimestamp(7,user.getUpdatedAt());
-		        ps.setLong(8,user.getId());
+		        ps.setBoolean(7, user.getIsActive());
+		        ps.setTimestamp(8,user.getUpdatedAt());
+		        ps.setLong(9,user.getId());
 		        ps.executeUpdate();
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    }
 		
+	}
+	@Override
+	public void delete(long id) {
+		String sql = "DELETE users where id= ?";
+		try {
+			conn=super.getConnection();
+			ps=conn.prepareStatement(sql);
+			ps.setLong(1,id);
+		
+			ps.executeUpdate();
+			conn.close();
+			ps.close();
+			rs.close();
+		}catch(Exception e)
+		{
+			
+		}
 	}
 
 

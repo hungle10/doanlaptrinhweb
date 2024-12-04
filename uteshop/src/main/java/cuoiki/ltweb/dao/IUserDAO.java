@@ -23,4 +23,6 @@ public interface IUserDAO {
 
 	boolean checkExistPhoneNumber(String phonenumber);
 
+	void delete(long id);
+
 }

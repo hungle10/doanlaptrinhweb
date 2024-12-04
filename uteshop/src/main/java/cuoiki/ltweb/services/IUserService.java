@@ -16,5 +16,6 @@ public interface IUserService {
 	UserModel findByEmail(String id);
 	void update(UserModel user);
 	boolean checkExistPhoneNumber(String phonenumber);
+	void delete(long id);
 
 }
