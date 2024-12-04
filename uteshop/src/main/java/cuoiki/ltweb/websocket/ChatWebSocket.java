@@ -48,6 +48,7 @@ public class ChatWebSocket {
             broadcastUserList();
             return;
         }
+	
 		// Giả sử message có format: "userID_from|userID_to|message"
 		String[] messageParts = message.split("\\|");
 		 String senderId = (String) session.getUserProperties().get("userID");

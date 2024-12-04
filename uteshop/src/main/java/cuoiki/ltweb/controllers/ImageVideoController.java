@@ -3,6 +3,10 @@ package cuoiki.ltweb.controllers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.apache.commons.io.IOUtils;
 
@@ -11,9 +15,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = { "/image", "/video" }) // ?fname=abc.png
+@WebServlet(urlPatterns = { "/image", "/video","/upload"}) // ?fname=abc.png
 public class ImageVideoController extends HttpServlet {
 	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Admin\\git\\repositorydoanlaptrinhweb\\uteshop\\src\\main\\webapp\\Images";
 
