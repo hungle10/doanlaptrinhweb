@@ -29,6 +29,7 @@
 							<th>Product Details</th>
 							<th>Delivery Address</th>
 							<th>Date & Time</th>
+							<th>Payment Status</th>
 							<th>Payment Type</th>
 							<th>Status</th>
 							<th class="text-center">Action</th>
@@ -66,6 +67,17 @@
 											${order.user.address}
 										</td>
 										<td>${order.orderdate}</td>
+										<td>
+										${order.payment_status}
+										<form action="/uteshop/admin/order/update?oid=${order.id}" method="post">
+											<button type="submit" class="btn btn-secondary">Update</button>
+											<select name="payment_status" class="form-select">
+											
+												<option value="paid">Paid</option>
+												<option value="unpaid">Unpaid</option>
+											</select>
+											</form>
+										</td>
 										<td>${order.payment_method}</td>
 										<td>${orderProduct.status}</td>
 										<td>

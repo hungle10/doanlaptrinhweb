@@ -43,11 +43,18 @@ public class OrderController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	     String path = req.getServletPath();
 	     if(path.contains("update")) {
-	    	 String order_detail_id_Str = req.getParameter("odid");
-	    	 String status = req.getParameter("status");
-	    	 System.out.println("goi update");
-	    	 order_detail_service.updateOrderDetail(Long.valueOf(order_detail_id_Str), status);
-	    	 
+	    	 if(req.getParameter("odid")!=null) {
+	    		 String order_detail_id_Str = req.getParameter("odid");
+	    		 String status = req.getParameter("status");
+		    	 order_detail_service.updateOrderDetail(Long.valueOf(order_detail_id_Str), status);
+
+	    	 }
+	    	 if(req.getParameter("oid")!=null) {
+	    	 String order_id_Str = req.getParameter("oid");
+	    	 String payment_status = req.getParameter("payment_status"); 
+	    	 order_service.updateOrder(Long.valueOf(order_id_Str), payment_status);
+	  
+	    	 }
 	    	 resp.sendRedirect("/uteshop/admin/order");
 	    	 return;
 	     }

@@ -152,6 +152,23 @@ public class OrderDAOImpl extends DBConnectSQLServer implements IOrderDAO{
 	    return orders;
 	}
 	
+	@Override
+	public void updateOrder(long id, String status) {
+
+		try {
+			conn = super.getConnection();
+			String query = "update orders set payment_status = ? where id = ?";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			psmt.setString(1, status);
+			psmt.setLong(2, id);
+
+			psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 
 	

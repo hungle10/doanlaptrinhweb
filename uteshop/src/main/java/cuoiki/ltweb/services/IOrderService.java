@@ -15,4 +15,6 @@ public interface IOrderService {
 
 	List<OrderModel> getAllOrders();
 
+	void updateOrder(long id, String status);
+
 }

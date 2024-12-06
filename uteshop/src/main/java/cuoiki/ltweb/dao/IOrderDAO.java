@@ -14,4 +14,6 @@ public interface IOrderDAO {
 	public List<OrderModel> getOrders(long user_id);
 
 	List<OrderModel> getAllOrders();
+
+	void updateOrder(long id, String status);
 }

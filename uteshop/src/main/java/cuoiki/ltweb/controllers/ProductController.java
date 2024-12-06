@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import cuoiki.ltweb.models.CategoryModel;
@@ -69,6 +70,8 @@ public class ProductController extends HttpServlet{
 		
 		List<ProductModel> prodList = null;
 		List<ProductModel> prodListFiltered = null;
+		List<ProductModel> prodBelongToPendingShop = productService.getProductsBelongToPendingShop();
+		
 		
 		
 		int currentPage = 1;
@@ -86,23 +89,105 @@ public class ProductController extends HttpServlet{
 			}
 			//
 			prodList = productDao.getAllProductsBySearchKey(searchKey);
+			
+			Iterator<ProductModel> iterator = prodList.iterator();
+			   // Duyệt qua list1 và xóa phần tử có trong list2
+			while (iterator.hasNext()) {
+			    ProductModel item = iterator.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			   
+			            iterator.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
 			// nó có gõ chữ và bấm search -> hàm này phân trang
 			prodListFiltered = productDao.getAllProductsBySearchKey(searchKey,currentPage);
+			
+			Iterator<ProductModel> iteratorF = prodListFiltered.iterator();
+			while (iteratorF.hasNext()) {
+			    ProductModel item = iteratorF.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			            System.out.println(prod.getName() + " 56565");
+			            iteratorF.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
+			
 
 		} 
 		//nếu nó có pick menu category để xổ ra các lựa chọn và nó chọn khác all product
 		else if (catId != null && !(catId.trim().equals("0"))) { //nếu cateId khác 0
 			
 			prodList = productDao.getAllProductsByCategoryId(Integer.parseInt(catId.trim()));
+			Iterator<ProductModel> iterator = prodList.iterator();
+			   // Duyệt qua list1 và xóa phần tử có trong list2
+			while (iterator.hasNext()) {
+			    ProductModel item = iterator.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			   
+			            iterator.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
 			//phân trang
 			prodListFiltered = productDao.getAllProductsByCategoryId(Integer.parseInt(catId.trim()),currentPage);
+			
+			Iterator<ProductModel> iteratorF = prodListFiltered.iterator();
+			while (iteratorF.hasNext()) {
+			    ProductModel item = iteratorF.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			            System.out.println(prod.getName() + " 56565");
+			            iteratorF.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
+			
 			message = "Showing results for \"" + categoryDao.getCategoryName(Integer.parseInt(catId.trim())) + "\"";
 		}
 		else if(shopId != "") {
 			prodList = productDao.getAllProductsByShopId(Integer.parseInt(shopId.trim()));
 			//phân trang
 			prodListFiltered = productDao.getAllProductsByShopId(Integer.parseInt(shopId.trim()),currentPage);
+	
+			Iterator<ProductModel> iterator = prodList.iterator();
+			   // Duyệt qua list1 và xóa phần tử có trong list2
+			while (iterator.hasNext()) {
+			    ProductModel item = iterator.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			   
+			            iterator.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
+			//phân trang
+		
+			
+			Iterator<ProductModel> iteratorF = prodListFiltered.iterator();
+			while (iteratorF.hasNext()) {
+			    ProductModel item = iteratorF.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			            System.out.println(prod.getName() + " 56565");
+			            iteratorF.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
+			
+			
 			message = "Showing results for \"" + shopDao.findById(Integer.parseInt(shopId.trim())).getName() + "\"";
+			
+			
 			ShopModel shopmodel = shopDao.findById(Long.valueOf(shopId.trim()));
 			req.setAttribute("shopmodel",shopmodel);
 		}
@@ -111,6 +196,32 @@ public class ProductController extends HttpServlet{
 			
 			prodList = productDao.getAllProducts();
 			prodListFiltered = productDao.getProductsBasedOnPageNumber(currentPage);
+			Iterator<ProductModel> iterator = prodList.iterator();
+			   // Duyệt qua list1 và xóa phần tử có trong list2
+			while (iterator.hasNext()) {
+			    ProductModel item = iterator.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			   
+			            iterator.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
+			//phân trang
+			
+			Iterator<ProductModel> iteratorF = prodListFiltered.iterator();
+			while (iteratorF.hasNext()) {
+			    ProductModel item = iteratorF.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			            System.out.println(prod.getName() + " 56565");
+			            iteratorF.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
+			
 			message = "All Products";
 		}
 //sau khi tìm kiếm nhưng không có hàng nào khớp thì show hết product
@@ -128,6 +239,31 @@ public class ProductController extends HttpServlet{
 			message = "No items are available for \"" + itemName + "\"";
 			prodList = productDao.getAllProducts();
 			prodListFiltered = productDao.getProductsBasedOnPageNumber(currentPage);
+			Iterator<ProductModel> iterator = prodList.iterator();
+			   // Duyệt qua list1 và xóa phần tử có trong list2
+			while (iterator.hasNext()) {
+			    ProductModel item = iterator.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			   
+			            iterator.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
+			//phân trang
+			
+			Iterator<ProductModel> iteratorF = prodListFiltered.iterator();
+			while (iteratorF.hasNext()) {
+			    ProductModel item = iteratorF.next();
+			    for (ProductModel prod : prodBelongToPendingShop) {
+			        if (prod.getId() == item.getId()) {
+			            System.out.println(prod.getName() + " 56565");
+			            iteratorF.remove(); // Xóa phần tử an toàn
+			            break; // Thoát vòng lặp for để tránh kiểm tra dư thừa
+			        }
+			    }
+			}
 		}
 		
 		

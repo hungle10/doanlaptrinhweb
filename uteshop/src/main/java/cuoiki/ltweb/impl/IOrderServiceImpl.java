@@ -28,5 +28,9 @@ public class IOrderServiceImpl extends DBConnectSQLServer implements IOrderServi
 	public List<OrderModel> getAllOrders(){
 		return orderdao.getAllOrders();
 	}
+	@Override
+	public void updateOrder(long id, String status) {
+		orderdao.updateOrder(id, status);
+	}
 
 }

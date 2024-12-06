@@ -55,5 +55,9 @@ public class IProductServiceImpl implements IProductService{
 	public List<ProductModel> getAllProducts(){
 		return productdao.getAllProducts();
 	}
+	@Override
+	public List<ProductModel> getProductsBelongToPendingShop() {
+		return productdao.getProductsBelongToPendingShop();
+	}
 
 }

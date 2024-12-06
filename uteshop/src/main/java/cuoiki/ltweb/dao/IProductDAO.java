@@ -37,4 +37,6 @@ public interface IProductDAO {
 
 	void delete(long idprod);
 
+	List<ProductModel> getProductsBelongToPendingShop();
+
 }

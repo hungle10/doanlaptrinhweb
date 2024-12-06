@@ -104,7 +104,9 @@ function goToUserController(userId) {
         <!-- Form nhập tin nhắn -->
         <input type="text" id="toUser" placeholder="Enter receiver ID" value="${user_receiver.id}" readonly style="display: none;">
         <input type="text" id="message" placeholder="Enter your message">
-        <button onclick="sendMessage()">Send</button>                                  
+        <button onclick="sendMessage()">Send</button>     
+      
+</form>                             
     </div>
    
 </div>
@@ -125,19 +127,7 @@ function goToUserController(userId) {
            };
         ws.onmessage = function(event) {
         	var message = event.data;
-        	if (message.startsWith("image|")) {
-                const [_, senderId, base64Image] = message.split("|");
-
-                // Hiển thị ảnh trong lịch sử chat
-                const chatHistory = document.getElementById("chatHistory");
-                const newMessage = document.createElement("li");
-                newMessage.classList.add("clearfix");
-                newMessage.innerHTML = `<div class="message other-message float-right">
-                                            <strong>${senderId}:</strong>
-                                            <img src="data:image/png;base64,${base64Image}" alt="Received Image" style="max-width: 200px; border-radius: 8px;">
-                                        </div>`;
-                chatHistory.appendChild(newMessage);
-            }
+        	
       	  if (message.startsWith("userList|")) {
       	        // Xử lý danh sách người dùng
       	        var userListData = message.substring("userList|".length); // Loại bỏ tiền tố "userList|"
@@ -285,6 +275,8 @@ function goToUserController(userId) {
                 toUserInput.value = senderId;  // Cập nhật giá trị `senderId`
             }
         }
+        
+
 
     </script>
    

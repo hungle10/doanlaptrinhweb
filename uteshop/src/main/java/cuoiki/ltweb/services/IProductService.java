@@ -19,5 +19,6 @@ public interface IProductService {
 	void update(ProductModel product);
 	void delete(long idprod);
 	List<ProductModel> getAllProducts();
+	List<ProductModel> getProductsBelongToPendingShop();
     
 }

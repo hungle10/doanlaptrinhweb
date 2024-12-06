@@ -59,7 +59,7 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 					+ "FROM order_details od\r\n"
 					+ "JOIN orders o ON od.order_id = o.id\r\n"
 					+ "WHERE o.payment_status = 'paid'\r\n"
-					+ "  AND od.status = 'Delivered'\r\n"
+					+ "  AND od.status IN ('Delivered', 'CancelReturned')\r\n"
 					+ "GROUP BY od.product_id\r\n"
 					+ "HAVING SUM(od.number_of_products) > 10\r\n"
 					+ "ORDER BY total_quantity DESC;";
@@ -85,6 +85,39 @@ public class ProductDAOImpl extends DBConnectSQLServer implements IProductDAO{
 			search.toLowerCase();
 			psmt.setString(1, search);
 			psmt.setString(2, search);
+
+			ResultSet rs = psmt.executeQuery();
+			while (rs.next()) {
+				ProductModel product = new ProductModel();
+				product.setId(rs.getLong("id"));
+				product.setName(rs.getString("name"));
+				product.setDescription(rs.getString("description"));
+				product.setPrice(rs.getFloat("price"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setDiscount(rs.getInt("discount"));
+				product.setImage(rs.getString("image"));
+				product.setCategory_id(rs.getInt("category_id"));
+				product.setCreatedAt(rs.getTimestamp("created_at"));
+				product.setUpdatedAt(rs.getTimestamp("updated_at"));
+				product.setShop_id(rs.getLong("shop_id"));
+				list.add(product);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	@Override
+	public List<ProductModel> getProductsBelongToPendingShop() {
+		List<ProductModel> list = new ArrayList<ProductModel>();
+		try {
+			conn = super.getConnection();
+			String query = "SELECT p.*\r\n"
+					+ "FROM products p\r\n"
+					+ "JOIN shops s ON p.shop_id = s.id\r\n"
+					+ "WHERE s.is_active = 0;\r\n";
+			PreparedStatement psmt = this.conn.prepareStatement(query);
+			
 
 			ResultSet rs = psmt.executeQuery();
 			while (rs.next()) {
