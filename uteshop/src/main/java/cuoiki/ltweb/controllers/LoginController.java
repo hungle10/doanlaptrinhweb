@@ -51,7 +51,7 @@ public class LoginController extends HttpServlet {
             Message message = new Message("Invalid details! Try again!!", "error", "alert-danger");
 			session.setAttribute("message", message);
             //req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
-			resp.sendRedirect("/views/login.jsp");
+	    	resp.sendRedirect("/uteshop/views/login.jsp");
             return;
         }
         System.out.println("helo spkt");
