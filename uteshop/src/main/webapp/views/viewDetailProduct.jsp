@@ -207,7 +207,7 @@
              
             </div>
                 </c:forEach>
-
+     <c:if test="${activeUser != null}">
             <!-- Comment submission area -->
             <div class="card p-4 mt-3 shadow-sm">
                 <form action="/uteshop/user/comment/add?pid=${requestScope.product.id}" method="post" enctype="multipart/form-data">
@@ -231,6 +231,7 @@
 
                 </form>
             </div>
+            </c:if>
         </div>
     </div>
 </div>

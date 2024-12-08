@@ -34,7 +34,10 @@ public class AdminFilter implements Filter{
 	    	chain.doFilter(request, response);
 	    	return;
 	    }else {
-	    	resp.sendRedirect("/uteshop/views/login.jsp");
+	    	
+	    	resp.sendRedirect("/uteshop/home");
+	
+	    	  
 	    	}
 		
 	}

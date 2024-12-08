@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 
 
 import cuoiki.ltweb.models.*;
+import cuoiki.ltweb.paypal.PayPalService;
 import cuoiki.ltweb.services.*;
 import cuoiki.ltweb.impl.*;
 import cuoiki.ltweb.mail.MailMessenger;
@@ -34,6 +35,7 @@ public class OrderController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
+	
 		if(path.contains("update")) {
 			
 			String order_detail_idStr = req.getParameter("odid");
@@ -80,6 +82,21 @@ public class OrderController extends HttpServlet{
 				}
 				else {
 					status ="cardpayment";
+				    String approveLink = PayPalService.createPayment(totalmoney, "USD", "http://localhost:8082/uteshop/user/orderpaypal/success",
+				            "http://localhost:8082/uteshop/user/orderpaypal/cancel");
+				    if (approveLink != null) {
+				        // Chuyển hướng người dùng đến giao diện PayPal
+						OrderModel order = new OrderModel(user.getId(),shippingcompany_id,currentDate,"Order Placed",totalmoney,status,status_payment,shippingaddress,timestamp,timestamp);
+                        session.setAttribute("orderpaypal", order);
+				        resp.sendRedirect(approveLink);
+				        return;
+				    } else {
+				        session.setAttribute("error", "PayPal payment initialization failed.");
+				        System.out.println("paypal that bai");
+				        resp.sendRedirect("/uteshop/views/error.jsp");
+				        return;
+				    }
+
 				}
 				OrderModel order = new OrderModel(user.getId(),shippingcompany_id,currentDate,"Order Placed",totalmoney,status,status_payment,shippingaddress,timestamp,timestamp);
 

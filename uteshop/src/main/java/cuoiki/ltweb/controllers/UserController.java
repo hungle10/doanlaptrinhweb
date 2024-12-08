@@ -186,7 +186,13 @@ public class UserController extends HttpServlet{
 				java.sql.Timestamp timestamp = new java.sql.Timestamp(millis);
 				timestamp.setNanos(0);
 				
-				UserModel user_updated = new UserModel(user.getId(),fullname,phone_number,address,email,date,image,timestamp);
+				UserModel user_updated = user_service.findById(user.getId());
+				user_updated.setFullname(fullname);
+				user_updated.setEmail(email);
+				user_updated.setPhoneNumber(phone_number);
+				user_updated.setDateOfBirth(date);
+				user_updated.setAddress(address);
+				user_updated.setImage(image);
 				
 				 user_service.update(user_updated);
 				

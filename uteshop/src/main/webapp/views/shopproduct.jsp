@@ -102,18 +102,18 @@
                         </div>
                         <div class="col-md-6 mb-2">
                             <label class="form-label"><b>Discount Percentage</b></label> 
-                            <input type="number" name="discount" onblur="validate()" placeholder="Enter discount if any!" class="form-control">
+                            <input type="number" name="discount" onblur="validate()" placeholder="Enter discount if any!" class="form-control" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-2">
                             <label class="form-label"><b>Product Quantity</b></label> 
-                            <input type="number" name="quantity" placeholder="Enter product quantity" class="form-control">
+                            <input type="number" name="quantity" placeholder="Enter product quantity" class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-2">
                             <label class="form-label"><b>Select Category Type</b></label>
                             <select name="categoryType" class="form-control">
-                                <option value="0">--Select Category--</option>
+                     
                                 <c:forEach var="c" items="${categoryList}">
                                     <option value="${c.id}">${c.name}</option>
                                 </c:forEach>
