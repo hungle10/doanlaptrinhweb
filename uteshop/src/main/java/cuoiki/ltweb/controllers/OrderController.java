@@ -31,6 +31,10 @@ public class OrderController extends HttpServlet{
 		// TODO Auto-generated method stub
 				super.doPost(req, resp);
 	}
+	private float convertVNDToUSD(float amountInVND) {
+	    final float exchangeRate = 25376.05f; // 1 USD = 25,376.05 VND
+	    return amountInVND / exchangeRate;
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -82,7 +86,7 @@ public class OrderController extends HttpServlet{
 				}
 				else {
 					status ="cardpayment";
-				    String approveLink = PayPalService.createPayment(totalmoney, "USD", "http://localhost:8082/uteshop/user/orderpaypal/success",
+				    String approveLink = PayPalService.createPayment(convertVNDToUSD(totalmoney), "USD", "http://localhost:8082/uteshop/user/orderpaypal/success",
 				            "http://localhost:8082/uteshop/user/orderpaypal/cancel");
 				    if (approveLink != null) {
 				        // Chuyển hướng người dùng đến giao diện PayPal

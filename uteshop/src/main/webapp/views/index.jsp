@@ -177,6 +177,44 @@
     <!-- Xóa giá trị của "order" trong session -->
     <c:remove var="order" scope="session"/>
 </c:if>
+<c:if test="${not empty sessionScope.orderfail}">
+    <script type="text/javascript">
+        console.log("testing..4...");
+        Swal.fire({
+          icon : 'error',
+          title: 'Order fail, There was some error!',
+          text: 'Please try again, your order is not done',
+          width: 600,
+          padding: '3em',
+          showConfirmButton : false,
+          timer : 3500,
+          backdrop: `
+            rgba(0,0,123,0.4)
+          `
+        });
+    </script>
+    <!-- Xóa giá trị của "order" trong session -->
+    <c:remove var="orderfail" scope="session"/>
+</c:if>
+<c:if test="${not empty sessionScope.orderpaymentcancel}">
+    <script type="text/javascript">
+        console.log("testing..4...");
+        Swal.fire({
+          icon : 'error',
+          title: 'Order is canceled!',
+          text: 'Your order is canceled',
+          width: 600,
+          padding: '3em',
+          showConfirmButton : false,
+          timer : 3500,
+          backdrop: `
+            rgba(0,0,123,0.4)
+          `
+        });
+    </script>
+    <!-- Xóa giá trị của "order" trong session -->
+    <c:remove var="orderpaymentcancel" scope="session"/>
+</c:if>
 <!-- end of message -->
 <c:if test="${not empty sessionScope.shopregistersuccess}">
     <script type="text/javascript">
