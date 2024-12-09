@@ -54,21 +54,6 @@
 									value="cardpayment" required><label class="form-check-label">Credit
 									/Debit /ATM card</label><br>
 								<div class="mb-3">
-
-									<input class="form-control mt-3" type="number"
-										placeholder="Enter card number" name="cardno">
-									<div class="row gx-5">
-										<div class="col mt-3">
-											<input class="form-control" type="number"
-												placeholder="Enter CVV" name="cvv">
-										</div>
-										<div class="col mt-3">
-											<input class="form-control" type="text"
-												placeholder="Valid through i.e '07/23'">
-										</div>
-									</div>
-									<input class="form-control mt-3" type="text"
-										placeholder="Enter card holder name" name="name">
 								</div>
 								<input class="form-check-input" type="radio" name="payementMode"
 									value="COD"><label

@@ -84,7 +84,7 @@ public class PayPalCallbackController extends HttpServlet{
 					}
 					session.removeAttribute("totalMoney");
 					session.removeAttribute("shippingcompanyId"); //
-				
+					session.removeAttribute("orderpaypal");
 					session.removeAttribute("deliverycharge"); //remove luôn cái thuộc tính này đã được set bên checkout controller , phục vụ cho giao diện
 
 					//removing all product from cart after successful order
@@ -94,6 +94,7 @@ public class PayPalCallbackController extends HttpServlet{
 					session.setAttribute("order", "success");
 					MailMessenger.successfullyOrderPlaced(user.getUsername(),user.getEmail(),Long.toString(order_added.getId()),order_added.getOrderdate().toString());
 				    resp.sendRedirect("/uteshop/views/index.jsp");
+				    
 
 	            } else {
 	                session.setAttribute("orderfail", "fail");
