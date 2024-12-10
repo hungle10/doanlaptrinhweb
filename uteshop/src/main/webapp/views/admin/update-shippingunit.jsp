@@ -15,7 +15,7 @@
             <div class="col">
                 <div class="card w-75">
                     <div class="card-header text-center">
-                        <h3>Edit Category</h3>
+                        <h3>Edit Shipping Unit</h3>
                     </div>
                     <form action="/uteshop/admin/shippingunit/update?sid=${shippingunit.id}" method="post">
                         <div class="card-body">

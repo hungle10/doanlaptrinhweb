@@ -48,7 +48,18 @@
 				<c:forEach var="product" items="${requestScope.listOfProductInCart}">
 				 <c:if test="${cart.productId == product.id}">
 				    <tr class="text-center">
-						<td><img src="/uteshop/Images/${product.image}" style="width: 50px; height: 50px; width: auto;"></td>
+						<td>
+						 <c:if test="${product.image != ''}">
+                                        <c:choose>
+                                            <c:when test="${product.image.substring(0, 5) != 'https'}">
+                                                <c:url value="/image?fname=${product.image}" var="imgUrl"></c:url>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="${product.image}" var="imgUrl"></c:url>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+						<img src="${imgUrl}" style="width: 50px; height: 50px; width: auto;"></td>
 						<td class="text-start">${product.name}</td>
 						<td>${product.price_after_discount}&#8363;</td>
 						<td>

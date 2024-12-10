@@ -4,7 +4,7 @@
 	<c:choose>
         <c:when test="${empty wlist}">
 	<div class="container mt-5 mb-5 text-center">
-		<img src="Images/wishlist.png" style="max-width: 200px;"
+		<img src="/uteshop/Images/wishlist.png" style="max-width: 200px;"
 			class="img-fluid">
 		<h4 class="mt-3">Empty Wishlist</h4>
 		You have no items in your wishlist. Start adding!
@@ -30,7 +30,7 @@
                                 <span class="product-price1111"><c:out value="${p.price_after_discount}" /></span>&#8363;
                             </td>
                             <td>
-                                <a href=" /uteshop/user/wishlist?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=delete"
+                                <a href="/uteshop/user/wishlist?uid=${sessionScope.activeUser.id}&pid=${p.id}&op=delete"
                                    class="btn btn-secondary" role="button">Remove</a>
                             </td>
                         </tr>

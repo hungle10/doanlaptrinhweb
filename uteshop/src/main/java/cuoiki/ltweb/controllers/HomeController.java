@@ -78,10 +78,12 @@ public class HomeController extends HttpServlet {
 		if (path.contains("forgotPassword")) {
 			String email = req.getParameter("email");
 			if (userService.checkExistEmail(email)) {
+	
 				Random rand = new Random();
 				int max = 99999, min = 10000;
 				int otp = rand.nextInt(max - min + 1) + min;
-				// System.out.println(otp);
+				
+				session.removeAttribute("email");
 				session.setAttribute("otp", otp);
 				session.setAttribute("email", email);
 				MailMessenger.sendOtp(email, otp);
@@ -116,6 +118,7 @@ public class HomeController extends HttpServlet {
 		{
 			String password = req.getParameter("password");
 			String email =(String)session.getAttribute("email");
+			System.out.println(email+"56565656");
 			UserModel user = userService.findByEmail(email);
 			System.out.println(user.getFullname());
 			System.out.println(user.getPassword());

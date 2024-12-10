@@ -134,7 +134,17 @@
                     <a href="/uteshop/view/product?pid=${deal.id}" style="text-decoration: none;">
                         <div class="card h-100">
                             <div class="container text-center">
-                                <img src="/uteshop/Images/${deal.image}" class="card-img-top m-2"
+                             <c:if test="${deal.image != ''}">
+                                        <c:choose>
+                                            <c:when test="${deal.image.substring(0, 5) != 'https'}">
+                                                <c:url value="/image?fname=${deal.image}" var="imgUrl"></c:url>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="${deal.image}" var="imgUrl"></c:url>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                <img src="${imgUrl}" class="card-img-top m-2"
                                      style="max-width: 100%; max-height: 200px; width: auto;">
                             </div>
                             <div class="card-body">

@@ -29,7 +29,17 @@
                                 <tr>
                                    <form action="/uteshop/user/viewshop?shopid=${shop.id}" method="post">
                                     <td class="text-center">
-                                        <img src="/uteshop/Images/${shop.logo}" style="width: 50px; height: 50px; width: auto;">
+                                    <c:if test="${shop.logo != ''}">
+                                        <c:choose>
+                                            <c:when test="${shop.logo.substring(0, 5) != 'https'}">
+                                                <c:url value="/image?fname=${shop.logo}" var="imgUrl"></c:url>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="${shop.logo}" var="imgUrl"></c:url>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                        <img src="${imgUrl}" style="width: 50px; height: 50px; width: auto;">
                                     </td>
                                     <td>${shop.id}</td>
                                     <td>

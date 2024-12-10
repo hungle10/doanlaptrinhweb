@@ -90,6 +90,7 @@
 												<option value="Delivered">Delivered</option>
 												<option value="Returned">Returned</option>
 												<option value="CancelReturned">Cancel Returned</option>
+												<option value="Refunded">Refunded</option>
 												<option value="Cancel">Cancel</option>
 											</select>
 										

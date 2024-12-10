@@ -22,7 +22,7 @@ label {
 					<div class="card-body px-5">
 
 						<div class="container text-center">
-							<img src="Images/forgot-password.png" style="max-width: 100px;"
+							<img src="/uteshop/Images/forgot-password.png" style="max-width: 100px;"
 								class="img-fluid">
 						</div>
 						<h3 class="text-center mt-3">Code Verification</h3>

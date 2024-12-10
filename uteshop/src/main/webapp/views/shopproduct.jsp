@@ -3,7 +3,7 @@
         <c:when test="${empty prodList}">
             <div class="container mt-5 mb-5 text-center">
                 <img src="/uteshop/Images/empty-cart.png" style="max-width: 200px;" class="img-fluid">
-                <h4 class="mt-3">Zero Order found</h4>
+                <h4 class="mt-3">Zero Product found</h4>
             </div>
         </c:when>
 

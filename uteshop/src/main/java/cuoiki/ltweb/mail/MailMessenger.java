@@ -64,6 +64,35 @@ public class MailMessenger {
 	        e.printStackTrace();
 	    }
 	}
+	public static void RegisteredShopOwnerAccepted(String userName, String userEmail, String shopName) {
+	    String subject = "Shop Registration has been accepted - UTEShop";
+	    String body = "Hi " + userName
+	            + ",<p>Thank you for registering your shop, <b>" + shopName + "</b>, on UTEShop!</p>"
+	            + "<p>We are excited to welcome you to our platform. Your shop registration is accepted.</p>"
+	            + "<p>Shop Details: <br>" + "Shop Name: " + shopName + "</p>"
+	            + "<p>If you have any questions, feel free to contact our support team. We are here to assist you.</p>"
+	            + "<p>Thank you for choosing UTEShop. We are committed to helping your shop succeed on our platform!</p>"
+	            + "<p>Warm regards,<br><b>UTEShop Team</b></p>";
+	    try {
+	        Mail.sendMail(userEmail, subject, body);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	public static void RegisteredShopOwnerPended(String userName, String userEmail, String shopName) {
+	    String subject = "Shop Registration has been pended - UTEShop";
+	    String body = "Hi " + userName
+	            + "<p>Your shop registration is pended.</p>"
+	            + "<p>Shop Details: <br>" + "Shop Name: " + shopName + "</p>"
+	            + "<p>If you have any questions, feel free to contact our support team. We are here to assist you.</p>"
+	            + "<p>Thank you for choosing UTEShop. We are committed to helping your shop succeed on our platform!</p>"
+	            + "<p>Warm regards,<br><b>UTEShop Team</b></p>";
+	    try {
+	        Mail.sendMail(userEmail, subject, body);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 
 
 	public static void orderShipped(String userName, String userEmail, String orderId, String OrderDate) {

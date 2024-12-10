@@ -72,6 +72,9 @@
                                       <c:when test="${orderProduct.status == 'Delivered'}">
                                           <button type="submit" class="btn btn-success disabled">Update</button>
                                       </c:when>
+                                      <c:when test="${orderProduct.status == 'CancelReturned'}">
+                                          <button type="submit" class="btn btn-success disabled">Update</button>
+                                      </c:when>
                                    <c:otherwise>
                                      <button type="submit" class="btn btn-secondary">Update</button>
                                   </c:otherwise>
@@ -80,6 +83,8 @@
                                 <select id="operation" name="status" class="form-select">
 							<option value="OrderConfirmed">Order Confirmed</option>
 						  	<option value="Pending">Pending</option>
+						  	<option value="OrderConfirmed">Order Confirmed</option>
+						  	<option value="Refunded">Refunded</option>
 							<!--<option value="Out For Delivery">Out For Delivery</option>
 							<option value="Delivered">Delivered</option> -->
 					        </select>
