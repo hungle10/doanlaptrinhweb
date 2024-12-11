@@ -83,7 +83,6 @@
                                 <select id="operation" name="status" class="form-select">
 							<option value="OrderConfirmed">Order Confirmed</option>
 						  	<option value="Pending">Pending</option>
-						  	<option value="OrderConfirmed">Order Confirmed</option>
 						  	<option value="Refunded">Refunded</option>
 							<!--<option value="Out For Delivery">Out For Delivery</option>
 							<option value="Delivered">Delivered</option> -->

@@ -20,7 +20,8 @@
 					<th>Phone number</th>
 					<th>Email</th>
 					<th>Status</th>
-                        <th colspan="1" class="text-center">Action</th>
+                    <th colspan="1" class="text-center">Action</th>    
+                    <th colspan="1" class="text-center">Xoa</th>  
                     </tr>
                   </thead>
                    <tbody>
@@ -65,9 +66,17 @@
 
                                     <td>
                                        <button type="submit" class="btn btn-secondary">Watch more detail</button>
+                                      
                                     </td>
+                                   
                                     </form>
+                                     <td>
+                                     <form action="/uteshop/user/deleteshop?shopid=${shop.id}" method="post">
+                                           <button type="submit" class="btn btn-secondary">Delete</button>
+                                      </form>
+                                      </td>
                                 </tr>
+                            
                             
                         </c:forEach>
                         </tbody>

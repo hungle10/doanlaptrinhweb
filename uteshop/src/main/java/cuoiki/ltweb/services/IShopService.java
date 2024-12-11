@@ -22,4 +22,6 @@ public interface IShopService {
 
 	List<ShopModel> findAll();
 
+	void delete(long idshop);
+
 }

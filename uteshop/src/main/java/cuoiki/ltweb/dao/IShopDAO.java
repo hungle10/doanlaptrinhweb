@@ -22,4 +22,6 @@ public interface IShopDAO {
 
 	List<ShopModel> findAll();
 
+	void delete(long idshop);
+
 }

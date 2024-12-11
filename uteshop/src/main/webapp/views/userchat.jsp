@@ -82,6 +82,7 @@ function goToUserController(userId) {
                    <c:if test="${chat_mine.chatId == chat.chatId}">
            
             <li class="clearfix">
+            
             <div class="message my-message">${chat_mine.message_content}</div>                                  
         </li>  
         </c:if>
@@ -89,6 +90,7 @@ function goToUserController(userId) {
              <c:forEach var="chat_opp" items="${chat_list_mine}">
               <c:if test="${chat_opp.chatId == chat.chatId}">
            <li class="clearfix">
+              
                 <div class="message other-message float-right">${chat_opp.message_content}</div>
             </li> 
                </c:if>

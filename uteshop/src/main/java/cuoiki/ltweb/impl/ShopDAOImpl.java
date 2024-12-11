@@ -258,6 +258,22 @@ public class ShopDAOImpl extends DBConnectSQLServer implements IShopDAO{
 		    }
 		
 	}
+	@Override
+	public void delete(long idshop) {
+		String sql = "DELETE shops where id= ?";
+		try {
+			conn=super.getConnection();
+			ps=conn.prepareStatement(sql);
+			ps.setLong(1,idshop);
+			ps.executeUpdate();
+			conn.close();
+			ps.close();
+			rs.close();
+		}catch(Exception e)
+		{
+			
+		}
+	}
 
 
 }

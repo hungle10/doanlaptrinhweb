@@ -41,6 +41,10 @@ public ShopModel findById(long id) {
 	public List<ShopModel> findAll() {
 	   return shopdao.findAll();
 	}
+	@Override
+	public void delete(long idshop) {
+		shopdao.delete(idshop);
+	}
 
 
 }

@@ -33,7 +33,7 @@ import cuoiki.ltweb.mail.MailMessenger;
 import cuoiki.ltweb.services.*;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = {"/user/registerShop","/user/viewshop","/revenue","/user/updateShop","/user/orderdetail/update"})
+@WebServlet(urlPatterns = {"/user/registerShop","/user/viewshop","/revenue","/user/updateShop","/user/orderdetail/update","/user/deleteshop"})
 @MultipartConfig
 public class ShopController extends HttpServlet{
 	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Admin\\git\\repositorydoanlaptrinhweb\\uteshop\\src\\main\\webapp\\Images";
@@ -241,6 +241,17 @@ public class ShopController extends HttpServlet{
 		    MailMessenger.RegisteredShopOwnerWaitToAccepted(user.getUsername(),user.getEmail(),shopname);;
 	        resp.sendRedirect("/uteshop/views/index.jsp");
 	        return;
+		}
+		if(path.contains("deleteshop")) {
+			
+			String shop_id_Str = req.getParameter("shopid");
+			
+			long shop_id = Long.valueOf(shop_id_Str);
+			
+			shop_service.delete(shop_id);
+			System.out.println("delete shop thanh cong");
+			resp.sendRedirect("/uteshop/user/profile");
+			return;
 		}
 		
 		String shopname = req.getParameter("shop_name");
